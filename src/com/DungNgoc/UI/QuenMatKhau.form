@@ -52,7 +52,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="167" max="-2" attributes="0"/>
-                          <Component id="btnDangNhap" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGuiMatKhau" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
@@ -63,7 +63,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextField1" min="-2" pref="328" max="-2" attributes="0"/>
+                              <Component id="txtNhapEmail" min="-2" pref="328" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -83,9 +83,9 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="62" max="32767" attributes="0"/>
-                  <Component id="jTextField1" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="txtNhapEmail" min="-2" pref="28" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                  <Component id="btnDangNhap" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="btnGuiMatKhau" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -122,12 +122,12 @@
             <Property name="text" type="java.lang.String" value="Ph&#x1ea7;n m&#x1ec1;m qu&#x1ea3;n l&#xfd; c&#x1eed;a h&#xe0;ng &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtNhapEmail">
           <Properties>
             <Property name="text" type="java.lang.String" value="Nh&#x1ead;p Email"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDangNhap">
+        <Component class="javax.swing.JButton" name="btnGuiMatKhau">
           <Properties>
             <Property name="text" type="java.lang.String" value="G&#x1eed;i m&#x1ead;t kh&#x1ea9;u"/>
           </Properties>
