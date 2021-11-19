@@ -5,7 +5,6 @@
  */
 package com.DungNgoc.UI;
 
-import UI.DangNhap;
 import UI.DoiMatKhau;
 import com.DungNgoc.untils.Auth;
 import com.DungNgoc.untils.Exceptions;
@@ -517,74 +516,137 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     }
 
     void openNhanVieṇ() {
-        JQuanLyNhanVien qlnv = new JQuanLyNhanVien();
-        this.DesktopMain.add(qlnv);
-        qlnv.setSize(700, 500);
-        qlnv.setVisible(true);
-        qlnv.setLocation(this.getWidth() / 2 - qlnv.getWidth() / 2, (this.getHeight() - 40) / 2 - qlnv.getHeight() / 2 - 50);
+        if (Auth.isLogin()) {
+            JQuanLyNhanVien qlnv = new JQuanLyNhanVien();
+            this.DesktopMain.add(qlnv);
+            qlnv.setSize(700, 500);
+            qlnv.setVisible(true);
+            qlnv.setLocation(this.getWidth() / 2 - qlnv.getWidth() / 2, (this.getHeight() - 40) / 2 - qlnv.getHeight() / 2 - 50);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
     }
 
     private void openKhachHang() {
-        JQuanLyKhachHang qlkh = new JQuanLyKhachHang();
-        this.DesktopMain.add(qlkh);
-        qlkh.setVisible(true);
-        qlkh.setLocation(this.getWidth() / 2 - qlkh.getWidth() / 2, (this.getHeight() - 40) / 2 - qlkh.getHeight() / 2 - 40);
+        if (Auth.isLogin()) {
+            JQuanLyKhachHang qlkh = new JQuanLyKhachHang();
+            this.DesktopMain.add(qlkh);
+            qlkh.setVisible(true);
+            qlkh.setLocation(this.getWidth() / 2 - qlkh.getWidth() / 2, (this.getHeight() - 40) / 2 - qlkh.getHeight() / 2 - 40);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openKhuyenMai() {
-        JQuanLyMaKhuyenMai qlkm = new JQuanLyMaKhuyenMai();
-        this.DesktopMain.add(qlkm);
-        qlkm.setVisible(true);
-        qlkm.setLocation(this.getWidth() / 2 - qlkm.getWidth() / 2, (this.getHeight() - 40) / 2 - qlkm.getHeight() / 2 - 30);
+        if (Auth.isLogin()) {
+            JQuanLyMaKhuyenMai qlkm = new JQuanLyMaKhuyenMai();
+            this.DesktopMain.add(qlkm);
+            qlkm.setVisible(true);
+            qlkm.setLocation(this.getWidth() / 2 - qlkm.getWidth() / 2, (this.getHeight() - 40) / 2 - qlkm.getHeight() / 2 - 30);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openSanPham() {
-        JQuanLySanPham qlsp = new JQuanLySanPham();
-        this.DesktopMain.add(qlsp);
-        qlsp.setVisible(true);
+        if (Auth.isLogin()) {
+            JQuanLySanPham qlsp = new JQuanLySanPham();
+            this.DesktopMain.add(qlsp);
+            qlsp.setVisible(true);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
 
     }
 
     private void openHoaDon() {
-        JDanhSachHoaDon qlhd = new JDanhSachHoaDon();
-        this.DesktopMain.add(qlhd);
-        qlhd.setVisible(true);
-        qlhd.setLocation(this.getWidth() / 2 - qlhd.getWidth() / 2, (this.getHeight() - 40) / 2 - qlhd.getHeight() / 2 - 50);
+        if (Auth.isLogin()) {
+            JDanhSachHoaDon qlhd = new JDanhSachHoaDon();
+            this.DesktopMain.add(qlhd);
+            qlhd.setVisible(true);
+            qlhd.setLocation(this.getWidth() / 2 - qlhd.getWidth() / 2, (this.getHeight() - 40) / 2 - qlhd.getHeight() / 2 - 50);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openThongKeSanPham() {
-        JThongKeSanPham tksp = new JThongKeSanPham();
-        this.DesktopMain.add(tksp);
-        tksp.setVisible(true);
-        tksp.setLocation(this.getWidth() / 2 - tksp.getWidth() / 2, (this.getHeight() - 40) / 2 - tksp.getHeight() / 2 - 50);
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeSanPham tksp = new JThongKeSanPham();
+                this.DesktopMain.add(tksp);
+                tksp.setVisible(true);
+                tksp.setLocation(this.getWidth() / 2 - tksp.getWidth() / 2, (this.getHeight() - 40) / 2 - tksp.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openThongKeNhanVien() {
-        JThongKeNhanVien tknv = new JThongKeNhanVien();
-        this.DesktopMain.add(tknv);
-        tknv.setVisible(true);
-        tknv.setLocation(this.getWidth() / 2 - tknv.getWidth() / 2, (this.getHeight() - 40) / 2 - tknv.getHeight() / 2 - 50);
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeNhanVien tknv = new JThongKeNhanVien();
+                this.DesktopMain.add(tknv);
+                tknv.setVisible(true);
+                tknv.setLocation(this.getWidth() / 2 - tknv.getWidth() / 2, (this.getHeight() - 40) / 2 - tknv.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openThongKeKhachHang() {
-        JThongKeKhachHang tkkh = new JThongKeKhachHang();
-        this.DesktopMain.add(tkkh);
-        tkkh.setVisible(true);
-        tkkh.setLocation(this.getWidth() / 2 - tkkh.getWidth() / 2, (this.getHeight() - 40) / 2 - tkkh.getHeight() / 2 - 50);
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeKhachHang tkkh = new JThongKeKhachHang();
+                this.DesktopMain.add(tkkh);
+                tkkh.setVisible(true);
+                tkkh.setLocation(this.getWidth() / 2 - tkkh.getWidth() / 2, (this.getHeight() - 40) / 2 - tkkh.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openDoanhThu() {
-        JThongKeDoanhThu tkdt = new JThongKeDoanhThu();
-        this.DesktopMain.add(tkdt);
-        tkdt.setVisible(true);
-        tkdt.setLocation(this.getWidth() / 2 - tkdt.getWidth() / 2, (this.getHeight() - 40) / 2 - tkdt.getHeight() / 2 - 50);
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeDoanhThu tkdt = new JThongKeDoanhThu();
+                this.DesktopMain.add(tkdt);
+                tkdt.setVisible(true);
+                tkdt.setLocation(this.getWidth() / 2 - tkdt.getWidth() / 2, (this.getHeight() - 40) / 2 - tkdt.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openBaoCao() {
-        BaoCao bc = new BaoCao();
-        this.DesktopMain.add(bc);
-        bc.setVisible(true);
-        bc.setLocation(this.getWidth() / 2 - bc.getWidth() / 2, (this.getHeight() - 40) / 2 - bc.getHeight() / 2 - 50);
+        if (Auth.isLogin()) {
+            BaoCao bc = new BaoCao();
+            this.DesktopMain.add(bc);
+            bc.setVisible(true);
+            bc.setLocation(this.getWidth() / 2 - bc.getWidth() / 2, (this.getHeight() - 40) / 2 - bc.getHeight() / 2 - 50);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
 
     }
 
@@ -627,8 +689,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         if (btnDangNhap.getText().equals("Đăng xuất")) {
             Auth.clear();
             new DangNhap(this, true).setVisible(true);
-        }
-        else{
+        } else {
             new DangNhap(this, true).setVisible(true);
         }
     }
