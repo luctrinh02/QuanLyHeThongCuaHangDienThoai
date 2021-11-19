@@ -137,7 +137,7 @@ public class NhanVien {
         }
     }
 
-    public boolean isCompareToHash(String passInput, String salt, String hash) {
+    public boolean isCompareToHash(String passInput) {
         try {
             Base64.Encoder enc = Base64.getEncoder();
             Base64.Decoder dnc = Base64.getDecoder();
