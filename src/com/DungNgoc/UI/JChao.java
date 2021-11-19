@@ -34,21 +34,43 @@ public class JChao extends javax.swing.JDialog {
         lblBanner = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblWelcome.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lblWelcome.setText("_WELCOME_");
-        getContentPane().add(lblWelcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 320, 60));
 
         lblLoading.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblLoading.setText("Loading...");
-        getContentPane().add(lblLoading, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 390, 160, -1));
 
         pgbLoading.setStringPainted(true);
-        getContentPane().add(pgbLoading, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, 390, 20));
 
         lblBanner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/banner.jpg"))); // NOI18N
-        getContentPane().add(lblBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 440));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(250, 250, 250)
+                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(pgbLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(350, 350, 350)
+                .addComponent(lblLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(lblBanner, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(pgbLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(lblLoading))
+            .addComponent(lblBanner, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
