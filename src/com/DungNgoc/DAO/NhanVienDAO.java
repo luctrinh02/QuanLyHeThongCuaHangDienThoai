@@ -22,6 +22,7 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
     String disable = "update NhanVien set status=0 where IdStaff=?";
     String reStore = "update NhanVien set status=1 where IdStaff=?";
     String select_ID = "select * from NhanVien where IdStaff=?";
+    String select_All = "select * from NhanVien";
     String select_page = "select * from NhanVien\n"
             + "order by IdStaff\n"
             + "offset ?*10 rows\n"
@@ -29,7 +30,7 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
 
     @Override
     public void insert(NhanVien entity) {
-        Xjdbc.update(insert, entity.getIdStaff(),entity.getName(), entity.getCCCD(), entity.getPhoneNumber(), entity.getEmail(), entity.getSalt(), entity.getHash(), entity.isRole(), entity.isStatus());
+        Xjdbc.update(insert, entity.getIdStaff(), entity.getName(), entity.getCCCD(), entity.getPhoneNumber(), entity.getEmail(), entity.getSalt(), entity.getHash(), entity.isRole(), entity.isStatus());
     }
 
     @Override
@@ -59,7 +60,7 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
 
     @Override
     public List<NhanVien> selectByPage(int page) {
-        return this.selectBySql(select_page,page);
+        return this.selectBySql(select_page, page);
     }
 
     @Override
@@ -75,5 +76,10 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<NhanVien> selectAll() {
+        return this.selectBySql(select_All);
     }
 }

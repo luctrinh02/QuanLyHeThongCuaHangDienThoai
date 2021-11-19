@@ -20,5 +20,6 @@ public interface DungNgocDAO<EntityType,KeyType> {
     public void reStore(KeyType id);
     public EntityType selectById(KeyType id);
     public List<EntityType> selectByPage(int page);
+    public List<EntityType> selectAll();
     public List<EntityType> selectBySql(String sql,Object... args);
 }
