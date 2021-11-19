@@ -5,11 +5,17 @@
  */
 package com.DungNgoc.UI;
 
+import UI.DangNhap;
+import UI.DoiMatKhau;
+import com.DungNgoc.untils.Auth;
+import com.DungNgoc.untils.Exceptions;
+import com.DungNgoc.untils.MsgBox;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 /**
@@ -17,12 +23,14 @@ import javax.swing.Timer;
  * @author LINH
  */
 public class DienThoaiDungNgoc extends javax.swing.JFrame {
-    
+    ImageIcon iconDN = new ImageIcon("src/com/DungNgoc/icons/Lock.png");
+    ImageIcon iconDX = new ImageIcon("src/com/DungNgoc/icons/Exit.png");
     /**
      * Creates new form DienThoaiDungNgoc
      */
     public DienThoaiDungNgoc() {
         initComponents();
+        init();
     }
 
     /**
@@ -35,6 +43,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     private void initComponents() {
 
         toolBar = new javax.swing.JToolBar();
+        btnDangNhap = new javax.swing.JButton();
         btnKhoSP = new javax.swing.JButton();
         btnHoaDon = new javax.swing.JButton();
         btnKhuyenMai = new javax.swing.JButton();
@@ -49,6 +58,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         MniDangXuat = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         MniDoiMK = new javax.swing.JMenuItem();
+        mniKetThuc = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         MniNhanVien = new javax.swing.JMenuItem();
         MniKhachHang = new javax.swing.JMenuItem();
@@ -68,6 +78,13 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
         toolBar.setRollover(true);
 
+        btnDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Exit.png"))); // NOI18N
+        btnDangNhap.setText("Đăng nhập");
+        btnDangNhap.setFocusable(false);
+        btnDangNhap.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDangNhap.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolBar.add(btnDangNhap);
+
         btnKhoSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Full basket.png"))); // NOI18N
         btnKhoSP.setText("Sản phẩm");
         btnKhoSP.setFocusable(false);
@@ -85,6 +102,11 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         btnHoaDon.setFocusable(false);
         btnHoaDon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnHoaDon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHoaDonActionPerformed(evt);
+            }
+        });
         toolBar.add(btnHoaDon);
 
         btnKhuyenMai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Gift.png"))); // NOI18N
@@ -104,6 +126,11 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         btnBaoLoi.setFocusable(false);
         btnBaoLoi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnBaoLoi.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnBaoLoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBaoLoiActionPerformed(evt);
+            }
+        });
         toolBar.add(btnBaoLoi);
 
         jPanel1.setBackground(new java.awt.Color(92, 192, 194));
@@ -153,18 +180,42 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         MniDangNhap.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         MniDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Lock.png"))); // NOI18N
         MniDangNhap.setText("Đăng nhập");
+        MniDangNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniDangNhapActionPerformed(evt);
+            }
+        });
         jMenu1.add(MniDangNhap);
 
         MniDangXuat.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         MniDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Exit.png"))); // NOI18N
         MniDangXuat.setText("Đăng xuất");
+        MniDangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniDangXuatActionPerformed(evt);
+            }
+        });
         jMenu1.add(MniDangXuat);
         jMenu1.add(jSeparator2);
 
         MniDoiMK.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         MniDoiMK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Refresh.png"))); // NOI18N
         MniDoiMK.setText("Đổi mật khẩu");
+        MniDoiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniDoiMKActionPerformed(evt);
+            }
+        });
         jMenu1.add(MniDoiMK);
+
+        mniKetThuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Delete.png"))); // NOI18N
+        mniKetThuc.setText("Kết thúc");
+        mniKetThuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniKetThucActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mniKetThuc);
 
         menuBar.add(jMenu1);
 
@@ -205,6 +256,11 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         MniHoaDon.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         MniHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Cash register.png"))); // NOI18N
         MniHoaDon.setText("Hóa đơn");
+        MniHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniHoaDonActionPerformed(evt);
+            }
+        });
         jMenu2.add(MniHoaDon);
 
         menuBar.add(jMenu2);
@@ -214,27 +270,52 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         MniDoanhThu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MniDoanhThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Bar chart.png"))); // NOI18N
         MniDoanhThu.setText("Doanh thu");
+        MniDoanhThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniDoanhThuActionPerformed(evt);
+            }
+        });
         jMenu3.add(MniDoanhThu);
 
         MniTKSP.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MniTKSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Money.png"))); // NOI18N
         MniTKSP.setText("Sản phẩm");
+        MniTKSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniTKSPActionPerformed(evt);
+            }
+        });
         jMenu3.add(MniTKSP);
 
         MniTKKH.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MniTKKH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Conference.png"))); // NOI18N
         MniTKKH.setText("Khách hàng");
+        MniTKKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniTKKHActionPerformed(evt);
+            }
+        });
         jMenu3.add(MniTKKH);
 
         MniTKNV.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MniTKNV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/User group.png"))); // NOI18N
         MniTKNV.setText("Nhân viên");
+        MniTKNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniTKNVActionPerformed(evt);
+            }
+        });
         jMenu3.add(MniTKNV);
         jMenu3.add(jSeparator5);
 
         MniBC.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         MniBC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Price list.png"))); // NOI18N
         MniBC.setText("Báo cáo");
+        MniBC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MniBCActionPerformed(evt);
+            }
+        });
         jMenu3.add(MniBC);
 
         menuBar.add(jMenu3);
@@ -263,24 +344,72 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MniNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniNhanVienActionPerformed
-
+        openNhanVieṇ();
     }//GEN-LAST:event_MniNhanVienActionPerformed
 
     private void MniKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniKhachHangActionPerformed
-
+        openKhachHang();
     }//GEN-LAST:event_MniKhachHangActionPerformed
 
     private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed
-
+        openKhuyenMai();
     }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     private void btnKhoSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoSPActionPerformed
-
+        openSanPham();
     }//GEN-LAST:event_btnKhoSPActionPerformed
 
     private void MniKhoSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniKhoSPActionPerformed
-
+        openSanPham();
     }//GEN-LAST:event_MniKhoSPActionPerformed
+
+    private void MniHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniHoaDonActionPerformed
+        openHoaDon();
+    }//GEN-LAST:event_MniHoaDonActionPerformed
+
+    private void MniDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniDoanhThuActionPerformed
+        openDoanhThu();
+    }//GEN-LAST:event_MniDoanhThuActionPerformed
+
+    private void MniTKSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniTKSPActionPerformed
+        openThongKeSanPham();
+    }//GEN-LAST:event_MniTKSPActionPerformed
+
+    private void MniTKKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniTKKHActionPerformed
+       openThongKeKhachHang();
+    }//GEN-LAST:event_MniTKKHActionPerformed
+
+    private void MniTKNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniTKNVActionPerformed
+        openThongKeNhanVien();
+    }//GEN-LAST:event_MniTKNVActionPerformed
+
+    private void MniBCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniBCActionPerformed
+        openBaoCao();
+    }//GEN-LAST:event_MniBCActionPerformed
+
+    private void btnBaoLoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaoLoiActionPerformed
+        baoLoi();
+    }//GEN-LAST:event_btnBaoLoiActionPerformed
+
+    private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
+        openHoaDon();
+    }//GEN-LAST:event_btnHoaDonActionPerformed
+
+    private void MniDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniDangNhapActionPerformed
+        openDangNhap();
+    }//GEN-LAST:event_MniDangNhapActionPerformed
+
+    private void MniDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniDangXuatActionPerformed
+        openDangXuat();
+    }//GEN-LAST:event_MniDangXuatActionPerformed
+
+    private void MniDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniDoiMKActionPerformed
+        openDoiMK();
+    }//GEN-LAST:event_MniDoiMKActionPerformed
+
+    private void mniKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniKetThucActionPerformed
+        ketThuc();
+    }//GEN-LAST:event_mniKetThucActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,7 +442,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DienThoaiDungNgoc().setVisible(true);
-                
+
             }
         });
     }
@@ -333,6 +462,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     private javax.swing.JMenuItem MniTKNV;
     private javax.swing.JMenuItem MniTKSP;
     private javax.swing.JButton btnBaoLoi;
+    private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnHoaDon;
     private javax.swing.JButton btnKhoSP;
     private javax.swing.JButton btnKhuyenMai;
@@ -347,8 +477,112 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     private javax.swing.JLabel lblClock;
     private javax.swing.JLabel lblUser;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem mniKetThuc;
     private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
 
+    private void init() {
+        this.setLocationRelativeTo(null);
+        new JChao(this, true).setVisible(true);
+        new DangNhap(this, true).setVisible(true);
+        new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date now = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+                String text = sdf.format(now);
+                lblClock.setText(text);
+                if (Auth.user == null) {
+                    btnDangNhap.setText("Đăng nhập");
+                    btnDangNhap.setIcon(iconDN);
+                }
+                else {
+                    btnDangNhap.setText("Đăng xuất");
+                    btnDangNhap.setIcon(iconDX);
+                }
+            }
+        }).start();
+    }
+
+    void openNhanVieṇ() {
+        JQuanLyNhanVien qlnv = new JQuanLyNhanVien();
+        this.DesktopMain.add(qlnv);
+        qlnv.setSize(700, 500);
+        qlnv.setVisible(true);
+    }
+
+    private void openKhachHang() {
+        JQuanLyKhachHang qlkh = new JQuanLyKhachHang();
+        this.DesktopMain.add(qlkh);
+        qlkh.setVisible(true);
+    }
+
+    private void openKhuyenMai() {
+        JQuanLyMaKhuyenMai qlkm = new JQuanLyMaKhuyenMai();
+        this.DesktopMain.add(qlkm);
+        qlkm.setVisible(true);
+    }
+
+    private void openSanPham() {
+        JQuanLySanPham qlsp = new JQuanLySanPham();
+        this.DesktopMain.add(qlsp);
+        qlsp.setVisible(true);
+
+    }
+    private void openHoaDon(){
+        JDanhSachHoaDon qlhd = new JDanhSachHoaDon();
+        this.DesktopMain.add(qlhd);
+        qlhd.setVisible(true);
+    }
+    private void openThongKeSanPham(){
+        JThongKeSanPham tksp = new JThongKeSanPham();
+        this.DesktopMain.add(tksp);
+        tksp.setVisible(true);
+    }
+    private void openThongKeNhanVien(){
+        JThongKeNhanVien tknv = new JThongKeNhanVien();
+        this.DesktopMain.add(tknv);
+        tknv.setVisible(true);
+    }
+    private void openThongKeKhachHang(){
+        JThongKeKhachHang tkkh = new JThongKeKhachHang();
+        this.DesktopMain.add(tkkh);
+        tkkh.setVisible(true);
+    }
+    private void openDoanhThu() {
+        JThongKeDoanhThu tkdt = new JThongKeDoanhThu();
+        this.DesktopMain.add(tkdt);
+        tkdt.setVisible(true);
+    }
+
+    private void openBaoCao() {
+        BaoCao bc = new BaoCao();
+        this.DesktopMain.add(bc);
+        bc.setVisible(true);
+        
+    }
+
+    private void baoLoi() {
+        Exceptions.sendMail();
+    }
+
+    private void openDangNhap() {
+        new DangNhap(this, true).setVisible(true);
+    }
+
+    private void openDoiMK() {
+        new DoiMatKhau(this, true).setVisible(true);
+    }
+
+    private void openDangXuat() {
+        new DangNhap(this, true).setVisible(true);
+    }
+
+    private void ketThuc() {
+        if (MsgBox.confirm(this, "Bạn muốn thoát ứng dụng")) {
+            System.exit(0);
+        }
+        
+    }
     
 }
