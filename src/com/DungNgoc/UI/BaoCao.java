@@ -554,10 +554,7 @@ public class BaoCao extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblHangHoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHangHoaMouseClicked
-        if (evt.getClickCount() == 2) {
-            this.row = tblHangHoa.getSelectedRow();
-            this.edit();
-        }
+
     }//GEN-LAST:event_tblHangHoaMouseClicked
 
     private void txtSLSPDaBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSLSPDaBanActionPerformed
