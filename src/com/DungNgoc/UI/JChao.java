@@ -5,11 +5,15 @@
  */
 package com.DungNgoc.UI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 /**
  *
  * @author LINH
  */
-public class JChao extends javax.swing.JDialog {
+public class JChao extends javax.swing.JDialog implements Runnable {
 
     /**
      * Creates new form JChao
@@ -17,6 +21,9 @@ public class JChao extends javax.swing.JDialog {
     public JChao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        init();
+        Thread t = new Thread(this);
+        t.start();
     }
 
     /**
@@ -123,4 +130,44 @@ public class JChao extends javax.swing.JDialog {
     private javax.swing.JLabel lblWelcome;
     private javax.swing.JProgressBar pgbLoading;
     // End of variables declaration//GEN-END:variables
+@Override
+    public void run() {
+        while (true) {
+            String txt = this.lblWelcome.getText();
+            String newText = txt.substring(1) + txt.substring(0, 1);
+            this.lblWelcome.setText(newText);
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void init() {
+        this.setLocationRelativeTo(null);
+        new Timer(10, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int value = pgbLoading.getValue();
+                if (value < pgbLoading.getMaximum()) {
+                    pgbLoading.setValue(value + 1);
+                } else {
+                    JChao.this.dispose();
+                }
+
+            }
+        }).start();
+        new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lblLoading.isVisible()) {
+                    lblLoading.setVisible(false);
+                } else {
+                    lblLoading.setVisible(true);
+                }
+
+            }
+        }).start();
+    }
 }
