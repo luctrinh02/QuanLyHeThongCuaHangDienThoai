@@ -5,7 +5,7 @@
  */
 package com.DungNgoc.UI;
 
-import UI.DangNhap;
+import com.DungNgoc.UI.DangNhap;
 import UI.DoiMatKhau;
 import com.DungNgoc.untils.Auth;
 import com.DungNgoc.untils.Exceptions;
