@@ -5,7 +5,10 @@
  */
 package com.DungNgoc.UI;
 
+<<<<<<< HEAD
 import com.DungNgoc.UI.DangNhap;
+=======
+>>>>>>> 15aa89bf189eed4b31eb714e622c9e9781edbf13
 import UI.DoiMatKhau;
 import com.DungNgoc.untils.Auth;
 import com.DungNgoc.untils.Exceptions;
@@ -23,8 +26,10 @@ import javax.swing.Timer;
  * @author LINH
  */
 public class DienThoaiDungNgoc extends javax.swing.JFrame {
+
     ImageIcon iconDN = new ImageIcon("src/com/DungNgoc/icons/Lock.png");
     ImageIcon iconDX = new ImageIcon("src/com/DungNgoc/icons/Exit.png");
+
     /**
      * Creates new form DienThoaiDungNgoc
      */
@@ -83,6 +88,11 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         btnDangNhap.setFocusable(false);
         btnDangNhap.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDangNhap.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangNhapActionPerformed(evt);
+            }
+        });
         toolBar.add(btnDangNhap);
 
         btnKhoSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Full basket.png"))); // NOI18N
@@ -376,7 +386,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     }//GEN-LAST:event_MniTKSPActionPerformed
 
     private void MniTKKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniTKKHActionPerformed
-       openThongKeKhachHang();
+        openThongKeKhachHang();
     }//GEN-LAST:event_MniTKKHActionPerformed
 
     private void MniTKNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniTKNVActionPerformed
@@ -410,6 +420,10 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     private void mniKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniKetThucActionPerformed
         ketThuc();
     }//GEN-LAST:event_mniKetThucActionPerformed
+
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        change();
+    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
      * @param args the command line arguments
@@ -492,74 +506,152 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
                 SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
                 String text = sdf.format(now);
                 lblClock.setText(text);
-                if (Auth.user == null) {
-                    btnDangNhap.setText("Đăng nhập");
-                    btnDangNhap.setIcon(iconDN);
-                }
-                else {
+                if (Auth.isLogin()) {
                     btnDangNhap.setText("Đăng xuất");
                     btnDangNhap.setIcon(iconDX);
+                    lblUser.setText(Auth.user.getName());
+                } else {
+                    btnDangNhap.setText("Đăng nhập");
+                    btnDangNhap.setIcon(iconDN);
+                    lblUser.setText("");
                 }
             }
         }).start();
     }
 
     void openNhanVieṇ() {
-        JQuanLyNhanVien qlnv = new JQuanLyNhanVien();
-        this.DesktopMain.add(qlnv);
-        qlnv.setSize(700, 500);
-        qlnv.setVisible(true);
+        if (Auth.isLogin()) {
+            JQuanLyNhanVien qlnv = new JQuanLyNhanVien();
+            this.DesktopMain.add(qlnv);
+            qlnv.setSize(700, 500);
+            qlnv.setVisible(true);
+            qlnv.setLocation(this.getWidth() / 2 - qlnv.getWidth() / 2, (this.getHeight() - 40) / 2 - qlnv.getHeight() / 2 - 50);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
     }
 
     private void openKhachHang() {
-        JQuanLyKhachHang qlkh = new JQuanLyKhachHang();
-        this.DesktopMain.add(qlkh);
-        qlkh.setVisible(true);
+        if (Auth.isLogin()) {
+            JQuanLyKhachHang qlkh = new JQuanLyKhachHang();
+            this.DesktopMain.add(qlkh);
+            qlkh.setVisible(true);
+            qlkh.setLocation(this.getWidth() / 2 - qlkh.getWidth() / 2, (this.getHeight() - 40) / 2 - qlkh.getHeight() / 2 - 40);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openKhuyenMai() {
-        JQuanLyMaKhuyenMai qlkm = new JQuanLyMaKhuyenMai();
-        this.DesktopMain.add(qlkm);
-        qlkm.setVisible(true);
+        if (Auth.isLogin()) {
+            JQuanLyMaKhuyenMai qlkm = new JQuanLyMaKhuyenMai();
+            this.DesktopMain.add(qlkm);
+            qlkm.setVisible(true);
+            qlkm.setLocation(this.getWidth() / 2 - qlkm.getWidth() / 2, (this.getHeight() - 40) / 2 - qlkm.getHeight() / 2 - 30);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openSanPham() {
-        JQuanLySanPham qlsp = new JQuanLySanPham();
-        this.DesktopMain.add(qlsp);
-        qlsp.setVisible(true);
+        if (Auth.isLogin()) {
+            JQuanLySanPham qlsp = new JQuanLySanPham();
+            this.DesktopMain.add(qlsp);
+            qlsp.setVisible(true);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
 
     }
-    private void openHoaDon(){
-        JDanhSachHoaDon qlhd = new JDanhSachHoaDon();
-        this.DesktopMain.add(qlhd);
-        qlhd.setVisible(true);
+
+    private void openHoaDon() {
+        if (Auth.isLogin()) {
+            JDanhSachHoaDon qlhd = new JDanhSachHoaDon();
+            this.DesktopMain.add(qlhd);
+            qlhd.setVisible(true);
+            qlhd.setLocation(this.getWidth() / 2 - qlhd.getWidth() / 2, (this.getHeight() - 40) / 2 - qlhd.getHeight() / 2 - 50);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
-    private void openThongKeSanPham(){
-        JThongKeSanPham tksp = new JThongKeSanPham();
-        this.DesktopMain.add(tksp);
-        tksp.setVisible(true);
+
+    private void openThongKeSanPham() {
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeSanPham tksp = new JThongKeSanPham();
+                this.DesktopMain.add(tksp);
+                tksp.setVisible(true);
+                tksp.setLocation(this.getWidth() / 2 - tksp.getWidth() / 2, (this.getHeight() - 40) / 2 - tksp.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
-    private void openThongKeNhanVien(){
-        JThongKeNhanVien tknv = new JThongKeNhanVien();
-        this.DesktopMain.add(tknv);
-        tknv.setVisible(true);
+
+    private void openThongKeNhanVien() {
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeNhanVien tknv = new JThongKeNhanVien();
+                this.DesktopMain.add(tknv);
+                tknv.setVisible(true);
+                tknv.setLocation(this.getWidth() / 2 - tknv.getWidth() / 2, (this.getHeight() - 40) / 2 - tknv.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
-    private void openThongKeKhachHang(){
-        JThongKeKhachHang tkkh = new JThongKeKhachHang();
-        this.DesktopMain.add(tkkh);
-        tkkh.setVisible(true);
+
+    private void openThongKeKhachHang() {
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeKhachHang tkkh = new JThongKeKhachHang();
+                this.DesktopMain.add(tkkh);
+                tkkh.setVisible(true);
+                tkkh.setLocation(this.getWidth() / 2 - tkkh.getWidth() / 2, (this.getHeight() - 40) / 2 - tkkh.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
+
     private void openDoanhThu() {
-        JThongKeDoanhThu tkdt = new JThongKeDoanhThu();
-        this.DesktopMain.add(tkdt);
-        tkdt.setVisible(true);
+        if (Auth.isLogin()) {
+            if (Auth.isManager()) {
+                JThongKeDoanhThu tkdt = new JThongKeDoanhThu();
+                this.DesktopMain.add(tkdt);
+                tkdt.setVisible(true);
+                tkdt.setLocation(this.getWidth() / 2 - tkdt.getWidth() / 2, (this.getHeight() - 40) / 2 - tkdt.getHeight() / 2 - 50);
+            } else {
+                MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
+            }
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void openBaoCao() {
-        BaoCao bc = new BaoCao();
-        this.DesktopMain.add(bc);
-        bc.setVisible(true);
-        
+        if (Auth.isLogin()) {
+            BaoCao bc = new BaoCao();
+            this.DesktopMain.add(bc);
+            bc.setVisible(true);
+            bc.setLocation(this.getWidth() / 2 - bc.getWidth() / 2, (this.getHeight() - 40) / 2 - bc.getHeight() / 2 - 50);
+        } else {
+            MsgBox.alert(this, "Hãy đăng nhập");
+        }
+
     }
 
     private void baoLoi() {
@@ -567,22 +659,42 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     }
 
     private void openDangNhap() {
-        new DangNhap(this, true).setVisible(true);
+        if (Auth.isLogin()) {
+            MsgBox.alert(this, "Bạn đã đăng nhập");
+        } else {
+            new DangNhap(this, true).setVisible(true);
+        }
     }
 
     private void openDoiMK() {
-        new DoiMatKhau(this, true).setVisible(true);
-    }
-
-    private void openDangXuat() {
-        new DangNhap(this, true).setVisible(true);
+        if (Auth.isLogin()) {
+            new DoiMatKhau(this, true).setVisible(true);
+        } else {
+            MsgBox.alert(this, "Bạn chưa đăng nhập");
+        }
     }
 
     private void ketThuc() {
         if (MsgBox.confirm(this, "Bạn muốn thoát ứng dụng")) {
             System.exit(0);
         }
-        
+
     }
-    
+
+    private void openDangXuat() {
+        if (Auth.isLogin()) {
+            new DangNhap(this, true).setVisible(true);
+        } else {
+            MsgBox.alert(this, "Bạn chưa đăng nhập");
+        }
+    }
+
+    private void change() {
+        if (btnDangNhap.getText().equals("Đăng xuất")) {
+            Auth.clear();
+            new DangNhap(this, true).setVisible(true);
+        } else {
+            new DangNhap(this, true).setVisible(true);
+        }
+    }
 }
