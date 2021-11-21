@@ -10,29 +10,19 @@ package com.DungNgoc.entitys;
  * @author Admin
  */
 public class HoaDonChiTiet {
-    private int seri;
     private int idBill;
-    private int idProduct;
+    private String idProduct;
     private int count;
     private double price;
 
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(int seri, int idBill, int idProduct, int count, double price) {
-        this.seri = seri;
+    public HoaDonChiTiet(int idBill, String idProduct, int count, double price) {
         this.idBill = idBill;
         this.idProduct = idProduct;
         this.count = count;
         this.price = price;
-    }
-
-    public int getSeri() {
-        return seri;
-    }
-
-    public void setSeri(int seri) {
-        this.seri = seri;
     }
 
     public int getIdBill() {
@@ -43,11 +33,11 @@ public class HoaDonChiTiet {
         this.idBill = idBill;
     }
 
-    public int getIdProduct() {
+    public String getIdProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(int idProduct) {
+    public void setIdProduct(String idProduct) {
         this.idProduct = idProduct;
     }
 
@@ -69,7 +59,7 @@ public class HoaDonChiTiet {
 
     @Override
     public String toString() {
-        return "HoaDonChiTiet{" + "seri=" + seri + ", idBill=" + idBill + ", idProduct=" + idProduct + ", count=" + count + ", price=" + price + '}';
+        return "HoaDonChiTiet{" + ", idBill=" + idBill + ", idProduct=" + idProduct + ", count=" + count + ", price=" + price + '}';
     }
     
 }
