@@ -5,14 +5,12 @@
  */
 package com.DungNgoc.UI;
 
-<<<<<<< HEAD
 import com.DungNgoc.UI.DangNhap;
-=======
->>>>>>> 15aa89bf189eed4b31eb714e622c9e9781edbf13
 import UI.DoiMatKhau;
 import com.DungNgoc.untils.Auth;
 import com.DungNgoc.untils.Exceptions;
 import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Ximage;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
