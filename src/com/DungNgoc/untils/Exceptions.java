@@ -28,6 +28,10 @@ import javax.mail.internet.MimeMultipart;
  * @author Admin
  */
 public class Exceptions {
+
+    static Properties props;
+    static Session session;
+
     public static void writeException(Exception ex, String x) {
         try {
             File f = new File("exceptions/bugs.txt");
@@ -42,47 +46,44 @@ public class Exceptions {
         }
     }
 
+    public static void setProsSession() {
+        props = new Properties();
+        props.put("mail.smtp.user", "username");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "25");
+        props.put("mail.debug", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.EnableSSL.enable", "true");
+
+        props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.setProperty("mail.smtp.socketFactory.fallback", "false");
+        props.setProperty("mail.smtp.port", "465");
+        props.setProperty("mail.smtp.socketFactory.port", "465");
+        //----------------------------
+        String accountName = "lucttph17307@fpt.edu.vn";
+        String accountPassword = "bl4z3login";
+        session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new javax.mail.PasswordAuthentication(accountName, accountPassword);
+            }
+        });
+    }
+
     public static void sendMail() {
         try {
-            Properties props = new Properties();
-//            props.put("mail.smtp.auth", "true");
-//            props.put("mail.smtp.starttls.enable", "true");
-//            props.put("mail.smtp.host", "smtp.gmail.com");
-//            props.put("mail.smtp.port", 587);
-//            props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
-            props.put("mail.smtp.user", "username");
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.port", "25");
-            props.put("mail.debug", "true");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.EnableSSL.enable", "true");
-
-            props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-            props.setProperty("mail.smtp.socketFactory.fallback", "false");
-            props.setProperty("mail.smtp.port", "465");
-            props.setProperty("mail.smtp.socketFactory.port", "465");
-            //----------------------------
-            String accountName = "lucttph17307@fpt.edu.vn";
-            String accountPassword = "bl4z3login";
-            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-                @Override
-                protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                    return new javax.mail.PasswordAuthentication(accountName, accountPassword);
-                }
-            });
-            //----------------------------
+            setProsSession();
             try {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress("lucttph17307@fpt.edu.vn"));
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse("trinhluc003@gmail.com"));
                 message.setSubject("Exception");
-
                 MimeBodyPart contentPart = new MimeBodyPart();
-                contentPart.setContent("IP: "+getIP(), "text/html; charser=utf-8");
+                contentPart.setContent("IP: " + getIP(), "text/html; charser=utf-8");
                 MimeBodyPart filePart = new MimeBodyPart();
-                File f = new File("EXCEPTIONS/exception.txt");
+                File f = new File("EXCEPTIONS/exception.txt.txt");
                 FileDataSource fds = new FileDataSource(f);
                 filePart.setDataHandler(new DataHandler(fds));
                 filePart.setFileName(f.getName());
@@ -96,6 +97,7 @@ public class Exceptions {
                 e.printStackTrace();
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -106,6 +108,24 @@ public class Exceptions {
             return ip;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public static void sendPass(String email, String mess) {
+        try {
+            setProsSession();
+            try {
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress("lucttph17307@fpt.edu.vn"));
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(email));
+                message.setSubject("Mật khẩu tạm thời");
+                message.setText(mess);
+                Transport.send(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
         }
     }
 }

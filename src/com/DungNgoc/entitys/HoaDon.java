@@ -15,13 +15,13 @@ public class HoaDon {
     private String dateBill;
     private String totalMoney;
     private String promoCode;
-    private String usepoint;
+    private boolean usepoint;
     private String idStaff;
 
     public HoaDon() {
     }
 
-    public HoaDon(int idBill, String idGuest, String dateBill, String totalMoney, String promoCode, String usepoint, String idStaff) {
+    public HoaDon(int idBill, String idGuest, String dateBill, String totalMoney, String promoCode, boolean usepoint, String idStaff) {
         this.idBill = idBill;
         this.idGuest = idGuest;
         this.dateBill = dateBill;
@@ -71,11 +71,11 @@ public class HoaDon {
         this.promoCode = promoCode;
     }
 
-    public String getUsepoint() {
+    public boolean isUsepoint() {
         return usepoint;
     }
 
-    public void setUsepoint(String usepoint) {
+    public void setUsepoint(boolean usepoint) {
         this.usepoint = usepoint;
     }
 

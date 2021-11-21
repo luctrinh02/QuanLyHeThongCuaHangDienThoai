@@ -14,17 +14,17 @@ public class KhachHang {
     private String name;
     private double totalMoney;
     private double point;
-    private boolean bit;
+    private boolean status;
 
     public KhachHang() {
     }
 
-    public KhachHang(String idGuest, String name, double totalMoney, double point, boolean bit) {
+    public KhachHang(String idGuest, String name, double totalMoney, double point, boolean status) {
         this.idGuest = idGuest;
         this.name = name;
         this.totalMoney = totalMoney;
         this.point = point;
-        this.bit = bit;
+        this.status = status;
     }
 
     public String getIdGuest() {
@@ -59,17 +59,17 @@ public class KhachHang {
         this.point = point;
     }
 
-    public boolean isBit() {
-        return bit;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setBit(boolean bit) {
-        this.bit = bit;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "KhachHang{" + "idGuest=" + idGuest + ", name=" + name + ", totalMoney=" + totalMoney + ", point=" + point + ", bit=" + bit + '}';
+        return "KhachHang{" + "idGuest=" + idGuest + ", name=" + name + ", totalMoney=" + totalMoney + ", point=" + point + ", status=" + status + '}';
     }
 
 }
