@@ -111,7 +111,7 @@ public class Exceptions {
         }
     }
 
-    public static void sendPass(String email, String mess) {
+    public static void sendPass(String email, String subject,String mess) {
         try {
             setProsSession();
             try {
@@ -119,7 +119,7 @@ public class Exceptions {
                 message.setFrom(new InternetAddress("lucttph17307@fpt.edu.vn"));
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(email));
-                message.setSubject("Mật khẩu tạm thời");
+                message.setSubject(subject);
                 message.setText(mess);
                 Transport.send(message);
             } catch (Exception e) {
