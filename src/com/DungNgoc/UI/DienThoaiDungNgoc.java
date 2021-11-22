@@ -407,7 +407,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     }//GEN-LAST:event_MniDangNhapActionPerformed
 
     private void MniDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniDangXuatActionPerformed
-        openDangXuat();
+        DangXuat();
     }//GEN-LAST:event_MniDangXuatActionPerformed
 
     private void MniDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MniDoiMKActionPerformed
@@ -680,8 +680,9 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     }
 
-    private void openDangXuat() {
+    private void DangXuat() {
         if (Auth.isLogin()) {
+            Auth.clear();
             new DangNhap(this, true).setVisible(true);
         } else {
             MsgBox.alert(this, "Bạn chưa đăng nhập");
