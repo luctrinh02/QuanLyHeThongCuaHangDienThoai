@@ -19,6 +19,7 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
 
     String insert = "insert into NhanVien values (?,?,?,?,?,?,?,0,1)";
     String update = "update NhanVien set name=?, CCCD=?, phoneNumber=?, email=?, salt=?, hash=? where IdStaff=?";
+    String update_PassByMail="update NhanVien set salt=?, hash=? where email=?";
     String disable = "update NhanVien set status=0 where IdStaff=?";
     String reStore = "update NhanVien set status=1 where IdStaff=?";
     String select_ID = "select * from NhanVien where IdStaff=?";
@@ -81,5 +82,21 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
     @Override
     public List<NhanVien> selectAll() {
         return this.selectBySql(select_All);
+    }
+    
+    public boolean checkMail(String mail){
+        String sql="select count(*) from NhanVien where email=?";
+        try {
+            ResultSet rs = Xjdbc.query(sql, mail);
+            rs.next();
+            boolean check=rs.getInt(1)!=0;
+            rs.getStatement().getConnection().close();
+            return check;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateByMail(String salt,String hash,String mail){
+        Xjdbc.update(update_PassByMail, salt,hash,mail);
     }
 }
