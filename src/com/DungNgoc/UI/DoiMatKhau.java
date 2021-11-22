@@ -3,7 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI;
+package com.DungNgoc.UI;
+
+import com.DungNgoc.DAO.NhanVienDAO;
+import com.DungNgoc.entitys.NhanVien;
+import com.DungNgoc.untils.Auth;
+import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.XpassWord;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JTextField;
 
 /**
  *
@@ -16,9 +25,15 @@ public class DoiMatKhau extends javax.swing.JDialog {
      */
     public DoiMatKhau(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setUndecorated(true);
         initComponents();
+        init();
     }
-
+    public void init(){
+        setLocationRelativeTo(null);
+        addPlaceHolderStyle(txtMatKhauMoi);
+        addPlaceHolderStyle(txtXacNhan);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,14 +43,27 @@ public class DoiMatKhau extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        doiMatKhauFrame = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtMatKhauCu = new javax.swing.JTextField();
-        txtMatKhauMoi = new javax.swing.JTextField();
-        txtXacNhanMatKhau = new javax.swing.JTextField();
         btnDoiMatKhau = new javax.swing.JButton();
+        txtMatKhauMoi = new javax.swing.JPasswordField();
+        txtMatKhauCu = new javax.swing.JPasswordField();
+        txtXacNhan = new javax.swing.JPasswordField();
+        btnDoiMatKhau1 = new javax.swing.JButton();
+
+        javax.swing.GroupLayout doiMatKhauFrameLayout = new javax.swing.GroupLayout(doiMatKhauFrame.getContentPane());
+        doiMatKhauFrame.getContentPane().setLayout(doiMatKhauFrameLayout);
+        doiMatKhauFrameLayout.setHorizontalGroup(
+            doiMatKhauFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        doiMatKhauFrameLayout.setVerticalGroup(
+            doiMatKhauFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -53,23 +81,52 @@ public class DoiMatKhau extends javax.swing.JDialog {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Phần mềm quản lý cửa hàng điện thoại");
 
-        txtMatKhauCu.setText("Nhập mật khẩu cũ");
-
-        txtMatKhauMoi.setText("Nhập mật khẩu mới");
-        txtMatKhauMoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauMoiActionPerformed(evt);
-            }
-        });
-
-        txtXacNhanMatKhau.setText("Xác nhận mật khẩu mới");
-        txtXacNhanMatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtXacNhanMatKhauActionPerformed(evt);
-            }
-        });
-
         btnDoiMatKhau.setText("Đổi mật khẩu");
+        btnDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMatKhauActionPerformed(evt);
+            }
+        });
+
+        txtMatKhauMoi.setText("Mật khẩu mới");
+        txtMatKhauMoi.setEchoChar('\u0000');
+        txtMatKhauMoi.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtMatKhauMoiFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtMatKhauMoiFocusLost(evt);
+            }
+        });
+
+        txtMatKhauCu.setText("Mật khẩu cũ");
+        txtMatKhauCu.setEchoChar('\u0000');
+        txtMatKhauCu.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtMatKhauCuFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtMatKhauCuFocusLost(evt);
+            }
+        });
+
+        txtXacNhan.setText("Xác nhận mật khẩu");
+        txtXacNhan.setEchoChar('\u0000');
+        txtXacNhan.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtXacNhanFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtXacNhanFocusLost(evt);
+            }
+        });
+
+        btnDoiMatKhau1.setText("Thoát");
+        btnDoiMatKhau1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMatKhau1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,19 +136,21 @@ public class DoiMatKhau extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtXacNhanMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel3)
-                            .addComponent(txtMatKhauCu, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtMatKhauMoi)
+                            .addComponent(txtMatKhauCu)
+                            .addComponent(txtXacNhan, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(btnDoiMatKhau)))
+                        .addGap(124, 124, 124)
+                        .addComponent(btnDoiMatKhau)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDoiMatKhau1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -108,10 +167,12 @@ public class DoiMatKhau extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtXacNhanMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(txtXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDoiMatKhau1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,13 +189,78 @@ public class DoiMatKhau extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtMatKhauMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauMoiActionPerformed
+    private void txtMatKhauCuFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMatKhauCuFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauMoiActionPerformed
+        String matKhau=new String(txtMatKhauCu.getPassword());
+        if(matKhau.equals("Mật khẩu cũ")){
+            txtMatKhauCu.setText("");
+            txtMatKhauCu.setEchoChar('*');
+            txtMatKhauCu.requestFocus();
+            removePlaceHolderStyle(txtMatKhauCu);
+        }
+    }//GEN-LAST:event_txtMatKhauCuFocusGained
 
-    private void txtXacNhanMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtXacNhanMatKhauActionPerformed
+    private void txtMatKhauCuFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMatKhauCuFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtXacNhanMatKhauActionPerformed
+        String matKhau=new String(txtMatKhauCu.getPassword());
+        if(matKhau.length()==0){
+            txtMatKhauCu.setText("Mật khẩu cũ");
+            txtMatKhauCu.setEchoChar('\u0000');
+            addPlaceHolderStyle(txtMatKhauCu);
+        }
+    }//GEN-LAST:event_txtMatKhauCuFocusLost
+
+    private void txtMatKhauMoiFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMatKhauMoiFocusGained
+        // TODO add your handling code here:
+        String matKhau=new String(txtMatKhauMoi.getPassword());
+        if(matKhau.equals("Mật khẩu mới")){
+            txtMatKhauMoi.setText("");
+            txtMatKhauMoi.setEchoChar('*');
+            txtMatKhauMoi.requestFocus();
+            removePlaceHolderStyle(txtMatKhauMoi);
+        }
+    }//GEN-LAST:event_txtMatKhauMoiFocusGained
+
+    private void txtMatKhauMoiFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMatKhauMoiFocusLost
+        // TODO add your handling code here:
+        String matKhau=new String(txtMatKhauMoi.getPassword());
+        if(matKhau.length()==0){
+            txtMatKhauMoi.setText("Mật khẩu mới");
+            txtMatKhauMoi.setEchoChar('\u0000');
+            addPlaceHolderStyle(txtMatKhauMoi);
+        }
+    }//GEN-LAST:event_txtMatKhauMoiFocusLost
+
+    private void txtXacNhanFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtXacNhanFocusGained
+        // TODO add your handling code here:
+        String matKhau=new String(txtXacNhan.getPassword());
+        if(matKhau.equals("Xác nhận mật khẩu")){
+            txtXacNhan.setText("");
+            txtXacNhan.setEchoChar('*');
+            txtXacNhan.requestFocus();
+            removePlaceHolderStyle(txtXacNhan);
+        }
+    }//GEN-LAST:event_txtXacNhanFocusGained
+
+    private void txtXacNhanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtXacNhanFocusLost
+        // TODO add your handling code here:
+        String matKhau=new String(txtXacNhan.getPassword());
+        if(matKhau.length()==0){
+            txtXacNhan.setText("Xác nhận mật khẩu");
+            txtXacNhan.setEchoChar('\u0000');
+            addPlaceHolderStyle(txtXacNhan);
+        }
+    }//GEN-LAST:event_txtXacNhanFocusLost
+
+    private void btnDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhauActionPerformed
+        // TODO add your handling code here:
+        doiMatKhau();
+    }//GEN-LAST:event_btnDoiMatKhauActionPerformed
+
+    private void btnDoiMatKhau1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhau1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnDoiMatKhau1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,14 +304,72 @@ public class DoiMatKhau extends javax.swing.JDialog {
         });
     }
 
+    public void addPlaceHolderStyle(JTextField textField) {
+        Font font = textField.getFont();
+        font = font.deriveFont(Font.PLAIN);
+        textField.setFont(font);
+        textField.setForeground(new Color(204, 204, 255));
+    }
+
+    public void removePlaceHolderStyle(JTextField textField) {
+        Font font = textField.getFont();
+        font = font.deriveFont(Font.PLAIN);
+        textField.setFont(font);
+        textField.setForeground(Color.BLACK);
+    }
+    public boolean validateForm(){
+        String matKhauCu=new String(txtMatKhauCu.getPassword());
+        String matKhauMoi=new String(txtMatKhauMoi.getPassword());
+        String xacNhan=new String(txtXacNhan.getPassword());
+        if(matKhauCu.length()==0 || matKhauMoi.length()==0 || xacNhan.length()==0){
+            MsgBox.alert(this, "Không bỏ trống!");
+            return false;
+        }else if(XpassWord.isCompareToHash(matKhauMoi, Auth.user)){
+            MsgBox.alert(this, "Mật khẩu cũ sai");
+            return false;
+        }else if(matKhauMoi.length()<6 || matKhauMoi.length()>18){
+            MsgBox.alert(this, "Mật khẩu có từ 6 - 18 ký tự");
+            return false;
+        }else if(!xacNhan.equals(matKhauMoi)){
+            MsgBox.alert(this, "Xác nhận mật khẩu không chính xác");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public void dangXuat(){
+        Auth.clear();
+        new DangNhap(doiMatKhauFrame, true).setVisible(true);
+        dispose();
+    }
+    public void doiMatKhau(){
+        if(validateForm()){
+            String matKhauMoi=new String(txtMatKhauMoi.getPassword()); 
+            NhanVien tam=Auth.user;
+            NhanVienDAO dao=new NhanVienDAO();
+            String[] saltHash=new String[2];
+            saltHash=XpassWord.passToHash(matKhauMoi);
+            tam.setSalt(saltHash[0]);
+            tam.setHash(saltHash[1]);
+            try {
+                dao.update(tam);
+                MsgBox.alert(this, "Đổi mật khẩu thành công");
+                dangXuat();
+            } catch (Exception e) {
+                MsgBox.alert(this, "Đổi mật khẩu thất bại");
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDoiMatKhau;
+    private javax.swing.JButton btnDoiMatKhau1;
+    private javax.swing.JFrame doiMatKhauFrame;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtMatKhauCu;
-    private javax.swing.JTextField txtMatKhauMoi;
-    private javax.swing.JTextField txtXacNhanMatKhau;
+    private javax.swing.JPasswordField txtMatKhauCu;
+    private javax.swing.JPasswordField txtMatKhauMoi;
+    private javax.swing.JPasswordField txtXacNhan;
     // End of variables declaration//GEN-END:variables
 }
