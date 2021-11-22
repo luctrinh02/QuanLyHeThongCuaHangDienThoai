@@ -6,7 +6,6 @@
 package com.DungNgoc.UI;
 
 import com.DungNgoc.UI.DangNhap;
-import UI.DoiMatKhau;
 import com.DungNgoc.untils.Auth;
 import com.DungNgoc.untils.Exceptions;
 import com.DungNgoc.untils.MsgBox;
@@ -495,6 +494,8 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void init() {
         this.setLocationRelativeTo(null);
+        setIconImage(Ximage.getAppIcon());
+        setTitle("Hệ thống quản lý cửa hàng điện thoại");
         new JChao(this, true).setVisible(true);
         new DangNhap(this, true).setVisible(true);
         new Timer(1000, new ActionListener() {
