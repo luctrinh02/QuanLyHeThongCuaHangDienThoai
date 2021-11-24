@@ -5,12 +5,6 @@
  */
 package com.DungNgoc.entitys;
 
-import java.security.SecureRandom;
-import java.security.spec.KeySpec;
-import java.util.Base64;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
 /**
  *
  * @author Admin
@@ -39,6 +33,14 @@ public class NhanVien {
         this.status = status;
     }
 
+    public NhanVien(String IdStaff, String name, String CCCD, String phoneNumber, String email) {
+        this.IdStaff = IdStaff;
+        this.name = name;
+        this.CCCD = CCCD;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+    
     public NhanVien() {
     }
 
