@@ -22,7 +22,11 @@ public class KhuyenMaiDAO implements DungNgocDAO<MaKhuyenMai, String>{
     String reStore = "update MaKhuyenMai set status=1 where promoCode=?";
     String select_ID = "select * from MaKhuyenMai where promoCode=?";
     String select_All = "select * from MaKHuyenMai";
-    String select_page = "select * from MaKhuyenMai\n"
+    String select_page = "select * from MaKhuyenMai where status=1\n"
+            + "order by promoCOde\n"
+            + "offset ?*10 rows\n"
+            + "fetch next 11 rows only";
+    String select_pageOff="select * from MaKhuyenMai where status=0\n"
             + "order by promoCOde\n"
             + "offset ?*10 rows\n"
             + "fetch next 11 rows only";
@@ -80,6 +84,10 @@ public class KhuyenMaiDAO implements DungNgocDAO<MaKhuyenMai, String>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<MaKhuyenMai> selectByRecyclebin(int pageRac) {
+        return this.selectBySql(select_pageOff, pageRac);
     }
     
 }
