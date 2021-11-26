@@ -41,7 +41,7 @@ public class HangMay {
 
     @Override
     public String toString() {
-        return "HangMay{" + "typeID=" + typeID + ", name=" + name + '}';
+        return name;
     }
     
 }

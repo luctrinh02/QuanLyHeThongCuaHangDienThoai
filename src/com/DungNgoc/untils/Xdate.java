@@ -30,4 +30,7 @@ public class Xdate {
         date.setTime(date.getTime()+days*24*60*60*1000);
         return date;
     }
+    public static Date now() {
+        return new Date();
+    }
 }

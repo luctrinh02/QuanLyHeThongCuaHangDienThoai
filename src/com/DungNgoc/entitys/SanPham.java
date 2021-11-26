@@ -5,6 +5,8 @@
  */
 package com.DungNgoc.entitys;
 
+import java.util.Date;
+
 /**
  *
  * @author Admin
@@ -13,7 +15,7 @@ public class SanPham {
     private String IdProduct;
     private String image;
     private String note;
-    private String modelId;
+    private int modelId;
     private String size;
     private String ram;
     private String colorId;
@@ -21,13 +23,13 @@ public class SanPham {
     private String versionId;
     private int count;
     private double price;
-    private String dateAdd;
+    private Date dateAdd;
     private boolean status;
 
     public SanPham() {
     }
 
-    public SanPham(String IdProduct, String image, String note, String modelId, String size, String ram, String colorId, boolean isnew, String versionId, int count, double price, String dateAdd, boolean status) {
+    public SanPham(String IdProduct, String image, String note, int modelId, String size, String ram, String colorId, boolean isnew, String versionId, int count, double price, Date dateAdd, boolean status) {
         this.IdProduct = IdProduct;
         this.image = image;
         this.note = note;
@@ -67,11 +69,11 @@ public class SanPham {
         this.note = note;
     }
 
-    public String getModelId() {
+    public int getModelId() {
         return modelId;
     }
 
-    public void setModelId(String modelId) {
+    public void setModelId(int modelId) {
         this.modelId = modelId;
     }
 
@@ -131,11 +133,11 @@ public class SanPham {
         this.price = price;
     }
 
-    public String getDateAdd() {
+    public Date getDateAdd() {
         return dateAdd;
     }
 
-    public void setDateAdd(String dateAdd) {
+    public void setDateAdd(Date dateAdd) {
         this.dateAdd = dateAdd;
     }
 

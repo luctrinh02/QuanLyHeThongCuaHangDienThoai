@@ -48,7 +48,7 @@ public class DongMay {
 
     @Override
     public String toString() {
-        return "DongMay{" + "tag=" + tag + ", name=" + name + ", typeId=" + typeId + '}';
+        return name;
     }
     
 

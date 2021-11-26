@@ -10,24 +10,25 @@ package com.DungNgoc.entitys;
  * @author Admin
  */
 public class LoaiMay {
-    private String modelId;
+
+    private int modelId;
     private String tag;
     private String name;
 
     public LoaiMay() {
     }
 
-    public LoaiMay(String modelId, String tag, String name) {
+    public LoaiMay(int modelId, String tag, String name) {
         this.modelId = modelId;
         this.tag = tag;
         this.name = name;
     }
 
-    public String getModelId() {
+    public int getModelId() {
         return modelId;
     }
 
-    public void setModelId(String modelId) {
+    public void setModelId(int modelId) {
         this.modelId = modelId;
     }
 
@@ -49,7 +50,7 @@ public class LoaiMay {
 
     @Override
     public String toString() {
-        return "LoaiMay{" + "modelId=" + modelId + ", tag=" + tag + ", name=" + name + '}';
+        return name;
     }
-    
+
 }

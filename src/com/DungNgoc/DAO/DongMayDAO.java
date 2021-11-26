@@ -27,6 +27,7 @@ public class DongMayDAO implements DungNgocDAO<DongMay, String> {
             + "order by tag\n"
             + "offset ?*10 rows\n"
             + "fetch next 11 rows only";
+    String select_by_HangMay = "select * from DongMay where typeId =?";
 
     @Override
     public void insert(DongMay entity) {
@@ -81,6 +82,9 @@ public class DongMayDAO implements DungNgocDAO<DongMay, String> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public List<DongMay> selectByHangMay(String typeId){
+        return this.selectBySql(select_by_HangMay, typeId);
     }
 
 

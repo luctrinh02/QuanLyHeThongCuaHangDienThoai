@@ -28,6 +28,7 @@ public class LoaiMayDAO implements DungNgocDAO<LoaiMay, Integer> {
             + "order by modelId\n"
             + "offset ?*10 rows\n"
             + "fetch next 11 rows only";
+    String select_by_DongMay = "select * from LoaiMay where tag = ?";
 
     @Override
     public void insert(LoaiMay entity) {
@@ -75,12 +76,15 @@ public class LoaiMayDAO implements DungNgocDAO<LoaiMay, Integer> {
         try {
             ResultSet rs = Xjdbc.query(sql, args);
             while (rs.next()) {
-                list.add(new LoaiMay(rs.getString(1), rs.getString(2), rs.getString(3)));
+                list.add(new LoaiMay(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
             rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public List<LoaiMay> selectByDongMay(String tag){
+        return this.selectBySql(select_by_DongMay, tag);
     }
 }

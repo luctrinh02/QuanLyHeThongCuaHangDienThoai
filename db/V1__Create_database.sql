@@ -51,7 +51,7 @@ create table PhienBan(
 create table SanPham(
 	IdProduct varchar(7) primary key,
 	image nvarchar(50) not null,
-	note nvarchar(50) not null,
+	note nvarchar(50) ,
 	modelId int not null,
 	size varchar(7) not null,
 	ram varchar(7) not null,

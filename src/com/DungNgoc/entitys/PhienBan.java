@@ -39,7 +39,7 @@ public class PhienBan {
 
     @Override
     public String toString() {
-        return "PhienBan{" + "versionId=" + versionId + ", name=" + name + '}';
+        return name;
     }
     
 }
