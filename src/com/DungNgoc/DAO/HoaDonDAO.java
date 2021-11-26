@@ -26,6 +26,7 @@ public class HoaDonDAO implements DungNgocDAO<HoaDon, Integer>{
             + "order by IdBill\n"
             + "offset ?*10 rows\n"
             + "fetch next 11 rows only";
+    String selectByIdGuest="select * from HoaDon where IdGuest=?";
     @Override
     public void insert(HoaDon entity) {
         Xjdbc.update(insert, entity.getIdGuest(),entity.getDateBill(),entity.getTotalMoney(),entity.getPromoCode(),entity.isUsepoint(),entity.getIdStaff());
@@ -80,5 +81,7 @@ public class HoaDonDAO implements DungNgocDAO<HoaDon, Integer>{
             throw new RuntimeException(e);
         }
     }
-    
+    public List<HoaDon> selectByIdGuest(String id){
+        return this.selectBySql(selectByIdGuest,id);
+    }
 }
