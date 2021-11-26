@@ -27,23 +27,23 @@ insert into DongMay values
 ('tag04','SamSung s21','HM02'),
 ('tag05','ROG','HM05')
 insert into LoaiMay(tag,name) values
-('tag01','Iphong 11'),
-('tag01','Iphong 11 pro'),
-('tag01','Iphong 11 pro max'),
-('tag02','Iphong 12'),
-('tag02','Iphong 12 pro'),
-('tag02','Iphong 12 pro max'),
-('tag03','Iphong 13'),
-('tag03','Iphong 13 pro'),
-('tag03','Iphong 13 pro max'),
-('tag04','SamSung s21'),
-('tag04','SamSung s21+'),
-('tag04','SamSung s21 ultra');
+('tag01','Iphone 11'),
+('tag01','Iphone 11 pro'),
+('tag01','Iphone 11 pro max'),
+('tag02','Iphone 12'),
+('tag02','Iphone 12 pro'),
+('tag02','Iphone 12 pro max'),
+('tag03','Iphone 13'),
+('tag03','Iphone 13 pro'),
+('tag03','Iphone 13 pro max'),
+('tag04','Samsung s21'),
+('tag04','Samsung s21+'),
+('tag04','Samsung s21 ultra');
 insert into PhienBan values
 ('PB000','Global'),
 ('PB001','Lock'),
-('PB002','Việt Nam'),
-('PB003','Hàn Quốc')
+('PB002',N'Việt Nam'),
+('PB003',N'Hàn Quốc')
 insert into SanPham values
 ('SP0001','iphone11_vang.png',N'',1,'64GB','4GB','CL02',1,'PB000',10,10000000,'20211110',1),
 ('SP0002','iphone11_xanh.png',N'',1,'128GB','8GB','CL01',1,'PB000',10,13000000,'20211110',1),
@@ -65,12 +65,8 @@ insert into SanPham values
 ('SP0018','samsungs21_bac.png',N'',10,'128GB','12GB','CL03',1,'PB000',10,17000000,'20211110',1),
 ('SP0019','samsungs21_than.png',N'',10,'128GB','12GB','CL04',1,'PB000',10,17000000,'20211110',1),
 ('SP0020','samsungs21plus_xanh.png',N'',11,'128GB','12GB','CL01',1,'PB000',10,20000000,'20211110',1),
-('SP0021','samsungs21plus_vang.png',N'',11,'128GB','12GB','CL02',1,'PB000',10,20000000,'20211110',1),
-('SP0022','samsungs21plus_bac.png',N'',11,'128GB','12GB','CL03',1,'PB000',10,20000000,'20211110',1),
-('SP0023','samsungs21plus_than.png',N'',11,'128GB','12GB','CL04',1,'PB000',10,20000000,'20211110',1),
-('SP0024','samsungs21plus_den.png',N'',11,'128GB','12GB','CL05',1,'PB000',10,20000000,'20211110',1),
-('SP0025','samsungs21ultra_than.png',N'',12,'128GB','12GB','CL04',1,'PB000',10,25000000,'20211110',1),
-('SP0026','samsungs21ultra_den.png',N'',12,'128GB','12GB','CL05',1,'PB000',10,25000000,'20211110',1);
+('SP0021','samsungs21plus_den.png',N'',11,'128GB','12GB','CL05',1,'PB000',10,20000000,'20211110',1)
+
 insert into MaKhuyenMai values
 ('None',0,1),
 ('KTCH',10,1),
@@ -88,4 +84,6 @@ insert into HoaDonCHiTiet values
 (3,'SP0020',1,20000000),
 (4,'SP0014',1,25000000),
 (5,'SP0014',1,13000000);
-select * from HoaDon
+select * from HoaDonCHiTiet
+select * from SanPham join LoaiMay on SanPham.modelId = LoaiMay.modelId where status = 1 AND name like '% %'
+

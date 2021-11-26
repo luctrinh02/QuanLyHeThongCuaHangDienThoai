@@ -40,7 +40,7 @@ public class Mau {
 
     @Override
     public String toString() {
-        return "Mau{" + "colorId=" + colorId + ", name=" + name +'}';
+        return name;
     }
     
 }

@@ -27,6 +27,7 @@ public class MauDAO implements DungNgocDAO<Mau, String>{
             + "order by colorid\n"
             + "offset ?*10 rows\n"
             + "fetch next 11 rows only";
+    String select_by_id = "select * from Mau where colorid=?";
     @Override
     public void insert(Mau entity) {
         Xjdbc.update(insert, entity.getColorId(),entity.getName());
@@ -81,5 +82,6 @@ public class MauDAO implements DungNgocDAO<Mau, String>{
             throw new RuntimeException(e);
         }
     }
+ 
     
 }
