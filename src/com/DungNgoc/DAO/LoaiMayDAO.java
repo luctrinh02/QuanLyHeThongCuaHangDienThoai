@@ -6,7 +6,6 @@
 package com.DungNgoc.DAO;
 
 import com.DungNgoc.entitys.LoaiMay;
-import com.DungNgoc.entitys.PhienBan;
 import com.DungNgoc.untils.Xjdbc;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public class LoaiMayDAO implements DungNgocDAO<LoaiMay, Integer> {
 
-    String insert = "insert into LoaiMay values (?,?,?)";
+    String insert = "insert into LoaiMay values (?,?)";
     String update = "update LoaiMay set tag=?,name=? where modelId=?";
     String disable = "";
     String reStore = "";
@@ -32,7 +31,7 @@ public class LoaiMayDAO implements DungNgocDAO<LoaiMay, Integer> {
 
     @Override
     public void insert(LoaiMay entity) {
-        Xjdbc.update(insert, entity.getModelId(), entity.getTag(), entity.getName());
+        Xjdbc.update(insert, entity.getTag(), entity.getName());
     }
 
     @Override

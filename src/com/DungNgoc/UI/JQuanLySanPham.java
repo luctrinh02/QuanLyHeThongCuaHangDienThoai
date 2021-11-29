@@ -980,7 +980,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemThongSoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThongSoActionPerformed
-
+        new JThongSoMoi(frame, true).setVisible(true);
     }//GEN-LAST:event_btnThemThongSoActionPerformed
 
     private void cbbHangMay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbHangMay1ActionPerformed
