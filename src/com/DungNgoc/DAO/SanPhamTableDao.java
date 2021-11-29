@@ -34,7 +34,7 @@ public class SanPhamTableDao {
     public List<SanPhamTable> select(String keyword, String hang, String dong, String loai, String phienBan, String ram, String dungLuong,int page) {
         String sql = "select IdProduct,b.name,ram,size, e.colorName,a.isNew,a.price,a.count\n"
                 + "from SanPham a join LoaiMay b on a.modelId=b.modelId join DongMay c on b.tag=c.tag join HangMay d on c.typeId=d.typeId join Mau e on a.colorId=e.colorid join PhienBan f on a.versionId = f.versionId\n"
-                + "where (IdProduct like ? or b.name like ?) \n"
+                + "where status = 1 and (IdProduct like ? or b.name like ?) \n"
                 + "and d.name like ? and c.name like ? and b.name like ? and f.name like ? and ram like ? and size like ?\n"
                 + "order by IdProduct\n"
                 + "offset ?*20 rows\n"
