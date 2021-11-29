@@ -23,7 +23,10 @@ public class SanPhamDAO implements DungNgocDAO<SanPham, String> {
     String reStore = "update SanPham set status=1 where IdProduct=?";
     String select_ID = "select * from SanPham where status=1 AND IdProduct=?";
     String select_All = "select * from SanPham where status=1";
-    String select_Disable = "select * from SanPham where status=0";
+    String select_Disable = "select * from SanPham where status=0\n"
+            + "order by IdProduct\n"
+            + "offset ?*10 rows\n"
+            + "fetch next 11 rows only";
     String select_page = "select * from SanPham where status=1\n"
             + "order by IdProduct\n"
             + "offset ?*10 rows\n"
@@ -111,7 +114,7 @@ public class SanPhamDAO implements DungNgocDAO<SanPham, String> {
     public List<SanPham> findProduct(String key) {
         return this.selectBySql(find_product, "%" + key + "%");
     }
-    public  List<SanPham> selectDisable(){
-        return this.selectBySql(select_Disable);
+    public  List<SanPham> selectDisable(int pageRac){
+        return this.selectBySql(select_Disable,pageRac);
     }
 }

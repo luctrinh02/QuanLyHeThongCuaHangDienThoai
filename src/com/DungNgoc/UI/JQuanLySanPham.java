@@ -45,8 +45,9 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     PhienBanDAO pbdao = new PhienBanDAO();
     SanPhamDAO spdao = new SanPhamDAO();
     SanPhamTableDao sptdao = new SanPhamTableDao();
-    int index = -1, page = 0;
-    List<SanPham> lst;
+    int index = -1, row = -1, page = 0, pageRac = 0;
+    List<SanPhamTable> list;
+    List<SanPham> lstSP;
     List<HangMay> listHM;
     List<DongMay> listDM;
     List<LoaiMay> listLM;
@@ -72,7 +73,6 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
 
         groupTrangThai = new javax.swing.ButtonGroup();
         frame = new javax.swing.JFrame();
-        groupLoc = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         tabs = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -336,8 +336,18 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnPrevious.setText("<<");
+        btnPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousActionPerformed(evt);
+            }
+        });
 
         btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -537,7 +547,6 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
 
         lblHang.setText("Hãng");
 
-        cbbHangMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbbHangMay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbbHangMayActionPerformed(evt);
@@ -555,9 +564,12 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
 
         lblLoai.setText("Loại máy");
 
-        cbbLoaiMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbLoaiMay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cbbLoaiMayMouseEntered(evt);
+            }
+        });
 
-        cbbDongMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbbDongMay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbbDongMayActionPerformed(evt);
@@ -864,8 +876,18 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         jPanel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnPrevious3.setText("<<");
+        btnPrevious3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevious3ActionPerformed(evt);
+            }
+        });
 
         btnNext3.setText(">>");
+        btnNext3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNext3ActionPerformed(evt);
+            }
+        });
 
         btnKhoiPhuc.setText("Khôi phục");
         btnKhoiPhuc.addActionListener(new java.awt.event.ActionListener() {
@@ -962,45 +984,45 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnThemThongSoActionPerformed
 
     private void cbbHangMay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbHangMay1ActionPerformed
-        index = cbbHangMay1.getSelectedIndex();
-        if (index >= 0) {
-            fillDongMay1(index);
+        row = cbbHangMay1.getSelectedIndex();
+        if (row >= 0) {
+            fillDongMay1(row);
             fillTable();
         }
     }//GEN-LAST:event_cbbHangMay1ActionPerformed
 
     private void cbbDongMay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbDongMay1ActionPerformed
-        index = cbbDongMay1.getSelectedIndex();
-        if (index >= 0) {
-            fillLoaiMay1(index);
+        row = cbbDongMay1.getSelectedIndex();
+        if (row >= 0) {
+            fillLoaiMay1(row);
             fillTable();
         }
     }//GEN-LAST:event_cbbDongMay1ActionPerformed
 
     private void cbbLoaiMay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLoaiMay1ActionPerformed
-        index = cbbLoaiMay1.getSelectedIndex();
-        if (index >= 0) {
+        row = cbbLoaiMay1.getSelectedIndex();
+        if (row >= 0) {
             fillTable();
         }
     }//GEN-LAST:event_cbbLoaiMay1ActionPerformed
 
     private void cbbPhienBan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbPhienBan1ActionPerformed
-        index = cbbLoaiMay1.getSelectedIndex();
-        if (index >= 0) {
+        row = cbbLoaiMay1.getSelectedIndex();
+        if (row >= 0) {
             fillTable();
         }
     }//GEN-LAST:event_cbbPhienBan1ActionPerformed
 
     private void cbbRAM1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbRAM1ActionPerformed
-        index = cbbLoaiMay1.getSelectedIndex();
-        if (index >= 0) {
+        row = cbbLoaiMay1.getSelectedIndex();
+        if (row >= 0) {
             fillTable();
         }
     }//GEN-LAST:event_cbbRAM1ActionPerformed
 
     private void cbbDungLuong1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbDungLuong1ActionPerformed
-        index = cbbLoaiMay1.getSelectedIndex();
-        if (index >= 0) {
+        row = cbbLoaiMay1.getSelectedIndex();
+        if (row >= 0) {
             fillTable();
         }
     }//GEN-LAST:event_cbbDungLuong1ActionPerformed
@@ -1037,32 +1059,32 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnMoiActionPerformed
 
     private void btnDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDauActionPerformed
-//        first();
+        first();
     }//GEN-LAST:event_btnDauActionPerformed
 
     private void btnLuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuiActionPerformed
-//        prev();
+        prev();
     }//GEN-LAST:event_btnLuiActionPerformed
 
     private void btnTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTienActionPerformed
-//        next();
+        next();
     }//GEN-LAST:event_btnTienActionPerformed
 
     private void btnCuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuoiActionPerformed
-//        last();
+        last();
     }//GEN-LAST:event_btnCuoiActionPerformed
 
     private void cbbHangMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbHangMayActionPerformed
-        index = cbbHangMay.getSelectedIndex();
-        if (index >= 0) {
-            fillDongMay(index);
+        row = cbbHangMay.getSelectedIndex();
+        if (row >= 0) {
+            fillDongMay(row);
         }
     }//GEN-LAST:event_cbbHangMayActionPerformed
 
     private void cbbDongMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbDongMayActionPerformed
-        index = cbbDongMay.getSelectedIndex();
-        if (index >= 0) {
-            fillLoaiMay(index);
+        row = cbbDongMay.getSelectedIndex();
+        if (row >= 0) {
+            fillLoaiMay(row);
         }
     }//GEN-LAST:event_cbbDongMayActionPerformed
 
@@ -1073,6 +1095,26 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     private void tblThungRacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThungRacMouseClicked
 
     }//GEN-LAST:event_tblThungRacMouseClicked
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
+        prevPage();
+    }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        nextPage();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnPrevious3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevious3ActionPerformed
+        prevPageRac();
+    }//GEN-LAST:event_btnPrevious3ActionPerformed
+
+    private void btnNext3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext3ActionPerformed
+        nextPageRac();
+    }//GEN-LAST:event_btnNext3ActionPerformed
+
+    private void cbbLoaiMayMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbLoaiMayMouseEntered
+        txtTenSP.setText(cbbLoaiMay.getSelectedItem().toString());
+    }//GEN-LAST:event_cbbLoaiMayMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1104,7 +1146,6 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbbRAM;
     private javax.swing.JComboBox<String> cbbRAM1;
     private javax.swing.JFrame frame;
-    private javax.swing.ButtonGroup groupLoc;
     private javax.swing.ButtonGroup groupTrangThai;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel1;
@@ -1172,7 +1213,10 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         fillLoaiMay(0);
         fillPhienBan();
         fillTable();
+        fillTableThungRac();
         fillMau();
+//        txtTenSP.setText(cbbLoaiMay.getSelectedItem().toString());
+        updateStatus();
     }
 
     void fillRam() {
@@ -1320,18 +1364,53 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         String phienBan = cbbPhienBan1.getSelectedItem() == null ? "" : cbbPhienBan1.getSelectedItem() + "";
         String ram = cbbRAM1.getSelectedItem() == null ? "" : cbbRAM1.getSelectedItem() + "";
         String dungLuong = cbbDungLuong1.getSelectedItem() == null ? "" : cbbDungLuong1.getSelectedItem() + "";
-        List<SanPhamTable> list = sptdao.select(txtTim.getText(), hang, dong, loai, phienBan, ram, dungLuong, page);
-        System.out.println(dong);
+        list = sptdao.select(txtTim.getText(), hang, dong, loai, phienBan, ram, dungLuong, page);
         for (SanPhamTable x : list) {
             model.addRow(new Object[]{x.getMa(), x.getTen(), x.getRam(), x.getDungLuong(), x.getMau(), x.isTinhTrang() ? "Mới" : "Cũ", Xmoney.moneyToString(x.getGia()), x.getSoLuong()});
         }
+        updatePage(list);
     }
+
+    void nextPage() {
+        page++;
+        fillTable();
+    }
+
+    void prevPage() {
+        page--;
+        fillTable();
+    }
+
+    void updatePage(List<SanPhamTable> list) {
+        boolean prev = page != 0;
+        boolean next = list.size() == 21;
+        btnNext.setEnabled(next);
+        btnPrevious.setEnabled(prev);
+    }
+
+    void updatePageRac(List<SanPham> list) {
+        boolean prev = pageRac != 0;
+        boolean next = list.size() == 11;
+        btnNext3.setEnabled(next);
+        btnPrevious3.setEnabled(prev);
+    }
+
+    void nextPageRac() {
+        pageRac++;
+        fillTableThungRac();
+    }
+
+    void prevPageRac() {
+        pageRac--;
+        fillTableThungRac();
+    }
+
     void fillTableThungRac() {
-        DefaultTableModel dtm = (DefaultTableModel) tblThungRac.getModel();
-        dtm.setRowCount(0);
-        lst = spdao.selectDisable();
-        for (int i = 0; i < lst.size(); i++) {
-            SanPham sp = lst.get(i);
+        modelRac = (DefaultTableModel) tblThungRac.getModel();
+        modelRac.setRowCount(0);
+        lstSP = spdao.selectDisable(pageRac);
+        for (int i = 0; i < lstSP.size(); i++) {
+            SanPham sp = lstSP.get(i);
             Mau mau = maudao.selectById(sp.getColorId());
             LoaiMay lm = lmdao.selectById(sp.getModelId());
             Object[] rowData = new Object[]{
@@ -1345,8 +1424,9 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
                 Xmoney.moneyToString(sp.getPrice()),
                 sp.getCount()
             };
-            dtm.addRow(rowData);
+            modelRac.addRow(rowData);
         }
+        updatePageRac(lstSP);
     }
 
     private void chonAnh() {
@@ -1440,10 +1520,45 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     }
 
     private SanPham getForm() {
-        LoaiMay lm = (LoaiMay) cbbLoaiMay.getSelectedItem();
-        Mau mau = (Mau) cbbMauMay.getSelectedItem();
-        PhienBan pb = (PhienBan) cbbPhienBan.getSelectedItem();
+        LoaiMay lm = listLM.get(cbbLoaiMay.getSelectedIndex());
+        Mau mau = listMau.get(cbbMauMay.getSelectedIndex());
+        PhienBan pb = listPB.get(cbbPhienBan.getSelectedIndex());
         SanPham sp = new SanPham();
+        if (txtMaSP.getText().trim().length() == 0 || txtGiaSP.getText().trim().length() == 0 || txtSoLuong.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Không được để trống thông tin sản phẩm");
+            return null;
+        }
+        if (txtMaSP.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+            MsgBox.alert(this, "Mã sản phẩm không chứa kí tự đặc biệt");
+            return null;
+        }
+        if (!txtGiaSP.getText().trim().matches("[0-9 ]+")) {
+            MsgBox.alert(this, "Giá phải là số");
+            return null;
+        }
+        if (!txtGiaSP.getText().trim().matches("^[1-9][0-9]+$")) {
+            MsgBox.alert(this, "Giá không bắt đầu từ 0");
+            return null;
+        }
+        if (Double.parseDouble(txtGiaSP.getText().trim()) <= 0) {
+            MsgBox.alert(this, "Giá phải lớn hơn 0");
+            return null;
+        }
+        if (!txtSoLuong.getText().trim().matches("[0-9 ]+")) {
+            MsgBox.alert(this, "Số lượng phải là số ");
+            return null;
+        }
+        if (!txtSoLuong.getText().trim().matches("^[1-9][0-9]+$")) {
+            MsgBox.alert(this, "Số lượng không bắt đầu từ 0");
+            return null;
+        }
+        if (Integer.parseInt(txtSoLuong.getText().trim()) <= 0) {
+            MsgBox.alert(this, "Số lượng phải lớn hơn 0");
+            return null;
+        }
+        if (lblAnh.getToolTipText().isEmpty()) {
+            MsgBox.alert(this, "Không để trống ảnh");
+        }
         sp.setIdProduct(txtMaSP.getText());
         sp.setImage(lblAnh.getToolTipText());
         sp.setModelId(lm.getModelId());
@@ -1463,6 +1578,11 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         if (sp == null) {
             return;
         }
+        int check = checkKey();
+        if (check == 1) {
+            MsgBox.alert(this, "Mã sản phẩm tồn tại");
+            return;
+        }
         try {
             spdao.insert(sp);
             this.fillTable();
@@ -1473,6 +1593,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
         clearForm();
+
     }
 
 // Loi anh, tien
@@ -1481,12 +1602,13 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         try {
             spdao.update(sp);
             this.fillTable();
-            this.clearForm();
+            MsgBox.alert(this, "Sửa thành công");
+            clearForm();
         } catch (Exception e) {
             MsgBox.alert(this, "Sửa thất bại");
             Exceptions.writeException(e, "Lỗi");
         }
-        clearForm();
+        
     }
 
     private void delete() {
@@ -1512,7 +1634,11 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
 
     private void clearForm() {
         SanPham sp = new SanPham();
-        this.setForm(sp);
+        txtMaSP.setText("");
+        txtTenSP.setText("");
+        txtGiaSP.setText("");
+        txtSoLuong.setText("");
+        lblAnh.setIcon(null);
         this.index = -1;
         this.updateStatus();
     }
@@ -1522,20 +1648,24 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Bạn không có quyền xóa sản phẩm");
         } else {
             index = tblThungRac.getSelectedRow();
-            String maSP = tblThungRac.getValueAt(index, 0).toString();
-            if (maSP == null) {
-                MsgBox.alert(this, "Bạn chưa chọn sản phẩm để khôi phục");
-            }
-            if (MsgBox.confirm(this, "Bạn muốn khôi phục sản phẩm này?")) {
-                try {
-                    spdao.reStore(maSP);
-                    this.fillTableThungRac();
-                    this.fillTable();
-                    MsgBox.alert(this, "Khôi phục thành công");
-                } catch (Exception e) {
-                    MsgBox.alert(this, "Khôi phục thất bại");
-                    Exceptions.writeException(e, "Lỗi");
+            if (index >= 0) {
+                String maSP = tblThungRac.getValueAt(index, 0).toString();
+                if (maSP == null) {
+                    MsgBox.alert(this, "Bạn chưa chọn sản phẩm để khôi phục");
                 }
+                if (MsgBox.confirm(this, "Bạn muốn khôi phục sản phẩm này?")) {
+                    try {
+                        spdao.reStore(maSP);
+                        this.fillTableThungRac();
+                        this.fillTable();
+                        MsgBox.alert(this, "Khôi phục thành công");
+                    } catch (Exception e) {
+                        MsgBox.alert(this, "Khôi phục thất bại");
+                        Exceptions.writeException(e, "Lỗi");
+                    }
+                }
+            } else {
+                MsgBox.alert(this, "Bạn chưa chọn sản phẩm cần khôi phục");
             }
         }
     }
@@ -1550,6 +1680,17 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         for (Mau x : listMau) {
             cbbMauMay.addItem(x.getName());
         }
+    }
+
+    int checkKey() {
+        int check = 0;
+        String maSP = txtMaSP.getText();
+        for (SanPhamTable x : list) {
+            if (x.getMa().trim().equalsIgnoreCase(maSP)) {
+                check = 1;
+            }
+        }
+        return check;
     }
 
 }
