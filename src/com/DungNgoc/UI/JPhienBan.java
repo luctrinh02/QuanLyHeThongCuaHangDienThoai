@@ -5,18 +5,27 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.PhienBanDAO;
+import com.DungNgoc.entitys.PhienBan;
+import com.DungNgoc.untils.Exceptions;
+import com.DungNgoc.untils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LINH
  */
 public class JPhienBan extends javax.swing.JDialog {
-
+    PhienBanDAO dao=new PhienBanDAO();
     /**
      * Creates new form JPhienBan
      */
     public JPhienBan(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setUndecorated(true);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -35,11 +44,11 @@ public class JPhienBan extends javax.swing.JDialog {
         txtMa = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         txtPhienBan = new javax.swing.JTextField();
+        btnMoi = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPhienBan = new javax.swing.JTable();
-        btnLui = new javax.swing.JButton();
-        btnTien = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -48,11 +57,30 @@ public class JPhienBan extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Thêm phiên bản máy");
 
-        jLabel8.setText("Mã l");
+        jLabel8.setText("Mã");
 
         jLabel9.setText("Phiên bản");
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        btnMoi.setText("Mới");
+        btnMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoiActionPerformed(evt);
+            }
+        });
+
+        btnExit.setText("X");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -61,6 +89,8 @@ public class JPhienBan extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(159, 159, 159)
                 .addComponent(btnThem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMoi)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,20 +100,24 @@ public class JPhienBan extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(txtPhienBan, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtPhienBan, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnExit))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addComponent(btnExit)
+                .addGap(2, 2, 2)
                 .addComponent(jLabel1)
                 .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -94,7 +128,9 @@ public class JPhienBan extends javax.swing.JDialog {
                     .addComponent(jLabel9)
                     .addComponent(txtPhienBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnThem)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThem)
+                    .addComponent(btnMoi))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -110,31 +146,17 @@ public class JPhienBan extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblPhienBan);
 
-        btnLui.setText("<<");
-
-        btnTien.setText(">>");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(btnLui)
-                .addGap(28, 28, 28)
-                .addComponent(btnTien)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLui)
-                    .addComponent(btnTien))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,6 +177,21 @@ public class JPhienBan extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
+        // TODO add your handling code here:
+        clear();
+    }//GEN-LAST:event_btnMoiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,11 +235,43 @@ public class JPhienBan extends javax.swing.JDialog {
             }
         });
     }
-
+    void clear(){
+        txtPhienBan.setText("");
+        txtMa.setText("");
+    }
+    PhienBan getForm(){
+        return new PhienBan(txtMa.getText(), txtPhienBan.getText());
+    }
+    void fillTable(){
+        DefaultTableModel model=(DefaultTableModel) tblPhienBan.getModel();
+        model.setRowCount(0);
+        try {
+            List<PhienBan> list=dao.selectAll();
+            for(PhienBan x:list){
+                model.addRow(new Object[]{x.getVersionId(),x.getName()});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    void insert(){
+        if(txtMa.getText().equals("")||txtPhienBan.getText().equals("")){
+            MsgBox.alert(this, "Không bỏ trống dữ liệu");
+        }else{
+            try {
+                dao.insert(getForm());
+                MsgBox.alert(this, "Thêm thành công");
+                fillTable();
+                clear();
+            } catch (Exception e) {
+                Exceptions.writeException(e, getForm().toString());
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLui;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTien;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

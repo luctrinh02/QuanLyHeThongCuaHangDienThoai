@@ -5,18 +5,34 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.DongMayDAO;
+import com.DungNgoc.DAO.HangMayDAO;
+import com.DungNgoc.entitys.DongMay;
+import com.DungNgoc.entitys.HangMay;
+import com.DungNgoc.untils.Exceptions;
+import com.DungNgoc.untils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LINH
  */
 public class JDongMay extends javax.swing.JDialog {
 
+    HangMayDAO HMdao = new HangMayDAO();
+    List<HangMay> listHM;
+    DongMayDAO DMdao = new DongMayDAO();
     /**
      * Creates new form JDongMay
      */
     public JDongMay(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setUndecorated(true);
         initComponents();
+        setLocationRelativeTo(null);
+        fillHangMay();
+        fillTable();
     }
 
     /**
@@ -37,11 +53,11 @@ public class JDongMay extends javax.swing.JDialog {
         txtDongMay = new javax.swing.JTextField();
         txtMa = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        btnMoi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDongMay = new javax.swing.JTable();
-        btnLui = new javax.swing.JButton();
-        btnTien = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -53,12 +69,36 @@ public class JDongMay extends javax.swing.JDialog {
         jLabel2.setText("Hãng");
 
         cbbHangMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbHangMay.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbHangMayItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("Mã dòng máy");
 
         jLabel4.setText("Tên dòng máy");
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        btnExit.setText("X");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        btnMoi.setText("Mới");
+        btnMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,13 +127,19 @@ public class JDongMay extends javax.swing.JDialog {
                             .addComponent(txtDongMay)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(151, 151, 151)
-                        .addComponent(btnThem)))
+                        .addComponent(btnThem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMoi)))
                 .addContainerGap(76, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnExit))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addComponent(btnExit)
+                .addGap(2, 2, 2)
                 .addComponent(jLabel1)
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -108,7 +154,9 @@ public class JDongMay extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(txtDongMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnThem)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThem)
+                    .addComponent(btnMoi))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -124,30 +172,16 @@ public class JDongMay extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblDongMay);
 
-        btnLui.setText("<<");
-
-        btnTien.setText(">>");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(btnLui)
-                .addGap(28, 28, 28)
-                .addComponent(btnTien)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLui)
-                    .addComponent(btnTien))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -163,12 +197,34 @@ public class JDongMay extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
+        // TODO add your handling code here:
+        clear();
+    }//GEN-LAST:event_btnMoiActionPerformed
+
+    private void cbbHangMayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbHangMayItemStateChanged
+        // TODO add your handling code here:
+        if(cbbHangMay.getItemCount()>1){
+            fillTable();
+        }
+    }//GEN-LAST:event_cbbHangMayItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -213,10 +269,51 @@ public class JDongMay extends javax.swing.JDialog {
         });
     }
 
+    void fillHangMay() {
+        cbbHangMay.removeAllItems();
+        listHM = HMdao.selectAll();
+        for (HangMay x : listHM) {
+            cbbHangMay.addItem(x.getName());
+        }
+    }
+    void fillTable(){
+        DefaultTableModel model=(DefaultTableModel) tblDongMay.getModel();
+        model.setRowCount(0);
+        try {
+            List<DongMay> listDM = DMdao.selectByHangMay(listHM.get(cbbHangMay.getSelectedIndex()).getTypeID());
+            for(DongMay x:listDM){
+                model.addRow(new Object[]{x.getTag(),x.getName()});
+            }
+        } catch (Exception e) {
+            Exceptions.writeException(e, "Đoc dữ liệu");
+        }
+    }
+    void clear(){
+        txtDongMay.setText("");
+        txtMa.setText("");
+    }
+    DongMay getForm(){
+        return new DongMay(txtMa.getText(), txtDongMay.getText(), listHM.get(cbbHangMay.getSelectedIndex()).getTypeID());
+    }
+    void insert(){
+        if(txtMa.getText().equals("") || txtDongMay.getText().equals("")){
+            MsgBox.alert(this, "Không bỏ trống dữ liệu");
+        }else{
+            try {
+                DMdao.insert(getForm());
+                MsgBox.alert(this, "Thêm thành công");
+                clear();
+                fillTable();
+            } catch (Exception e) {
+                MsgBox.alert(this, "Thêm thất bại");
+                Exceptions.writeException(e, getForm().toString());
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLui;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTien;
     private javax.swing.JComboBox<String> cbbHangMay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
