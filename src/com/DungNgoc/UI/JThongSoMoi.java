@@ -16,8 +16,9 @@ public class JThongSoMoi extends javax.swing.JDialog {
      */
     public JThongSoMoi(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setUndecorated(true);
         initComponents();
-
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -37,6 +38,7 @@ public class JThongSoMoi extends javax.swing.JDialog {
         btnDongMay = new javax.swing.JButton();
         btnPhienBanMay = new javax.swing.JButton();
         btnMauMay = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout frameLayout = new javax.swing.GroupLayout(frame.getContentPane());
         frame.getContentPane().setLayout(frameLayout);
@@ -91,6 +93,13 @@ public class JThongSoMoi extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("X");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -114,11 +123,16 @@ public class JThongSoMoi extends javax.swing.JDialog {
                         .addGap(85, 85, 85)
                         .addComponent(btnMauMay, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(135, 135, 135))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -130,7 +144,7 @@ public class JThongSoMoi extends javax.swing.JDialog {
                     .addComponent(btnPhienBanMay))
                 .addGap(28, 28, 28)
                 .addComponent(btnMauMay)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,24 +164,34 @@ public class JThongSoMoi extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHangMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHangMayActionPerformed
-
+        new JHangMay(frame, true).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnHangMayActionPerformed
 
     private void btnDongMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongMayActionPerformed
-
+        new JDongMay(frame, true).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnDongMayActionPerformed
 
     private void btnLoaiMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoaiMayActionPerformed
-
+        new JLoaiMay(frame, true).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnLoaiMayActionPerformed
 
     private void btnPhienBanMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhienBanMayActionPerformed
- 
+        new JPhienBan(frame, true).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPhienBanMayActionPerformed
 
     private void btnMauMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMauMayActionPerformed
-
+        new JMau(frame, true).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnMauMayActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,9 +243,9 @@ public class JThongSoMoi extends javax.swing.JDialog {
     private javax.swing.JButton btnMauMay;
     private javax.swing.JButton btnPhienBanMay;
     private javax.swing.JFrame frame;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 
 }
