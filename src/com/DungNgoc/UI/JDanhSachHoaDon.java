@@ -5,6 +5,22 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.HoaDonDAO;
+import com.DungNgoc.DAO.KhachHangDAO;
+import com.DungNgoc.DAO.KhuyenMaiDAO;
+import com.DungNgoc.DAO.NhanVienDAO;
+import com.DungNgoc.entitys.HoaDon;
+import com.DungNgoc.entitys.KhachHang;
+import com.DungNgoc.entitys.MaKhuyenMai;
+import com.DungNgoc.entitys.NhanVien;
+import java.awt.Color;
+import java.awt.Font;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LINH
@@ -14,8 +30,16 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
     /**
      * Creates new form JDanhSachHoaDon
      */
+    HoaDonDAO hdao = new HoaDonDAO();
+    KhachHangDAO khdao = new KhachHangDAO();
+    NhanVienDAO nvdao = new NhanVienDAO();
+    KhuyenMaiDAO kmdao = new KhuyenMaiDAO();
+    DefaultTableModel dtm;
+    public int vitri;
+
     public JDanhSachHoaDon() {
         initComponents();
+        this.init();
     }
 
     /**
@@ -43,6 +67,21 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Tìm Kiếm:");
 
+        txtTimKiem.setText("Tìm Kiếm");
+        txtTimKiem.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTimKiemFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTimKiemFocusLost(evt);
+            }
+        });
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
+
         tblDanhSachHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -51,9 +90,19 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
                 "Mã HD", "Thời Gian", "Khách Hàng", "Tổng Tiền Hàng", "Giảm Giá", "Tên NV", "Tổng Thu"
             }
         ));
+        tblDanhSachHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDanhSachHoaDonMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDanhSachHoaDon);
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,6 +151,42 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void tblDanhSachHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachHoaDonMouseClicked
+        this.vitri = tblDanhSachHoaDon.getSelectedRow();
+        if (this.vitri == -1) {
+            return;
+        }
+         new JHoaDonChiTiet(null, true,String.valueOf(tblDanhSachHoaDon.getValueAt(vitri, 0))).setVisible(true);
+  
+    }//GEN-LAST:event_tblDanhSachHoaDonMouseClicked
+
+    private void txtTimKiemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimKiemFocusGained
+        // TODO add your handling code here:
+        if (txtTimKiem.getText().equals("Tìm Kiếm")) {
+            txtTimKiem.setText(null);
+            txtTimKiem.requestFocus();
+            removePlaceHolderStyle(txtTimKiem);
+        }
+    }//GEN-LAST:event_txtTimKiemFocusGained
+
+    private void txtTimKiemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimKiemFocusLost
+        // TODO add your handling code here:
+        if (txtTimKiem.getText().length() == 0) {
+            txtTimKiem.setText("Tìm Kiếm");
+            addPlaceHolderStyle(txtTimKiem);
+        }
+    }//GEN-LAST:event_txtTimKiemFocusLost
+
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
+        // TODO add your handling code here:
+        this.filltableSearch(this.txtTimKiem.getText());
+    }//GEN-LAST:event_txtTimKiemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
@@ -112,4 +197,69 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblDanhSachHoaDon;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
+private void init() {
+        dtm = (DefaultTableModel) tblDanhSachHoaDon.getModel();
+        this.filltable();
+    }
+
+    private void filltable() {
+        dtm.setRowCount(0);
+        List<HoaDon> lsthd = hdao.selectAll();
+        for (int i = 0; i < lsthd.size(); i++) {
+            HoaDon hd = (HoaDon) lsthd.get(i);
+            KhachHang kh = khdao.selectById(hd.getIdGuest());
+            NhanVien nv = nvdao.selectById(hd.getIdStaff());
+            MaKhuyenMai km = kmdao.selectById(hd.getPromoCode());
+            Double tongthu = (Double.parseDouble(hd.getTotalMoney()) / (100 - km.getValue()) * 100);
+            DecimalFormat df = new DecimalFormat("#.000");
+            Object[] rd = new Object[]{
+                hd.getIdBill(),
+                hd.getDateBill(),
+                kh.getName(),
+                df.format(tongthu),
+                hd.getPromoCode(),
+                nv.getName(),
+                hd.getTotalMoney()
+            };
+            dtm.addRow(rd);
+        }
+
+    }
+    private void filltableSearch(String id) {
+        dtm.setRowCount(0);
+        //IdGuest LIKE '%?%' OR IdStaff LIKE '%?%' OR IdBill= ?
+        List<HoaDon> lsthd = hdao.selectBySql("SELECT *FROM HoaDon WHERE IdStaff = ? OR IdGuest = ? OR IdBill= ?" ,id,id,id);
+        for (int i = 0; i < lsthd.size(); i++) {
+            HoaDon hd = (HoaDon) lsthd.get(i);
+            KhachHang kh = khdao.selectById(hd.getIdGuest());
+            NhanVien nv = nvdao.selectById(hd.getIdStaff());
+            MaKhuyenMai km = kmdao.selectById(hd.getPromoCode());
+            Double tongthu = (Double.parseDouble(hd.getTotalMoney()) / (100 - km.getValue()) * 100);
+            DecimalFormat df = new DecimalFormat("#.000");
+            Object[] rd = new Object[]{
+                hd.getIdBill(),
+                hd.getDateBill(),
+                kh.getName(),
+                df.format(tongthu),
+                hd.getPromoCode(),
+                nv.getName(),
+                hd.getTotalMoney()
+            };
+            dtm.addRow(rd);
+        }
+
+    }
+    public void addPlaceHolderStyle(JTextField textField) {
+        Font font = textField.getFont();
+        font = font.deriveFont(Font.PLAIN);
+        textField.setFont(font);
+        textField.setForeground(new Color(204, 204, 255));
+    }
+
+    public void removePlaceHolderStyle(JTextField textField) {
+        Font font = textField.getFont();
+        font = font.deriveFont(Font.PLAIN);
+        textField.setFont(font);
+        textField.setForeground(Color.BLACK);
+    }
 }
