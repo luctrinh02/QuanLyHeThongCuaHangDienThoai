@@ -5,6 +5,26 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.HoaDonChiTietDAO;
+import com.DungNgoc.DAO.HoaDonDAO;
+import com.DungNgoc.DAO.KhachHangDAO;
+import com.DungNgoc.DAO.LoaiMayDAO;
+import com.DungNgoc.DAO.MauDAO;
+import com.DungNgoc.DAO.NhanVienDAO;
+import com.DungNgoc.DAO.SanPhamDAO;
+import com.DungNgoc.entitys.HoaDon;
+import com.DungNgoc.entitys.HoaDonChiTiet;
+import com.DungNgoc.entitys.KhachHang;
+import com.DungNgoc.entitys.LoaiMay;
+import com.DungNgoc.entitys.Mau;
+import com.DungNgoc.entitys.NhanVien;
+import com.DungNgoc.entitys.SanPham;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LINH
@@ -14,9 +34,27 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     /**
      * Creates new form JHoaDonChiTiet
      */
-    public JHoaDonChiTiet(java.awt.Frame parent, boolean modal) {
+    HoaDonChiTietDAO hdctdao = new HoaDonChiTietDAO();
+    HoaDonDAO hddao = new HoaDonDAO();
+    KhachHangDAO khdao = new KhachHangDAO();
+    NhanVienDAO nvdao = new NhanVienDAO();
+    SanPhamDAO spdao = new SanPhamDAO();
+    LoaiMayDAO lmdao = new LoaiMayDAO();
+    MauDAO mdao = new MauDAO();
+    DefaultTableModel dtm;
+    int id;
+    DecimalFormat df = new DecimalFormat("#.000");
+
+    public JHoaDonChiTiet(java.awt.Frame parent, boolean modal, String idbill) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        id = Integer.parseInt(idbill);
+        this.init();
+    }
+
+    private JHoaDonChiTiet(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -36,9 +74,9 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
         txtTenNV = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        DCNgayMua = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDonChiTiet = new javax.swing.JTable();
+        txtNgayMua = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -47,7 +85,13 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
 
         jLabel2.setText("Tên Khách Hàng:");
 
+        txtTenKH.setEnabled(false);
+
         jLabel3.setText("Mã Hóa Đơn:");
+
+        txtMaHD.setEnabled(false);
+
+        txtTenNV.setEnabled(false);
 
         jLabel4.setText("Ngày Mua:");
 
@@ -62,6 +106,8 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
             }
         ));
         jScrollPane1.setViewportView(tblHoaDonChiTiet);
+
+        txtNgayMua.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,9 +133,9 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(DCNgayMua, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                            .addComponent(txtTenNV)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNgayMua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -99,12 +145,11 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4))
-                    .addComponent(DCNgayMua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtNgayMua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -162,7 +207,6 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser DCNgayMua;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -171,7 +215,41 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblHoaDonChiTiet;
     private javax.swing.JTextField txtMaHD;
+    private javax.swing.JTextField txtNgayMua;
     private javax.swing.JTextField txtTenKH;
     private javax.swing.JTextField txtTenNV;
     // End of variables declaration//GEN-END:variables
+private void init() {
+        dtm = (DefaultTableModel) tblHoaDonChiTiet.getModel();
+        this.fillTable();
+    }
+
+    private void fillTable() {
+        List<HoaDonChiTiet> lsthdct = hdctdao.selectById(id, null);
+        HoaDon hd = hddao.selectById(id);
+        this.txtMaHD.setText(String.valueOf(hd.getIdBill()));
+        this.txtNgayMua.setText(hd.getDateBill());
+        NhanVien nv = nvdao.selectById(hd.getIdStaff());
+        this.txtTenNV.setText(nv.getName());
+        KhachHang kh = khdao.selectById(String.valueOf(hd.getIdGuest()));
+        this.txtTenKH.setText(kh.getName());
+        for (int i = 0; i < lsthdct.size(); i++) {
+            HoaDonChiTiet hdct = (HoaDonChiTiet) lsthdct.get(i);
+            SanPham sp = spdao.selectById(String.valueOf(hdct.getIdProduct()));
+            LoaiMay lm = lmdao.selectById(sp.getModelId());
+            Mau mau = mdao.selectById(sp.getColorId());
+            Object[] rowdata = new Object[]{
+                hdct.getIdProduct(),
+                lm.getName(),
+                hdct.getCount(),
+                mau.getName(),
+                sp.getSize(),
+                sp.getRam(),
+                df.format(sp.getPrice()),
+                df.format(sp.getPrice()),
+                df.format(hdct.getCount() * sp.getPrice())
+            };
+            dtm.addRow(rowdata);
+        }
+    }
 }
