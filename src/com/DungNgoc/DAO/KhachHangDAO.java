@@ -74,7 +74,7 @@ public class KhachHangDAO implements DungNgocDAO<KhachHang, String> {
             while (rs.next()) {
                 list.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getDouble(3),rs.getDouble(4),rs.getBoolean(5)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -75,7 +75,7 @@ public class HoaDonDAO implements DungNgocDAO<HoaDon, Integer>{
             while (rs.next()) {
                 list.add(new HoaDon(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getString(7)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

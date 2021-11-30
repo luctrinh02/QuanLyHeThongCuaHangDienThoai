@@ -77,7 +77,7 @@ public class LoaiMayDAO implements DungNgocDAO<LoaiMay, Integer> {
             while (rs.next()) {
                 list.add(new LoaiMay(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -19,17 +19,18 @@ public class Xjdbc {
     static String user = "linhnt", pass = "123";
     static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     static String url = "jdbc:sqlserver://34.124.214.68;databaseName=CuaHangDienThoai";
-
+    static Connection cn;
+    
     static {
         try {
             Class.forName(driver);
+            cn = DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public static PreparedStatement getStm(String sql, Object... args) throws Exception {
-        Connection cn = DriverManager.getConnection(url, user, pass);
         PreparedStatement pst;
         if (sql.trim().startsWith("{")) {
             pst = cn.prepareCall(sql);
@@ -56,7 +57,7 @@ public class Xjdbc {
             if (rs.next()) {
                 return rs.getObject(0);
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -69,7 +70,7 @@ public class Xjdbc {
             try {
                 return pst.executeUpdate();
             } finally {
-                pst.getConnection().close();
+//                pst.getConnection().close();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

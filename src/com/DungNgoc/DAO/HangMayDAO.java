@@ -76,7 +76,7 @@ public class HangMayDAO implements DungNgocDAO<HangMay, String> {
             while (rs.next()) {
                 list.add(new HangMay(rs.getString(1), rs.getString(2)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -76,7 +76,7 @@ public class MauDAO implements DungNgocDAO<Mau, String>{
             while (rs.next()) {
                 list.add(new Mau(rs.getString(1),rs.getString(2)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
