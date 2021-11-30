@@ -24,7 +24,7 @@ public class SanPhamTableDao {
             while (rs.next()) {
                 list.add(new SanPhamTable(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getDouble(7), rs.getInt(8)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

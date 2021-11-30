@@ -79,7 +79,7 @@ public class KhuyenMaiDAO implements DungNgocDAO<MaKhuyenMai, String>{
             while (rs.next()) {
                 list.add(new MaKhuyenMai(rs.getString(1), rs.getInt(2), rs.getBoolean(3)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

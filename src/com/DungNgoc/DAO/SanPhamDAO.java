@@ -88,7 +88,7 @@ public class SanPhamDAO implements DungNgocDAO<SanPham, String> {
             while (rs.next()) {
                 list.add(new SanPham(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getString(9), rs.getInt(10), rs.getDouble(11), rs.getDate(12), rs.getBoolean(13)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

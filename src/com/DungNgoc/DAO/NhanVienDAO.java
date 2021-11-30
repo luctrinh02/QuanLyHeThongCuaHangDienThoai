@@ -81,7 +81,7 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
             while (rs.next()) {
                 list.add(new NhanVien(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getBoolean(9)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
