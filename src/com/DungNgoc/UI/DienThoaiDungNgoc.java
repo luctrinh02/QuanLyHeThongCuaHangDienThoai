@@ -628,10 +628,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     private void openDoanhThu() {
         if (Auth.isLogin()) {
             if (Auth.isManager()) {
-                JThongKeDoanhThu tkdt = new JThongKeDoanhThu();
-                this.DesktopMain.add(tkdt);
-                tkdt.setVisible(true);
-                tkdt.setLocation(this.getWidth() / 2 - tkdt.getWidth() / 2, (this.getHeight() - 40) / 2 - tkdt.getHeight() / 2 - 50);
+                ThongKeDoanhThu.chart();
             } else {
                 MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
             }
