@@ -29,7 +29,7 @@ public class HoaDonDAO implements DungNgocDAO<HoaDon, Integer>{
     String selectByIdGuest="select * from HoaDon where IdGuest=?";
     @Override
     public void insert(HoaDon entity) {
-        Xjdbc.update(insert, entity.getIdGuest(),entity.getDateBill(),entity.getTotalMoney(),entity.getPromoCode(),entity.isUsepoint(),entity.getIdStaff());
+        Xjdbc.update(insert, entity.getIdGuest(),entity.getDateBill(),Double.parseDouble(entity.getTotalMoney()),entity.getPromoCode(),entity.isUsepoint(),entity.getIdStaff());
     }
 
     @Override
@@ -83,5 +83,14 @@ public class HoaDonDAO implements DungNgocDAO<HoaDon, Integer>{
     }
     public List<HoaDon> selectByIdGuest(String id){
         return this.selectBySql(selectByIdGuest,id);
+    }
+    public int selectId(){
+        try {
+            ResultSet rs=Xjdbc.query("select max(IdBill) from HoaDon");
+            rs.next();
+            return rs.getInt(1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

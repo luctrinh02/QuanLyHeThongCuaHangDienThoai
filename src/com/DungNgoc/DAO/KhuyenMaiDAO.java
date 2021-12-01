@@ -21,7 +21,7 @@ public class KhuyenMaiDAO implements DungNgocDAO<MaKhuyenMai, String>{
     String disable = "update MaKhuyenMai set status=0 where promoCode=?";
     String reStore = "update MaKhuyenMai set status=1 where promoCode=?";
     String select_ID = "select * from MaKhuyenMai where promoCode=?";
-    String select_All = "select * from MaKHuyenMai";
+    String select_All = "select * from MaKHuyenMai where status=1";
     String select_page = "select * from MaKhuyenMai where status=1\n"
             + "order by promoCOde\n"
             + "offset ?*10 rows\n"

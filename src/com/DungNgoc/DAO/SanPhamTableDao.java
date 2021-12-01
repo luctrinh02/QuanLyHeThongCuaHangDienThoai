@@ -31,7 +31,7 @@ public class SanPhamTableDao {
         }
     }
 
-    public List<SanPhamTable> select(String keyword, String hang, String dong, String loai, String phienBan, String ram, String dungLuong,int page) {
+    public List<SanPhamTable> select(String keyword, String hang, String dong, String loai, String phienBan, String ram, String dungLuong, int page) {
         String sql = "select IdProduct,b.name,ram,size, e.colorName,a.isNew,a.price,a.count\n"
                 + "from SanPham a join LoaiMay b on a.modelId=b.modelId join DongMay c on b.tag=c.tag join HangMay d on c.typeId=d.typeId join Mau e on a.colorId=e.colorid join PhienBan f on a.versionId = f.versionId\n"
                 + "where status = 1 and (IdProduct like ? or b.name like ?) \n"
@@ -39,6 +39,23 @@ public class SanPhamTableDao {
                 + "order by IdProduct\n"
                 + "offset ?*20 rows\n"
                 + "fetch next 21 rows only";
-        return this.selectBySql(sql, "%" + keyword + "%", "%" + keyword + "%", "%" + hang + "%", "%" + dong + "%", "%" + loai + "%", "%" + phienBan + "%", "%" + ram + "%","%"+dungLuong+"%",page);
+        return this.selectBySql(sql, "%" + keyword + "%", "%" + keyword + "%", "%" + hang + "%", "%" + dong + "%", "%" + loai + "%", "%" + phienBan + "%", "%" + ram + "%", "%" + dungLuong + "%", page);
+    }
+
+    public List<SanPhamTable> selectByKeyWord(String keyword, int page) {
+        String sql = "select IdProduct,b.name,ram,size, e.colorName,a.isNew,a.price,a.count\n"
+                + "from SanPham a join LoaiMay b on a.modelId=b.modelId join DongMay c on b.tag=c.tag join HangMay d on c.typeId=d.typeId join Mau e on a.colorId=e.colorid join PhienBan f on a.versionId = f.versionId\n"
+                + "where status = 1 and (IdProduct like ? or b.name like ?) \n"
+                + "order by IdProduct\n"
+                + "offset ?*20 rows\n"
+                + "fetch next 21 rows only";
+        return this.selectBySql(sql, "%" + keyword + "%", "%" + keyword + "%", page);
+    }
+    public SanPhamTable selectById(String id){
+        String sql="select IdProduct,b.name,ram,size, e.colorName,a.isNew,a.price,a.count\n"
+                + "from SanPham a join LoaiMay b on a.modelId=b.modelId join DongMay c on b.tag=c.tag join HangMay d on c.typeId=d.typeId join Mau e on a.colorId=e.colorid join PhienBan f on a.versionId = f.versionId\n"
+                + "where status = 1 and IdProduct = ?";
+        List<SanPhamTable> list=selectBySql(sql, id);
+        return list.isEmpty()?null:list.get(0);
     }
 }
