@@ -71,7 +71,7 @@ public class HoaDonChiTietDAO implements DungNgocDAO<HoaDonChiTiet, Integer>{
             while (rs.next()) {
                 list.add(new HoaDonChiTiet(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getDouble(4)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -77,7 +77,7 @@ public class DongMayDAO implements DungNgocDAO<DongMay, String> {
             while (rs.next()) {
                 list.add(new DongMay(rs.getString(1),rs.getString(2),rs.getString(3)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

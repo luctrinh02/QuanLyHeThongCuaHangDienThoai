@@ -5,6 +5,16 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.HoaDonChiTietDAO;
+import com.DungNgoc.DAO.HoaDonDAO;
+import com.DungNgoc.DAO.KhachHangDAO;
+import com.DungNgoc.entitys.HoaDon;
+import com.DungNgoc.entitys.HoaDonChiTiet;
+import com.DungNgoc.entitys.KhachHang;
+import java.text.DecimalFormat;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LINH
@@ -14,8 +24,16 @@ public class JThongKeKhachHang extends javax.swing.JInternalFrame {
     /**
      * Creates new form JThongKeKhachHang
      */
+    KhachHangDAO khdao = new KhachHangDAO();
+    HoaDonDAO hddao = new HoaDonDAO();
+    HoaDonChiTietDAO hdctdao = new HoaDonChiTietDAO();
+    DefaultTableModel dtm;
+    DecimalFormat df = new DecimalFormat("#.000");
+    int sl;
+
     public JThongKeKhachHang() {
         initComponents();
+        this.init();
     }
 
     /**
@@ -94,4 +112,39 @@ public class JThongKeKhachHang extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tblTKKhachHang;
     // End of variables declaration//GEN-END:variables
+private void init() {
+        dtm = (DefaultTableModel) tblTKKhachHang.getModel();
+        sl = 0;
+        this.filltable();
+    }
+
+    private int tongSoLuong(String IdGuest) {
+        int soluong = 0;
+        List<HoaDon> lsthd = hddao.selectByIdGuest(IdGuest);
+        for (int j = 0; j < lsthd.size(); j++) {
+            HoaDon hd = (HoaDon) lsthd.get(j);
+            List<HoaDonChiTiet> lsthdct = hdctdao.selectById(hd.getIdBill(), null);
+            for (int i = 0; i < lsthdct.size(); i++) {
+                soluong += lsthdct.get(i).getCount();
+            }
+        }
+        return soluong;
+    }
+
+    private void filltable() {
+        List<KhachHang> lstkh = khdao.selectAll();
+        for (int i = 0; i < lstkh.size(); i++) {
+            KhachHang kh = (KhachHang) lstkh.get(i);
+            sl = 0;
+            sl = this.tongSoLuong(kh.getIdGuest());
+            Object[] rd = new Object[]{
+                kh.getIdGuest(),
+                kh.getName(),
+                sl,
+                df.format(kh.getTotalMoney())
+            };
+            dtm.addRow(rd);
+            
+        }
+    }
 }

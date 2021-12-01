@@ -26,9 +26,10 @@ public class HoaDonDAO implements DungNgocDAO<HoaDon, Integer>{
             + "order by IdBill\n"
             + "offset ?*10 rows\n"
             + "fetch next 11 rows only";
+    String selectByIdGuest="select * from HoaDon where IdGuest=?";
     @Override
     public void insert(HoaDon entity) {
-        Xjdbc.update(insert, entity.getIdGuest(),entity.getDateBill(),entity.getTotalMoney(),entity.getPromoCode(),entity.isUsepoint(),entity.getIdStaff());
+        Xjdbc.update(insert, entity.getIdGuest(),entity.getDateBill(),Double.parseDouble(entity.getTotalMoney()),entity.getPromoCode(),entity.isUsepoint(),entity.getIdStaff());
     }
 
     @Override
@@ -74,11 +75,22 @@ public class HoaDonDAO implements DungNgocDAO<HoaDon, Integer>{
             while (rs.next()) {
                 list.add(new HoaDon(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getString(7)));
             }
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    
+    public List<HoaDon> selectByIdGuest(String id){
+        return this.selectBySql(selectByIdGuest,id);
+    }
+    public int selectId(){
+        try {
+            ResultSet rs=Xjdbc.query("select max(IdBill) from HoaDon");
+            rs.next();
+            return rs.getInt(1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

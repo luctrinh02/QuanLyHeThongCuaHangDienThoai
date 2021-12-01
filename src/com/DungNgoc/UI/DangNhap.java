@@ -356,7 +356,7 @@ public class DangNhap extends javax.swing.JDialog {
             String id = txtTenTaiKhoan.getText();
             String pass = new String(txtMatKhau.getPassword());
             NhanVien tam = new NhanVien();
-            if (dao.selectById(id) == null) {
+            if (dao.selectById(id) == null || id.contains(" ")) {
                 MsgBox.alert(this, "Không tồn tại!");
             } else {
                 tam = dao.selectById(id);

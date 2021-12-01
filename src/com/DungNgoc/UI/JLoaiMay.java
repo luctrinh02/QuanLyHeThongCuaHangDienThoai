@@ -5,19 +5,43 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.DongMayDAO;
+import com.DungNgoc.DAO.HangMayDAO;
+import com.DungNgoc.DAO.LoaiMayDAO;
+import com.DungNgoc.entitys.DongMay;
+import com.DungNgoc.entitys.HangMay;
+import com.DungNgoc.entitys.LoaiMay;
+import com.DungNgoc.untils.Exceptions;
+import com.DungNgoc.untils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LINH
  */
 public class JLoaiMay extends javax.swing.JDialog {
 
+    HangMayDAO HMdao = new HangMayDAO();
+    List<HangMay> listHM;
+    DongMayDAO DMdao = new DongMayDAO();
+    List<DongMay> listDM;
+    LoaiMayDAO LMdao = new LoaiMayDAO();
+
     /**
      * Creates new form JLoaiMay
      */
     public JLoaiMay(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setUndecorated(true);
         initComponents();
+        init();
+    }
 
+    void init() {
+        setLocationRelativeTo(null);
+        fillHangMay();
+        fillDongMay();
     }
 
     /**
@@ -33,18 +57,16 @@ public class JLoaiMay extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtLoaiMay = new javax.swing.JTextField();
-        txtMa = new javax.swing.JTextField();
         cbbDongMay = new javax.swing.JComboBox<>();
         cbbHangMay = new javax.swing.JComboBox<>();
         btnThem = new javax.swing.JButton();
+        btnMoi = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLoaiMay = new javax.swing.JTable();
-        btnLui = new javax.swing.JButton();
-        btnTien = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,15 +79,42 @@ public class JLoaiMay extends javax.swing.JDialog {
 
         jLabel3.setText("Dòng máy");
 
-        jLabel4.setText("Mã loại máy");
-
         jLabel5.setText("Tên loại máy");
 
         cbbDongMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbDongMay.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbDongMayItemStateChanged(evt);
+            }
+        });
 
         cbbHangMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbHangMay.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbHangMayItemStateChanged(evt);
+            }
+        });
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        btnMoi.setText("Mới");
+        btnMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoiActionPerformed(evt);
+            }
+        });
+
+        btnExit.setText("X");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,7 +133,7 @@ public class JLoaiMay extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel3)))
-                        .addGap(0, 161, Short.MAX_VALUE))
+                        .addGap(0, 166, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,22 +142,26 @@ public class JLoaiMay extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtLoaiMay))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(23, 23, 23)
+                                .addGap(79, 79, 79)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbbDongMay, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtMa)
                                     .addComponent(cbbHangMay, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(151, 151, 151)
                 .addComponent(btnThem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMoi)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnExit))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addComponent(btnExit)
+                .addGap(2, 2, 2)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -118,16 +171,14 @@ public class JLoaiMay extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cbbDongMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtLoaiMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(btnThem)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThem)
+                    .addComponent(btnMoi))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -143,30 +194,16 @@ public class JLoaiMay extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblLoaiMay);
 
-        btnLui.setText("<<");
-
-        btnTien.setText(">>");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(btnLui)
-                .addGap(28, 28, 28)
-                .addComponent(btnTien)
-                .addContainerGap(145, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLui)
-                    .addComponent(btnTien))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -187,6 +224,35 @@ public class JLoaiMay extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbbHangMayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbHangMayItemStateChanged
+        // TODO add your handling code here:
+        if (cbbHangMay.getItemCount() > 1) {
+            fillDongMay();
+        }
+    }//GEN-LAST:event_cbbHangMayItemStateChanged
+
+    private void cbbDongMayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbDongMayItemStateChanged
+        // TODO add your handling code here:
+        if (cbbDongMay.getItemCount() > 1) {
+            fillTable();
+        }
+    }//GEN-LAST:event_cbbDongMayItemStateChanged
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
+        // TODO add your handling code here:
+        clear();
+    }//GEN-LAST:event_btnMoiActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,23 +297,93 @@ public class JLoaiMay extends javax.swing.JDialog {
         });
     }
 
+    void fillHangMay() {
+        cbbHangMay.removeAllItems();
+        listHM = HMdao.selectAll();
+        for (HangMay x : listHM) {
+            cbbHangMay.addItem(x.getName());
+        }
+    }
+
+    void fillDongMay() {
+        try {
+            listDM.clear();
+        } catch (Exception e) {
+        }
+        cbbDongMay.removeAllItems();
+        listDM = DMdao.selectByHangMay(listHM.get(cbbHangMay.getSelectedIndex()).getTypeID());
+        for (DongMay x : listDM) {
+            cbbDongMay.addItem(x.getName());
+        }
+        fillTable();
+    }
+
+    void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblLoaiMay.getModel();
+        model.setRowCount(0);
+        if (listDM.size() != 0) {
+            try {
+                List<LoaiMay> list = LMdao.selectByDongMay(listDM.get(cbbDongMay.getSelectedIndex()).getTag());
+                for (LoaiMay x : list) {
+                    model.addRow(new Object[]{x.getModelId(), x.getName()});
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    LoaiMay getForm() {
+        LoaiMay lm = new LoaiMay();
+        lm.setName(txtLoaiMay.getText());
+        lm.setTag(listDM.get(cbbDongMay.getSelectedIndex()).getTag());
+        return lm;
+    }
+
+    void insert() {
+        if (validateForm()) {
+            try {
+                LMdao.insert(getForm());
+                MsgBox.alert(this, "Thêm thành công");
+                fillTable();
+                clear();
+            } catch (Exception e) {
+                Exceptions.writeException(e, getForm().toString());
+                MsgBox.alert(this, "Thêm thất bai");
+            }
+        }
+    }
+
+    boolean validateForm() {
+        if (txtLoaiMay.getText().equals("")) {
+            MsgBox.alert(this, "Không bỏ trống dữ liệu");
+            return false;
+        } else if (cbbDongMay.getItemCount() == 0) {
+            MsgBox.alert(this, "Không có dòng máy nào");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    void clear() {
+        txtLoaiMay.setText("");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLui;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTien;
     private javax.swing.JComboBox<String> cbbDongMay;
     private javax.swing.JComboBox<String> cbbHangMay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLoaiMay;
     private javax.swing.JTextField txtLoaiMay;
-    private javax.swing.JTextField txtMa;
     // End of variables declaration//GEN-END:variables
 
 }

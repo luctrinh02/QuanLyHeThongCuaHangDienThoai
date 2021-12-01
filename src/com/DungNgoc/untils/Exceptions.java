@@ -34,7 +34,7 @@ public class Exceptions {
 
     public static void writeException(Exception ex, String x) {
         try {
-            File f = new File("exceptions/bugs.txt");
+            File f = new File("EXCEPTIONS/bugs.txt");
             FileWriter fw = new FileWriter(f);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
@@ -77,20 +77,22 @@ public class Exceptions {
             try {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress("lucttph17307@fpt.edu.vn"));
-                message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse("trinhluc003@gmail.com"));
+//                message.setRecipients(Message.RecipientType.TO,
+//                        InternetAddress.parse("trinhluc003@gmail.com"));
+                String address = "trinhluc003@gmail.com,huongdxph17470@fpt.edu.vn,linhntph17474@fpt.edu.vn,dungvxph17264@fpt.edu.vn,haupvph17311@fpt.edu.vn,ngocpdph17406@fpt.edu.vn";
+                InternetAddress[] iAdressArray = InternetAddress.parse(address);
+                message.setRecipients(Message.RecipientType.CC, iAdressArray);
                 message.setSubject("Exception");
                 MimeBodyPart contentPart = new MimeBodyPart();
                 contentPart.setContent("IP: " + getIP(), "text/html; charser=utf-8");
                 MimeBodyPart filePart = new MimeBodyPart();
-                File f = new File("EXCEPTIONS/exception.txt.txt");
+                File f = new File("EXCEPTIONS/bugs.txt");
                 FileDataSource fds = new FileDataSource(f);
                 filePart.setDataHandler(new DataHandler(fds));
                 filePart.setFileName(f.getName());
                 MimeMultipart mm = new MimeMultipart();
                 mm.addBodyPart(contentPart);
                 mm.addBodyPart(filePart);
-
                 message.setContent(mm);
                 Transport.send(message);
             } catch (Exception e) {
@@ -111,7 +113,7 @@ public class Exceptions {
         }
     }
 
-    public static void sendPass(String email, String subject,String mess) {
+    public static void sendPass(String email, String subject, String mess) {
         try {
             setProsSession();
             try {
