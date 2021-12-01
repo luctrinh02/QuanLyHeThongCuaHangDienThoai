@@ -1536,7 +1536,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Giá phải là số");
             return null;
         }
-        if (!txtGiaSP.getText().trim().matches("^[1-9][0-9]+$")) {
+        if (!txtGiaSP.getText().trim().matches("^[1-9][0-9]+$|[1-9]")) {
             MsgBox.alert(this, "Giá không bắt đầu từ 0");
             return null;
         }
@@ -1548,7 +1548,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Số lượng phải là số ");
             return null;
         }
-        if (!txtSoLuong.getText().trim().matches("^[1-9][0-9]+$")) {
+        if (!txtSoLuong.getText().trim().matches("^[1-9][0-9]+$|[1-9]")) {
             MsgBox.alert(this, "Số lượng không bắt đầu từ 0");
             return null;
         }
