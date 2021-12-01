@@ -15,6 +15,7 @@ import com.DungNgoc.entitys.HoaDon;
 import com.DungNgoc.entitys.HoaDonChiTiet;
 import com.DungNgoc.entitys.KhachHang;
 import com.DungNgoc.entitys.MaKhuyenMai;
+import com.DungNgoc.entitys.SanPham;
 import com.DungNgoc.entitys.SanPhamTable;
 import com.DungNgoc.untils.Auth;
 import com.DungNgoc.untils.Exceptions;
@@ -736,6 +737,8 @@ public class ThemHoaDon extends javax.swing.JDialog {
         hoaDon();
         //thêm hoá đơn chi tiết
         hoaDonChiTiet();
+        //sửa thông tin sản phẩm
+        sanPham();
         //đóng form
         dispose();
     }
@@ -795,6 +798,11 @@ public class ThemHoaDon extends javax.swing.JDialog {
             }
         }
         MsgBox.alert(this, "Thanh toán thành công!");
+    }
+    void sanPham(){
+        for(SanPhamTable x:listHD){
+            spDAO.updateSL(x.getMa(), x.getSoLuong());
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNextPage;

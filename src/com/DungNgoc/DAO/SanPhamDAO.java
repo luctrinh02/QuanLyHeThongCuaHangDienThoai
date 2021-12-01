@@ -117,4 +117,8 @@ public class SanPhamDAO implements DungNgocDAO<SanPham, String> {
     public  List<SanPham> selectDisable(int pageRac){
         return this.selectBySql(select_Disable,pageRac);
     }
+    public void updateSL(String ma,int sl){
+        String sql="update SanPham set count=count-? where IdProduct=?";
+        Xjdbc.update(sql, sl,ma);
+    }
 }
