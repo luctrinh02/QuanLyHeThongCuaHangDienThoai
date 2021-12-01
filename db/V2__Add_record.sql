@@ -13,7 +13,7 @@ insert into HangMay values
 ('HM02','SamSung'),
 ('HM03','Oppo'),
 ('HM04','Xiaomi'),
-('HM05','Asus')
+('HM05','Realme')
 insert into Mau values
 ('CL01',N'Xanh đại dương'),
 ('CL02',N'Vàng gold'),
@@ -25,7 +25,9 @@ insert into DongMay values
 ('tag02','Iphone 12','HM01'),
 ('tag03','Iphone 13','HM01'),
 ('tag04','SamSung s21','HM02'),
-('tag05','ROG','HM05')
+('tag05','Realme 6','HM05'),
+('tag06','Realme 7','HM05'),
+('tag07','Realme 8','HM05');
 insert into LoaiMay(tag,name) values
 ('tag01','Iphone 11'),
 ('tag01','Iphone 11 pro'),
@@ -38,10 +40,16 @@ insert into LoaiMay(tag,name) values
 ('tag03','Iphone 13 pro max'),
 ('tag04','Samsung s21'),
 ('tag04','Samsung s21+'),
-('tag04','Samsung s21 ultra');
+('tag04','Samsung s21 ultra'),
+('tag05','Realme 6'),
+('tag05','Realme 6 pro'),
+('tag06','Realme 7'),
+('tag06','Realme 7 pro'),
+('tag07','Realme 8'),
+('tag07','Realme 8 pro');
 insert into PhienBan values
-('PB000','Global'),
-('PB001','Lock'),
+('PB000',N'Global'),
+('PB001',N'Lock'),
 ('PB002',N'Việt Nam'),
 ('PB003',N'Hàn Quốc')
 insert into SanPham values
@@ -85,5 +93,16 @@ insert into HoaDonCHiTiet values
 (4,'SP0014',1,25000000),
 (5,'SP0014',1,13000000);
 select * from HoaDonCHiTiet
-select * from SanPham join LoaiMay on SanPham.modelId = LoaiMay.modelId where status = 1 AND name like '% %'
 
+if OBJECT_ID('baoCaoHangHoa') is not null
+	drop proc baoCaoHangHoa
+go
+create proc baoCaoHangHoa 
+	@date date as
+begin
+	select a.IdProduct 'Mã',c.name 'Tên',SUM(a.count) 'Số lượng',SUM(a.price*a.count) 'Doanh thu'
+	from HoaDonCHiTiet a join SanPham b on a.IdProduct=b.IdProduct join LoaiMay c on b.modelId=c.modelId join HoaDon d on a.IdBill=d.IdBill
+	where d.date=@date
+	group by a.IdProduct,c.name 
+end
+go
