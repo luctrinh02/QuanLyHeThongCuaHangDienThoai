@@ -51,6 +51,9 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        frame = new javax.swing.JFrame();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        refesh = new javax.swing.JMenuItem();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
@@ -58,6 +61,26 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDanhSachHoaDon = new javax.swing.JTable();
         btnThem = new javax.swing.JButton();
+
+        javax.swing.GroupLayout frameLayout = new javax.swing.GroupLayout(frame.getContentPane());
+        frame.getContentPane().setLayout(frameLayout);
+        frameLayout.setHorizontalGroup(
+            frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        frameLayout.setVerticalGroup(
+            frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        refesh.setText("Refesh");
+        refesh.setComponentPopupMenu(jPopupMenu1);
+        refesh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refeshActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(refesh);
 
         setClosable(true);
         setPreferredSize(new java.awt.Dimension(751, 575));
@@ -90,6 +113,7 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
                 "Mã HD", "Thời Gian", "Khách Hàng", "Tổng Tiền Hàng", "Giảm Giá", "Tên NV", "Tổng Thu"
             }
         ));
+        tblDanhSachHoaDon.setComponentPopupMenu(jPopupMenu1);
         tblDanhSachHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDanhSachHoaDonMouseClicked(evt);
@@ -153,7 +177,7 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-
+        new ThemHoaDon(frame, true).setVisible(true);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void tblDanhSachHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachHoaDonMouseClicked
@@ -187,13 +211,21 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
         this.filltableSearch(this.txtTimKiem.getText());
     }//GEN-LAST:event_txtTimKiemActionPerformed
 
+    private void refeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refeshActionPerformed
+        // TODO add your handling code here:
+        filltable();
+    }//GEN-LAST:event_refeshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
+    private javax.swing.JFrame frame;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuItem refesh;
     private javax.swing.JTable tblDanhSachHoaDon;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables

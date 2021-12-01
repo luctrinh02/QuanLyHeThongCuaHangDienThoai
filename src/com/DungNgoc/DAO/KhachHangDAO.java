@@ -40,6 +40,10 @@ public class KhachHangDAO implements DungNgocDAO<KhachHang, String> {
     public void update(KhachHang entity) {
         Xjdbc.update(update,entity.getName(), entity.getIdGuest());
     }
+    public void update2(KhachHang entity) {
+        String sql="update khachHang set totalMoney=totalMoney+?,point=point+? where IdGuest=?";
+        Xjdbc.update(sql,entity.getTotalMoney(),entity.getPoint(), entity.getIdGuest());
+    }
 
     @Override
     public void disable(String id) {
@@ -89,5 +93,10 @@ public class KhachHangDAO implements DungNgocDAO<KhachHang, String> {
     @Override
     public List<KhachHang> selectByPage(int page) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    public KhachHang select(String id){
+        String sql="select * from KhachHang where IdGuest=? and status=1";
+        List<KhachHang> list = this.selectBySql(sql, id);
+        return list.isEmpty()?null:list.get(0);
     }
 }
