@@ -5,17 +5,24 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.thongKeNhanVienDAO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LINH
  */
 public class JThongKeNhanVien extends javax.swing.JInternalFrame {
 
+    thongKeNhanVienDAO nv = new thongKeNhanVienDAO();
+
     /**
      * Creates new form JThongKeNhanVien
      */
     public JThongKeNhanVien() {
         initComponents();
+        fillTable();
     }
 
     /**
@@ -39,6 +46,11 @@ public class JThongKeNhanVien extends javax.swing.JInternalFrame {
         jLabel1.setText("Thống Kê Nhân Viên");
 
         btnShow.setText("Show Biểu Đồ");
+        btnShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowActionPerformed(evt);
+            }
+        });
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,7 +99,19 @@ public class JThongKeNhanVien extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        // TODO add your handling code here:
+        chartNhanVien.chart();
+    }//GEN-LAST:event_btnShowActionPerformed
 
+    void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+        List<Object[]> list = nv.baoCaoSanPham();
+        for (Object[] x: list ) {
+            model.addRow(new Object[]{x[0],x[1],x[2],x[3]==null?0:x[3]});
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnShow;
     private javax.swing.JLabel jLabel1;
