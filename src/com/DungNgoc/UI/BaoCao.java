@@ -53,7 +53,7 @@ public class BaoCao extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label1 = new java.awt.Label();
+        frame = new javax.swing.JFrame();
         lblBaoCaoCuoiNgay = new javax.swing.JLabel();
         tabs = new javax.swing.JTabbedPane();
         PanelHangHoa = new javax.swing.JPanel();
@@ -75,7 +75,16 @@ public class BaoCao extends javax.swing.JInternalFrame {
         txtThoiGian = new com.toedter.calendar.JDateChooser();
         btnLoc = new javax.swing.JButton();
 
-        label1.setText("label1");
+        javax.swing.GroupLayout frameLayout = new javax.swing.GroupLayout(frame.getContentPane());
+        frame.getContentPane().setLayout(frameLayout);
+        frameLayout.setHorizontalGroup(
+            frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        frameLayout.setVerticalGroup(
+            frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         lblBaoCaoCuoiNgay.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblBaoCaoCuoiNgay.setText("Báo cáo cuối ngày");
@@ -258,7 +267,7 @@ public class BaoCao extends javax.swing.JInternalFrame {
         fillTable();
         setFrom();
         if(!"".equals(txtDoanhThu.getText())){
-            chartBaoCao.chartBaoCao(Xdate.toString(txtThoiGian.getDate(), "yyyy-MM-dd"));
+            new jChartBaoCao(frame, true, Xdate.toString(txtThoiGian.getDate(), "yyyy-MM-dd")).setVisible(true);
         }else{
             MsgBox.alert(this, "Cả ngày không bán được gì!");
         }
@@ -304,8 +313,8 @@ public class BaoCao extends javax.swing.JInternalFrame {
     private javax.swing.JPanel PanelTongHop;
     private javax.swing.JButton btnLoc;
     private javax.swing.JButton btnShow;
+    private javax.swing.JFrame frame;
     private javax.swing.JScrollPane jScrollPane1;
-    private java.awt.Label label1;
     private javax.swing.JLabel lblBaoCaoCuoiNgay;
     private javax.swing.JLabel lblDoanhThu;
     private javax.swing.JLabel lblSPBanIN;

@@ -13,6 +13,7 @@ import com.DungNgoc.entitys.HoaDon;
 import com.DungNgoc.entitys.KhachHang;
 import com.DungNgoc.entitys.MaKhuyenMai;
 import com.DungNgoc.entitys.NhanVien;
+import com.DungNgoc.untils.Xmoney;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
@@ -99,9 +100,9 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
                 txtTimKiemFocusLost(evt);
             }
         });
-        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemActionPerformed(evt);
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
             }
         });
 
@@ -206,15 +207,15 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtTimKiemFocusLost
 
-    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
-        // TODO add your handling code here:
-        this.filltableSearch(this.txtTimKiem.getText());
-    }//GEN-LAST:event_txtTimKiemActionPerformed
-
     private void refeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refeshActionPerformed
         // TODO add your handling code here:
         filltable();
     }//GEN-LAST:event_refeshActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+        filltableSearch(txtTimKiem.getText());
+    }//GEN-LAST:event_txtTimKiemKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -248,10 +249,10 @@ private void init() {
                 hd.getIdBill(),
                 hd.getDateBill(),
                 kh.getName(),
-                df.format(tongthu),
+                Xmoney.moneyToString(tongthu),
                 hd.getPromoCode(),
                 nv.getName(),
-                hd.getTotalMoney()
+                Xmoney.moneyToString(Double.parseDouble(hd.getTotalMoney()))
             };
             dtm.addRow(rd);
         }
@@ -260,22 +261,21 @@ private void init() {
     private void filltableSearch(String id) {
         dtm.setRowCount(0);
         //IdGuest LIKE '%?%' OR IdStaff LIKE '%?%' OR IdBill= ?
-        List<HoaDon> lsthd = hdao.selectBySql("SELECT *FROM HoaDon WHERE IdStaff = ? OR IdGuest = ? OR IdBill= ?" ,id,id,id);
+        List<HoaDon> lsthd = hdao.selectBySql("SELECT *FROM HoaDon WHERE IdStaff like ? OR IdGuest like ? OR IdBill like ?" ,"%"+id+"%","%"+id+"%","%"+id+"%");
         for (int i = 0; i < lsthd.size(); i++) {
             HoaDon hd = (HoaDon) lsthd.get(i);
             KhachHang kh = khdao.selectById(hd.getIdGuest());
             NhanVien nv = nvdao.selectById(hd.getIdStaff());
             MaKhuyenMai km = kmdao.selectById(hd.getPromoCode());
             Double tongthu = (Double.parseDouble(hd.getTotalMoney()) / (100 - km.getValue()) * 100);
-            DecimalFormat df = new DecimalFormat("#.000");
             Object[] rd = new Object[]{
                 hd.getIdBill(),
                 hd.getDateBill(),
                 kh.getName(),
-                df.format(tongthu),
+                Xmoney.moneyToString(tongthu),
                 hd.getPromoCode(),
                 nv.getName(),
-                hd.getTotalMoney()
+                Xmoney.moneyToString(Double.parseDouble(hd.getTotalMoney()))
             };
             dtm.addRow(rd);
         }

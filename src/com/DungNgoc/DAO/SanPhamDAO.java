@@ -21,7 +21,7 @@ public class SanPhamDAO implements DungNgocDAO<SanPham, String> {
     String update = "update SanPham set image=?,note=?,modelId=?,size=?,ram=?,colorId=?,isNew=?,versionId=?,count=?,price=?,date=? where IdProduct=?";
     String disable = "update SanPham set status=0 where IdProduct=?";
     String reStore = "update SanPham set status=1 where IdProduct=?";
-    String select_ID = "select * from SanPham where status=1 AND IdProduct=?";
+    String select_ID = "select * from SanPham where IdProduct=?";
     String select_All = "select * from SanPham where status=1";
     String select_Disable = "select * from SanPham where status=0\n"
             + "order by IdProduct\n"

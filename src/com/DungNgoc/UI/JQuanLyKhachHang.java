@@ -525,7 +525,7 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
 
     private void btnNextPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPageActionPerformed
         // TODO add your handling code here:
-        nextPageRac();
+        nextPage();
     }//GEN-LAST:event_btnNextPageActionPerformed
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
@@ -574,7 +574,7 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
         try {
             List<KhachHang> list = dao.selectByPage(page, txtSerch.getText());
             if (list.size() == 6) {
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 5; i++) {
                     KhachHang tam = list.get(i);
                     model.addRow(new Object[]{tam.getIdGuest(), tam.getName(), Xmoney.moneyToString(tam.getTotalMoney()), tam.getPoint()});
                 }
@@ -623,7 +623,7 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
 
     void updatePage(List<KhachHang> list) {
         boolean prev = page != 0;
-        boolean next = list.size() == 11;
+        boolean next = list.size() == 6;
         btnNextPage.setEnabled(next);
         btnPrevPage.setEnabled(prev);
         lblPage.setText(page + 1 + "");

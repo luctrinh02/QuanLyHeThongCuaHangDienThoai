@@ -277,7 +277,7 @@ public class DangNhap extends javax.swing.JDialog {
     private void btnDangNhap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhap1ActionPerformed
         // TODO add your handling code here:
         if(MsgBox.confirm(this, "Bạn có chắc muốn thoát chương trình!")){
-            dispose();
+            System.exit(0);
         }
     }//GEN-LAST:event_btnDangNhap1ActionPerformed
 

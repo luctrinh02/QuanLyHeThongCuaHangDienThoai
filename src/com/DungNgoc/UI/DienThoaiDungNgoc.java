@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 import javax.swing.Timer;
 
 /**
@@ -77,11 +78,12 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         MniBC = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
 
         toolBar.setRollover(true);
 
         btnDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Exit.png"))); // NOI18N
-        btnDangNhap.setText("Đăng nhập");
+        btnDangNhap.setText("Đăng xuất");
         btnDangNhap.setFocusable(false);
         btnDangNhap.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDangNhap.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -184,7 +186,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
         jMenu1.setText("Tài khoản");
 
-        MniDangNhap.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        MniDangNhap.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_MASK));
         MniDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Lock.png"))); // NOI18N
         MniDangNhap.setText("Đăng nhập");
         MniDangNhap.addActionListener(new java.awt.event.ActionListener() {
@@ -194,7 +196,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         });
         jMenu1.add(MniDangNhap);
 
-        MniDangXuat.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        MniDangXuat.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_MASK));
         MniDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Exit.png"))); // NOI18N
         MniDangXuat.setText("Đăng xuất");
         MniDangXuat.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +207,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         jMenu1.add(MniDangXuat);
         jMenu1.add(jSeparator2);
 
-        MniDoiMK.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        MniDoiMK.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_MASK));
         MniDoiMK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Refresh.png"))); // NOI18N
         MniDoiMK.setText("Đổi mật khẩu");
         MniDoiMK.addActionListener(new java.awt.event.ActionListener() {
@@ -228,7 +230,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
         jMenu2.setText("Quản lý");
 
-        MniNhanVien.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MniNhanVien.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         MniNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/User group.png"))); // NOI18N
         MniNhanVien.setText("Nhân viên");
         MniNhanVien.addActionListener(new java.awt.event.ActionListener() {
@@ -238,7 +240,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         });
         jMenu2.add(MniNhanVien);
 
-        MniKhachHang.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MniKhachHang.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         MniKhachHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Conference.png"))); // NOI18N
         MniKhachHang.setText("Khách hàng");
         MniKhachHang.addActionListener(new java.awt.event.ActionListener() {
@@ -274,7 +276,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
         jMenu3.setText("Thống kê");
 
-        MniDoanhThu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MniDoanhThu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.CTRL_MASK));
         MniDoanhThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Bar chart.png"))); // NOI18N
         MniDoanhThu.setText("Doanh thu");
         MniDoanhThu.addActionListener(new java.awt.event.ActionListener() {
@@ -284,7 +286,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         });
         jMenu3.add(MniDoanhThu);
 
-        MniTKSP.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MniTKSP.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, java.awt.event.InputEvent.CTRL_MASK));
         MniTKSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Money.png"))); // NOI18N
         MniTKSP.setText("Sản phẩm");
         MniTKSP.addActionListener(new java.awt.event.ActionListener() {
@@ -294,7 +296,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         });
         jMenu3.add(MniTKSP);
 
-        MniTKKH.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MniTKKH.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, java.awt.event.InputEvent.CTRL_MASK));
         MniTKKH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Conference.png"))); // NOI18N
         MniTKKH.setText("Khách hàng");
         MniTKKH.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +306,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         });
         jMenu3.add(MniTKKH);
 
-        MniTKNV.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MniTKNV.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, java.awt.event.InputEvent.CTRL_MASK));
         MniTKNV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/User group.png"))); // NOI18N
         MniTKNV.setText("Nhân viên");
         MniTKNV.addActionListener(new java.awt.event.ActionListener() {
@@ -315,7 +317,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
         jMenu3.add(MniTKNV);
         jMenu3.add(jSeparator5);
 
-        MniBC.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        MniBC.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, java.awt.event.InputEvent.SHIFT_MASK));
         MniBC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/DungNgoc/icons/Price list.png"))); // NOI18N
         MniBC.setText("Báo cáo");
         MniBC.addActionListener(new java.awt.event.ActionListener() {
@@ -520,9 +522,9 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     void openNhanVieṇ() {
         if (Auth.isLogin()) {
+            closeAll();
             JQuanLyNhanVien qlnv = new JQuanLyNhanVien();
             this.DesktopMain.add(qlnv);
-            qlnv.setSize(700, 500);
             qlnv.setVisible(true);
             qlnv.setLocation(this.getWidth() / 2 - qlnv.getWidth() / 2, (this.getHeight() - 40) / 2 - qlnv.getHeight() / 2 - 50);
         } else {
@@ -532,6 +534,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void openKhachHang() {
         if (Auth.isLogin()) {
+            closeAll();
             JQuanLyKhachHang qlkh = new JQuanLyKhachHang();
             this.DesktopMain.add(qlkh);
             qlkh.setVisible(true);
@@ -544,6 +547,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void openKhuyenMai() {
         if (Auth.isLogin()) {
+            closeAll();
             JQuanLyMaKhuyenMai qlkm = new JQuanLyMaKhuyenMai();
             this.DesktopMain.add(qlkm);
             qlkm.setVisible(true);
@@ -556,6 +560,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void openSanPham() {
         if (Auth.isLogin()) {
+            closeAll();
             JQuanLySanPham qlsp = new JQuanLySanPham();
             this.DesktopMain.add(qlsp);
             qlsp.setVisible(true);
@@ -567,6 +572,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void openHoaDon() {
         if (Auth.isLogin()) {
+            closeAll();
             JDanhSachHoaDon qlhd = new JDanhSachHoaDon();
             this.DesktopMain.add(qlhd);
             qlhd.setVisible(true);
@@ -628,7 +634,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
     private void openDoanhThu() {
         if (Auth.isLogin()) {
             if (Auth.isManager()) {
-                ThongKeDoanhThu.chart();
+                new JThongKeDoanhThu(this, true).setVisible(true);
             } else {
                 MsgBox.alert(this, "Bạn không có quyền xem doanh thu");
             }
@@ -656,6 +662,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void openDangNhap() {
         if (Auth.isLogin()) {
+            closeAll();
             MsgBox.alert(this, "Bạn đã đăng nhập");
         } else {
             new DangNhap(this, true).setVisible(true);
@@ -664,6 +671,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void openDoiMK() {
         if (Auth.isLogin()) {
+            closeAll();
             new DoiMatKhau(this, true).setVisible(true);
         } else {
             MsgBox.alert(this, "Bạn chưa đăng nhập");
@@ -679,6 +687,7 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
 
     private void DangXuat() {
         if (Auth.isLogin()) {
+            closeAll();
             Auth.clear();
             new DangNhap(this, true).setVisible(true);
         } else {
@@ -692,6 +701,11 @@ public class DienThoaiDungNgoc extends javax.swing.JFrame {
             new DangNhap(this, true).setVisible(true);
         } else {
             new DangNhap(this, true).setVisible(true);
+        }
+    }
+    void closeAll(){
+        for(JInternalFrame x:DesktopMain.getAllFrames()){
+            x.dispose();
         }
     }
 }

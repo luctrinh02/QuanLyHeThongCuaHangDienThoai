@@ -20,7 +20,6 @@ import com.DungNgoc.entitys.Mau;
 import com.DungNgoc.entitys.NhanVien;
 import com.DungNgoc.entitys.SanPham;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
