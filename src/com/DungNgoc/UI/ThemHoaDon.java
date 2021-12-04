@@ -97,8 +97,8 @@ public class ThemHoaDon extends javax.swing.JDialog {
         btnXoa = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         lblThanhTien = new javax.swing.JLabel();
-        txtKhuyenMai = new javax.swing.JTextField();
         btnChon = new javax.swing.JButton();
+        lblKhuyenMai = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -283,6 +283,8 @@ public class ThemHoaDon extends javax.swing.JDialog {
             }
         });
 
+        lblKhuyenMai.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -294,14 +296,13 @@ public class ThemHoaDon extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnChon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel7)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5)))
+                                    .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -359,8 +360,8 @@ public class ThemHoaDon extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(txtKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChon))
+                    .addComponent(btnChon)
+                    .addComponent(lblKhuyenMai, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkDiem)
@@ -371,7 +372,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThanhToan))
@@ -460,7 +461,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         // TODO add your handling code here:
         new ChonKhuyenMai(null, true).setVisible(true);
-        txtKhuyenMai.setText(ChonKhuyenMai.promocode);
+        lblKhuyenMai.setText(ChonKhuyenMai.promocode);
         thanhTien(tong);
     }//GEN-LAST:event_btnChonActionPerformed
 
@@ -512,8 +513,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
         prepareDanhSachGUI();
         fillTableSanPham();
         prepareHoaDonGUI();
-        txtKhuyenMai.setText("None");
-        txtKhuyenMai.setEnabled(false);
+        lblKhuyenMai.setText("None");
         tabs.setSelectedIndex(1);
         updateStatus();
         txtNhanVien.setEditable(false);
@@ -707,7 +707,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
             thanhTien = tong;
             point = 0.001 * tong / 100 + diem;
         }
-        MaKhuyenMai km=kmDao.selectById(txtKhuyenMai.getText());
+        MaKhuyenMai km=kmDao.selectById(lblKhuyenMai.getText());
         thanhTien=(100-km.getValue())*thanhTien/100;
         lblThanhTien.setText(Xmoney.moneyToString(thanhTien));
     }
@@ -767,7 +767,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
         }
     }
     void hoaDon(){
-        String maKM=txtKhuyenMai.getText();
+        String maKM=lblKhuyenMai.getText();
         HoaDon hd=new HoaDon(0, txtSDT.getText(), Xdate.toString(new Date(), "yyyy-MM-dd"), tong+"", maKM, chkDiem.isSelected(), Auth.user.getIdStaff());
         try {
             hdDao.insert(hd);
@@ -812,6 +812,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblKhuyenMai;
     private javax.swing.JLabel lblPage;
     private javax.swing.JLabel lblThanhTien;
     private javax.swing.JLabel lblTongTien;
@@ -819,7 +820,6 @@ public class ThemHoaDon extends javax.swing.JDialog {
     private javax.swing.JTable tblHoaDon;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JTextField txtHoTen;
-    private javax.swing.JTextField txtKhuyenMai;
     private javax.swing.JTextField txtNgayMua;
     private javax.swing.JTextField txtNhanVien;
     private javax.swing.JTextField txtSDT;
