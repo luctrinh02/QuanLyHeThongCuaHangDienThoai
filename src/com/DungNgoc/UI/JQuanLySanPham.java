@@ -73,6 +73,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
 
         groupTrangThai = new javax.swing.ButtonGroup();
         frame = new javax.swing.JFrame();
+        popup = new javax.swing.JPopupMenu();
+        Refesh = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         tabs = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -163,7 +165,17 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        Refesh.setText("Refesh");
+        Refesh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefeshActionPerformed(evt);
+            }
+        });
+        popup.add(Refesh);
+
         setClosable(true);
+
+        jPanel1.setComponentPopupMenu(popup);
 
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1116,8 +1128,18 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         txtTenSP.setText(cbbLoaiMay.getSelectedItem().toString());
     }//GEN-LAST:event_cbbLoaiMayMouseEntered
 
+    private void RefeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefeshActionPerformed
+        // TODO add your handling code here:
+        fillHangMay();
+        fillDongMay(0);
+        fillLoaiMay(0);
+        fillPhienBan();
+        fillMau();
+    }//GEN-LAST:event_RefeshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Refesh;
     private javax.swing.JButton btnCuoi;
     private javax.swing.JButton btnDau;
     private javax.swing.JButton btnKhoiPhuc;
@@ -1188,6 +1210,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblSoLuong;
     private javax.swing.JLabel lblTenSP;
     private javax.swing.JLabel lblTinhTrang;
+    private javax.swing.JPopupMenu popup;
     private javax.swing.JRadioButton radioMayCu;
     private javax.swing.JRadioButton radioMayMoi;
     private javax.swing.JTabbedPane tabs;
@@ -1301,6 +1324,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             listPB.clear();
         } catch (Exception e) {
         }
+        cbbLoaiMay1.removeAllItems();
+        cbbLoaiMay1.addItem("");
         listPB = pbdao.selectAll();
         for (PhienBan x : listPB) {
             cbbPhienBan1.addItem(x.getName());
@@ -1365,8 +1390,15 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         String ram = cbbRAM1.getSelectedItem() == null ? "" : cbbRAM1.getSelectedItem() + "";
         String dungLuong = cbbDungLuong1.getSelectedItem() == null ? "" : cbbDungLuong1.getSelectedItem() + "";
         list = sptdao.select(txtTim.getText(), hang, dong, loai, phienBan, ram, dungLuong, page);
-        for (SanPhamTable x : list) {
-            model.addRow(new Object[]{x.getMa(), x.getTen(), x.getRam(), x.getDungLuong(), x.getMau(), x.isTinhTrang() ? "Mới" : "Cũ", Xmoney.moneyToString(x.getGia()), x.getSoLuong()});
+        if (list.size() == 21) {
+            for(int i=0;i<20;i++){
+                SanPhamTable x=list.get(i);
+                model.addRow(new Object[]{x.getMa(), x.getTen(), x.getRam(), x.getDungLuong(), x.getMau(), x.isTinhTrang() ? "Mới" : "Cũ", Xmoney.moneyToString(x.getGia()), x.getSoLuong()});
+            }
+        } else {
+            for (SanPhamTable x : list) {
+                model.addRow(new Object[]{x.getMa(), x.getTen(), x.getRam(), x.getDungLuong(), x.getMau(), x.isTinhTrang() ? "Mới" : "Cũ", Xmoney.moneyToString(x.getGia()), x.getSoLuong()});
+            }
         }
         updatePage(list);
     }
@@ -1608,7 +1640,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Sửa thất bại");
             Exceptions.writeException(e, "Lỗi");
         }
-        
+
     }
 
     private void delete() {
