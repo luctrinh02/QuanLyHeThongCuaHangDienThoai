@@ -668,7 +668,7 @@ public class JQuanLyNhanVien extends javax.swing.JInternalFrame {
     }
 
     public NhanVien getForm() {
-        return new NhanVien(txtMa.getText(), txtTen.getText(), txtCanCuoc.getText(), txtSDT.getText(), txtEmail.getText());
+        return new NhanVien(txtMa.getText().trim(), txtTen.getText().trim(), txtCanCuoc.getText().trim(), txtSDT.getText().trim(), txtEmail.getText().trim());
     }
 
     public void setForm(NhanVien nv) {
@@ -785,21 +785,25 @@ public class JQuanLyNhanVien extends javax.swing.JInternalFrame {
             }
         }
     }
-
+    
     public boolean validateForm() {
-        if ("".equals(txtMa.getText()) || "".equals(txtEmail.getText()) || "".equals(txtCanCuoc.getText()) || "".equals(txtSDT.getText()) || "".equals(txtTen.getText())) {
+        String x="[a-zA-z0-9]+$";
+        if ("".equals(txtMa.getText().trim()) || "".equals(txtEmail.getText()) || "".equals(txtCanCuoc.getText()) || "".equals(txtSDT.getText()) || "".equals(txtTen.getText().trim())) {
             MsgBox.alert(this, "Không bỏ trống dữ liệu");
             return false;
-        } else if (Xcheck.isNotName(txtTen.getText())) {
+        } else if(!txtMa.getText().trim().matches(x)){
+            MsgBox.alert(this, "Mã không chứa kí tự đặc biệt");
+            return false;
+        }else if (Xcheck.isNotName(txtTen.getText().trim())) {
             MsgBox.alert(this, "Tên không đúng định dạng");
             return false;
-        } else if (!Xcheck.isCCCD(txtCanCuoc.getText())) {
+        } else if (!Xcheck.isCCCD(txtCanCuoc.getText().trim())) {
             MsgBox.alert(this, "Căn cước không đúng định dạng");
             return false;
-        } else if (!Xcheck.isSDT(txtSDT.getText())) {
+        } else if (!Xcheck.isSDT(txtSDT.getText().trim())) {
             MsgBox.alert(this, "Số điện thoại không đúng định dạng");
             return false;
-        } else if (!Xcheck.isEmail(txtEmail.getText())) {
+        } else if (!Xcheck.isEmail(txtEmail.getText().trim())) {
             MsgBox.alert(this, "Email không đúng định dạng");
             return false;
         } else {
