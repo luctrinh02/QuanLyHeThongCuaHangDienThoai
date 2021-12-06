@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,12 +21,12 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
     KhuyenMaiDAO dao = new KhuyenMaiDAO();
     int row = -1;
     int index, page = 0, pageRac = 0;
+
     public JQuanLyMaKhuyenMai() {
         initComponents();
         init();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -265,17 +263,17 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtMaKM))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(txtGiaTri))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtMaKM, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                            .addComponent(txtGiaTri))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -417,11 +415,11 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhuyenMaiMouseClicked
-       if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() == 2) {
             row = tblKhuyenMai.getSelectedRow();
             this.edit();
             tabs.setSelectedIndex(1);
-            
+
         }
     }//GEN-LAST:event_tblKhuyenMaiMouseClicked
 
@@ -438,7 +436,7 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
-         clearForm();
+        clearForm();
     }//GEN-LAST:event_btnMoiActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
@@ -529,19 +527,20 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
         this.setLocation(100, 100);
         this.fillTable();
         this.fillTableRac();
-        this.row =-1;
+        this.row = -1;
         this.updateStatus();
-        
+
     }
-    void fillTable(){
+
+    void fillTable() {
         DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
         model.setRowCount(0);
         try {
             List<MaKhuyenMai> lst = dao.selectByPage(page);
             for (MaKhuyenMai x : lst) {
                 Object[] rdt = new Object[]{
-                  x.getPromoCode(),
-                  x.getValue()
+                    x.getPromoCode(),
+                    x.getValue()
                 };
                 model.addRow(rdt);
             }
@@ -550,6 +549,7 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }
+
     public void fillTableRac() {
         DefaultTableModel modelRac = (DefaultTableModel) tblThungRac.getModel();
         modelRac.setRowCount(0);
@@ -571,23 +571,32 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }
-//    void updatePageRac(List<MaKhuyenMai> list) {
-//        boolean prev = page != 0;
-//        boolean next = list.size() == 11;
-//        btnNextRac.setEnabled(next);
-//        btnPrevRac.setEnabled(prev);
-//
-//    }
-    void setForm(MaKhuyenMai km){
+
+    void setForm(MaKhuyenMai km) {
         txtMaKM.setText(km.getPromoCode());
-        txtGiaTri.setText(km.getValue()+"");
+        txtGiaTri.setText(km.getValue() + "");
     }
-    MaKhuyenMai getForm(){
+
+    MaKhuyenMai getForm() {
         MaKhuyenMai km = new MaKhuyenMai();
+        if (txtGiaTri.getText().trim().length() == 0 || txtMaKM.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Không được để trống!");
+            return null;
+        }
+
+        if (!txtMaKM.getText().trim().matches("^[a-zA-Z0-9]{1,7}$")) {
+            MsgBox.alert(this, "Mã khuyến mãi không hợp lệ!");
+            return null;
+        }
+        if (!txtGiaTri.getText().trim().matches("^[0-9]{1,2}")) {
+            MsgBox.alert(this, "Giá trị mã khuyến mãi không hợp lệ!");
+            return null;
+        }
         km.setPromoCode(txtMaKM.getText());
         km.setValue(Integer.parseInt(txtGiaTri.getText()));
         return km;
     }
+
     public void clearForm() {
         MaKhuyenMai km = new MaKhuyenMai();
         this.setForm(km);
@@ -599,7 +608,7 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
         String maKM = tblKhuyenMai.getValueAt(this.row, 0) + "";
         MaKhuyenMai km = dao.selectById(maKM);
         this.setForm(km);
-        
+
         this.updateStatus();
     }
 
@@ -637,63 +646,76 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
         btnSua.setEnabled(edit);
         btnXoa.setEnabled(edit);
 
-        
         btnDau.setEnabled(edit && !first);
         btnLui.setEnabled(edit && !first);
         btnTien.setEnabled(edit && !last);
         btnCuoi.setEnabled(edit && !last);
-       
+
     }
 
     public void insert() {
         MaKhuyenMai km = getForm();
-        if (validateForm()) {
-            try {
-                dao.insert(km);
-                page = 0;
-                this.fillTable();
-                this.clearForm();
-                MsgBox.alert(this, "Thêm thành công");
-            } catch (Exception e) {
-                MsgBox.alert(this, "Thêm thất bại");
-                Exceptions.writeException(e, getForm().toString());
-                e.printStackTrace();
+        if (km == null) {
+            return;
+        }
+        List<MaKhuyenMai> list = this.dao.selectAll();
+        for (int i = 0; i < list.size(); i++) {
+            
+            if (list.get(i).getPromoCode().equals(km.getPromoCode())) {
+                MsgBox.alert(this, "Mã khuyến mãi đã tồn tại!");
+                return;
             }
+        }
+        try {
+            dao.insert(km);
+            page = 0;
+            this.fillTable();
+            this.clearForm();
+            MsgBox.alert(this, "Thêm thành công");
+        } catch (Exception e) {
+            MsgBox.alert(this, "Thêm thất bại");
+            Exceptions.writeException(e, getForm().toString());
+            e.printStackTrace();
+
         }
     }
 
     public void update() {
         MaKhuyenMai nv = getForm();
-        if (validateForm()) {
-            try {
-                dao.update(nv);
-                this.fillTable();
-                this.clearForm();
-                MsgBox.alert(this, "Cập nhật thành công");
-            } catch (Exception e) {
-                MsgBox.alert(this, "Cập nhật thất bại");
-                Exceptions.writeException(e, getForm().toString());
-            }
+        if (nv == null) {
+            return;
+        }
+        try {
+            dao.update(nv);
+            this.fillTable();
+            this.clearForm();
+            MsgBox.alert(this, "Cập nhật thành công");
+        } catch (Exception e) {
+            MsgBox.alert(this, "Cập nhật thất bại");
+            Exceptions.writeException(e, getForm().toString());
+
         }
     }
+
     public void disableKM() {
         String maKM = txtMaKM.getText();
         //MaKhuyenMai tam = dao.selectById(maKM);    
-            try {
-                dao.disable(maKM.trim());
-                page = 0;
-                pageRac = 0;
-                this.fillTable();
-                this.fillTableRac();
-                this.clearForm();
-                MsgBox.alert(this, "Vô hiệu thành công");
-            } catch (Exception e) {
-                MsgBox.alert(this, "Vô hiệu thất bại");
-                Exceptions.writeException(e, getForm().toString());
-                e.printStackTrace();
-            }
-        
+        try {
+            dao.disable(maKM.trim());
+            page = 0;
+            pageRac = 0;
+            this.fillTable();
+            this.fillTableRac();
+            this.clearForm();
+            MsgBox.alert(this, "Vô hiệu thành công");
+        } catch (Exception e) {
+            MsgBox.alert(this, "Vô hiệu thất bại");
+            Exceptions.writeException(e, getForm().toString());
+            e.printStackTrace();
+        }
+
     }
+
     public void phucHoi() {
         int[] rows = tblThungRac.getSelectedRows();
         for (int i : rows) {
@@ -708,15 +730,6 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
         fillTable();
         btnKhoiPhuc.setEnabled(false);
     }
-    public boolean validateForm() {
-        if ("".equals(txtMaKM.getText()) || "".equals(txtGiaTri.getText()) ) {
-            MsgBox.alert(this, "Không bỏ trống dữ liệu");
-            return false;
-        
-        } else {
-            return true;
-        }
-    }
 
     void nextPage() {
         page++;
@@ -727,6 +740,7 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
         page--;
         fillTable();
     }
+
     void nextPageRac() {
         page++;
         fillTableRac();
