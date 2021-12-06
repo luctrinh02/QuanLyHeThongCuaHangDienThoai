@@ -1561,7 +1561,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Không để trống ảnh");
             return null;
         }
-        sp.setIdProduct(txtMaSP.getText());
+        sp.setIdProduct(txtMaSP.getText().trim());
         sp.setImage(lblAnh.getToolTipText());
         sp.setModelId(lm.getModelId());
         sp.setSize(String.valueOf(cbbDungLuong.getSelectedItem()));
@@ -1569,8 +1569,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         sp.setColorId(mau.getColorId());
         sp.setIsnew(radioMayMoi.isSelected());
         sp.setVersionId(pb.getVersionId());
-        sp.setCount(Integer.parseInt(txtSoLuong.getText()));
-        sp.setPrice(Double.parseDouble(txtGiaSP.getText()));
+        sp.setCount(Integer.parseInt(txtSoLuong.getText().trim()));
+        sp.setPrice(Double.parseDouble(txtGiaSP.getText().trim()));
         sp.setDateAdd(Xdate.now());
         return sp;
     }
