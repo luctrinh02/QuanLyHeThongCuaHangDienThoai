@@ -99,7 +99,7 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
             ResultSet rs = Xjdbc.query(sql, mail);
             rs.next();
             boolean check=rs.getInt(1)!=0;
-            rs.getStatement().getConnection().close();
+//            rs.getStatement().getConnection().close();
             return check;
         } catch (Exception e) {
             throw new RuntimeException(e);

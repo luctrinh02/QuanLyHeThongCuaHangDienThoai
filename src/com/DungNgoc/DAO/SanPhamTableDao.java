@@ -58,4 +58,11 @@ public class SanPhamTableDao {
         List<SanPhamTable> list=selectBySql(sql, id);
         return list.isEmpty()?null:list.get(0);
     }
+    public SanPhamTable selectByTraHangId(String id){
+        String sql="select IdProduct,b.name,ram,size, e.colorName,a.isNew,a.price,a.count\n"
+                + "from SanPham a join LoaiMay b on a.modelId=b.modelId join DongMay c on b.tag=c.tag join HangMay d on c.typeId=d.typeId join Mau e on a.colorId=e.colorid join PhienBan f on a.versionId = f.versionId\n"
+                + "where status = 1 and IdProduct = ?";
+        List<SanPhamTable> list=selectBySql(sql, id);
+        return list.isEmpty()?null:list.get(0);
+    }
 }
