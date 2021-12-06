@@ -960,7 +960,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addComponent(lblQLSP)
                 .addGap(7, 7, 7)
-                .addComponent(tabs))
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1217,6 +1217,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         fillMau();
 //        txtTenSP.setText(cbbLoaiMay.getSelectedItem().toString());
         updateStatus();
+        radioMayMoi.setSelected(true);
     }
 
     void fillRam() {
@@ -1556,8 +1557,9 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Số lượng phải lớn hơn 0");
             return null;
         }
-        if (lblAnh.getToolTipText().isEmpty()) {
+        if (lblAnh.getIcon() == null) {
             MsgBox.alert(this, "Không để trống ảnh");
+            return null;
         }
         sp.setIdProduct(txtMaSP.getText());
         sp.setImage(lblAnh.getToolTipText());

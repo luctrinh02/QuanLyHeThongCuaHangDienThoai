@@ -73,7 +73,7 @@
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="lblQLSP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                  <Component id="tabs" max="32767" attributes="0"/>
+                  <Component id="tabs" pref="521" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
