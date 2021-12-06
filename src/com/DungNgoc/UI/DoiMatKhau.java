@@ -324,7 +324,10 @@ public class DoiMatKhau extends javax.swing.JDialog {
         if(matKhauCu.length()==0 || matKhauMoi.length()==0 || xacNhan.length()==0){
             MsgBox.alert(this, "Không bỏ trống!");
             return false;
-        }else if(XpassWord.isCompareToHash(matKhauMoi, Auth.user)){
+        }if(matKhauMoi.contains(" ")){
+            MsgBox.alert(this, "mật khẩu không chứa dấu cách");
+            return false;
+        }else if(XpassWord.isCompareToHash(matKhauCu, Auth.user)==false){
             MsgBox.alert(this, "Mật khẩu cũ sai");
             return false;
         }else if(matKhauMoi.length()<6 || matKhauMoi.length()>18){
@@ -352,7 +355,7 @@ public class DoiMatKhau extends javax.swing.JDialog {
             tam.setSalt(saltHash[0]);
             tam.setHash(saltHash[1]);
             try {
-                dao.update(tam);
+                dao.updatepass(tam);
                 MsgBox.alert(this, "Đổi mật khẩu thành công");
                 dangXuat();
             } catch (Exception e) {
