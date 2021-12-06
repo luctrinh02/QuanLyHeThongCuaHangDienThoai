@@ -972,7 +972,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addComponent(lblQLSP)
                 .addGap(7, 7, 7)
-                .addComponent(tabs))
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1240,6 +1240,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         fillMau();
 //        txtTenSP.setText(cbbLoaiMay.getSelectedItem().toString());
         updateStatus();
+        radioMayMoi.setSelected(true);
     }
 
     void fillRam() {
@@ -1568,10 +1569,6 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Giá phải là số");
             return null;
         }
-        if (!txtGiaSP.getText().trim().matches("^[1-9][0-9]+$|[1-9]")) {
-            MsgBox.alert(this, "Giá không bắt đầu từ 0");
-            return null;
-        }
         if (Double.parseDouble(txtGiaSP.getText().trim()) <= 0) {
             MsgBox.alert(this, "Giá phải lớn hơn 0");
             return null;
@@ -1580,18 +1577,15 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Số lượng phải là số ");
             return null;
         }
-        if (!txtSoLuong.getText().trim().matches("^[1-9][0-9]+$|[1-9]")) {
-            MsgBox.alert(this, "Số lượng không bắt đầu từ 0");
-            return null;
-        }
         if (Integer.parseInt(txtSoLuong.getText().trim()) <= 0) {
             MsgBox.alert(this, "Số lượng phải lớn hơn 0");
             return null;
         }
-        if (lblAnh.getToolTipText().isEmpty()) {
+        if (lblAnh.getIcon() == null) {
             MsgBox.alert(this, "Không để trống ảnh");
+            return null;
         }
-        sp.setIdProduct(txtMaSP.getText());
+        sp.setIdProduct(txtMaSP.getText().trim());
         sp.setImage(lblAnh.getToolTipText());
         sp.setModelId(lm.getModelId());
         sp.setSize(String.valueOf(cbbDungLuong.getSelectedItem()));
@@ -1599,8 +1593,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         sp.setColorId(mau.getColorId());
         sp.setIsnew(radioMayMoi.isSelected());
         sp.setVersionId(pb.getVersionId());
-        sp.setCount(Integer.parseInt(txtSoLuong.getText()));
-        sp.setPrice(Double.parseDouble(txtGiaSP.getText()));
+        sp.setCount(Integer.parseInt(txtSoLuong.getText().trim()));
+        sp.setPrice(Double.parseDouble(txtGiaSP.getText().trim()));
         sp.setDateAdd(Xdate.now());
         return sp;
     }
