@@ -1498,7 +1498,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         if (sp.isIsnew()) {
             radioMayMoi.setSelected(true);
         } else {
-            radioMayMoi.setSelected(true);
+            radioMayCu.setSelected(true);
         }
 
     }

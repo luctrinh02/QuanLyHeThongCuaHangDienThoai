@@ -9,6 +9,7 @@ import com.DungNgoc.DAO.MauDAO;
 import com.DungNgoc.entitys.Mau;
 import com.DungNgoc.untils.Exceptions;
 import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Xcheck;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -241,6 +242,14 @@ public class JMau extends javax.swing.JDialog {
     }
 
     Mau getForm() {
+        if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+            MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
+        if (Xcheck.isNotName(txtMau.getText().trim())) {
+            MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
         return new Mau(txtMa.getText(), txtMau.getText());
     }
 

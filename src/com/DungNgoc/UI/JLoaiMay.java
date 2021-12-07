@@ -13,6 +13,7 @@ import com.DungNgoc.entitys.HangMay;
 import com.DungNgoc.entitys.LoaiMay;
 import com.DungNgoc.untils.Exceptions;
 import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Xcheck;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -335,6 +336,10 @@ public class JLoaiMay extends javax.swing.JDialog {
 
     LoaiMay getForm() {
         LoaiMay lm = new LoaiMay();
+        if (Xcheck.isNotName(txtLoaiMay.getText().trim())) {
+            MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
         lm.setName(txtLoaiMay.getText());
         lm.setTag(listDM.get(cbbDongMay.getSelectedIndex()).getTag());
         return lm;
