@@ -15,7 +15,6 @@ import com.DungNgoc.entitys.HoaDon;
 import com.DungNgoc.entitys.HoaDonChiTiet;
 import com.DungNgoc.entitys.KhachHang;
 import com.DungNgoc.entitys.MaKhuyenMai;
-import com.DungNgoc.entitys.SanPham;
 import com.DungNgoc.entitys.SanPhamTable;
 import com.DungNgoc.untils.Auth;
 import com.DungNgoc.untils.Exceptions;
@@ -23,10 +22,19 @@ import com.DungNgoc.untils.MsgBox;
 import com.DungNgoc.untils.Xcheck;
 import com.DungNgoc.untils.Xdate;
 import com.DungNgoc.untils.Xmoney;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,13 +50,14 @@ public class ThemHoaDon extends javax.swing.JDialog {
     SanPhamDAO spDAO = new SanPhamDAO();
     HoaDonChiTietDAO hdctDAO = new HoaDonChiTietDAO();
     KhachHangDAO khDAO = new KhachHangDAO();
-    KhuyenMaiDAO kmDao=new KhuyenMaiDAO();
+    KhuyenMaiDAO kmDao = new KhuyenMaiDAO();
     DefaultTableModel modelSP;
     DefaultTableModel modelHoaDOn;
     List<SanPhamTable> listHD = new ArrayList<>();
     boolean isUpdate = false;
     double point = 0;
     double tong = 0.0;
+
     /**
      * Creates new form ThemHoaDon
      */
@@ -357,11 +366,12 @@ public class ThemHoaDon extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(btnChon)
-                    .addComponent(lblKhuyenMai, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblKhuyenMai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addComponent(btnChon)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkDiem)
@@ -683,8 +693,9 @@ public class ThemHoaDon extends javax.swing.JDialog {
             chkDiem.setEnabled(false);
         }
     }
+
     void tongTien() {
-        tong=0;
+        tong = 0;
         for (SanPhamTable x : listHD) {
             tong += (Double.parseDouble(x.getSoLuong() + "") * Double.parseDouble(x.getGia() + ""));
         }
@@ -707,8 +718,8 @@ public class ThemHoaDon extends javax.swing.JDialog {
             thanhTien = tong;
             point = 0.001 * tong / 100 + diem;
         }
-        MaKhuyenMai km=kmDao.selectById(lblKhuyenMai.getText());
-        thanhTien=(100-km.getValue())*thanhTien/100;
+        MaKhuyenMai km = kmDao.selectById(lblKhuyenMai.getText());
+        thanhTien = (100 - km.getValue()) * thanhTien / 100;
         lblThanhTien.setText(Xmoney.moneyToString(thanhTien));
     }
 
@@ -726,6 +737,8 @@ public class ThemHoaDon extends javax.swing.JDialog {
         hoaDonChiTiet();
         //sửa thông tin sản phẩm
         sanPham();
+        //xuất hoá đơn
+        xuatHoaDon("HD"+hdDao.selectId()+"_"+Xdate.toString(new Date(), "yyMMdd"));
         //đóng form
         dispose();
     }
@@ -766,18 +779,20 @@ public class ThemHoaDon extends javax.swing.JDialog {
             return true;
         }
     }
-    void hoaDon(){
-        String maKM=lblKhuyenMai.getText();
-        HoaDon hd=new HoaDon(0, txtSDT.getText(), Xdate.toString(new Date(), "yyyy-MM-dd"), tong+"", maKM, chkDiem.isSelected(), Auth.user.getIdStaff());
+
+    void hoaDon() {
+        String maKM = lblKhuyenMai.getText();
+        HoaDon hd = new HoaDon(0, txtSDT.getText(), Xdate.toString(new Date(), "yyyy-MM-dd"), tong + "", maKM, chkDiem.isSelected(), Auth.user.getIdStaff());
         try {
             hdDao.insert(hd);
         } catch (Exception e) {
             Exceptions.writeException(e, hd.toString());
         }
     }
-    void hoaDonChiTiet(){
-        for(SanPhamTable x:listHD){
-            HoaDonChiTiet hdct=new HoaDonChiTiet(hdDao.selectId(), x.getMa(), x.getSoLuong(), x.getGia());
+
+    void hoaDonChiTiet() {
+        for (SanPhamTable x : listHD) {
+            HoaDonChiTiet hdct = new HoaDonChiTiet(hdDao.selectId(), x.getMa(), x.getSoLuong(), x.getGia());
             try {
                 hdctDAO.insert(hdct);
             } catch (Exception e) {
@@ -786,9 +801,86 @@ public class ThemHoaDon extends javax.swing.JDialog {
         }
         MsgBox.alert(this, "Thanh toán thành công!");
     }
-    void sanPham(){
-        for(SanPhamTable x:listHD){
+
+    void sanPham() {
+        for (SanPhamTable x : listHD) {
             spDAO.updateSL(x.getMa(), x.getSoLuong());
+        }
+    }
+
+    void xuatHoaDon(String name) {
+        try {
+            BaseFont bf = BaseFont.createFont("c:\\windows\\fonts\\times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            //khởi tạo dc
+            Document dc = new Document();
+            //tạo font tiếng việt
+            Font header = new Font(bf, 40, Font.BOLD, BaseColor.BLUE);//header
+            Font headerTB = new Font(bf, 14, Font.BOLD, BaseColor.BLACK);//headertbale
+            Font tiny = new Font(bf, 10, Font.UNDERLINE, BaseColor.GRAY);
+            Font text = new Font(bf, 14, Font.NORMAL, BaseColor.BLACK);//normal text
+            Font textTB = new Font(bf, 12, Font.NORMAL, BaseColor.BLACK);//normal text table
+            PdfWriter.getInstance(dc, new FileOutputStream("hoaDon/" + name + ".pdf"));
+            dc.open();
+            //nội dung
+            Paragraph[] p = new Paragraph[7];
+            p[0] = new Paragraph("Dũng Ngọc Mobile", header);
+            p[0].setAlignment(Element.ALIGN_CENTER);
+            p[0].setSpacingBefore(12);
+            p[1] = new Paragraph("HOÁ ĐƠN BÁN HÀNG", tiny);
+            p[1].setAlignment(Element.ALIGN_CENTER);
+            p[1].setSpacingBefore(5);
+            p[2] = new Paragraph("Số điện thoại: " + txtSDT.getText(), text);
+            p[2].setAlignment(Element.ALIGN_LEFT);
+            p[3] = new Paragraph("Tên khách hàng: " + txtHoTen.getText(), text);
+            p[3].setAlignment(Element.ALIGN_LEFT);
+            p[4] = new Paragraph("Ngày mua hàng: " + Xdate.toString(new Date(), "dd/MM/yyyy"), text);
+            p[4].setAlignment(Element.ALIGN_LEFT);
+            p[5] = new Paragraph("Họ tên nhân viên: " + txtNhanVien.getText(), text);
+            p[5].setAlignment(Element.ALIGN_LEFT);
+            p[6] = new Paragraph("Danh sách sản phẩm: ", text);
+            p[6].setAlignment(Element.ALIGN_LEFT);
+            p[6].setSpacingAfter(20);
+            //add nội dung
+            for (int i = 0; i < 7; i++) {
+                dc.add(p[i]);
+            }
+            //table
+            //Khởi tạo một table có 3 cột
+            PdfPTable table = new PdfPTable(8);
+            //Khởi tạo ô header và thêm vào table
+            String h[] = {"Mã máy", "Tên máy", "Ram", "Dung Luọng", "Màu", "Tình trạng", "Giá", "Số lượng"};
+            PdfPCell title[] = new PdfPCell[8];
+            for (int i = 0; i < 8; i++) {
+                title[i] = new PdfPCell(new Paragraph(h[i], headerTB));
+                title[i].setPaddingLeft(2.0f);
+                table.addCell(title[i]);
+            }
+            //Khởi tạo  ô data và thêm vào bảng
+            for (int i = 0; i < tblHoaDon.getRowCount(); i++) {
+                for (int j = 0; j < 8; j++) {
+                    PdfPCell data = new PdfPCell(new Paragraph(tblHoaDon.getValueAt(i, j) + "", textTB));
+                    table.addCell(data);
+                }
+            }
+            float[] withsKM = {1.2f, 2.3f, 0.8f, 1.7f, 1f, 1.6f, 1.6f, 1.3f};
+            table.setWidths(withsKM);
+            table.setWidthPercentage(100);
+            dc.add(table);
+            //thêm nội dung tiền
+            Paragraph[] pp = new Paragraph[5];
+            p[0] = new Paragraph("Tổng tiền: " + lblTongTien.getText(), text);
+            p[1] = new Paragraph("Mã giảm giá: " + lblKhuyenMai.getText(), text);
+            p[2] = new Paragraph("Điểm thưởng: " + (chkDiem.isSelected() ? chkDiem.getText() : "0"), text);
+            p[3] = new Paragraph("----------------------------------------------");
+            p[4] = new Paragraph("Thành tiền: " + lblThanhTien.getText(), text);
+            for (int i = 0; i < 5; i++) {
+                p[i].setAlignment(Element.ALIGN_RIGHT);
+                dc.add(p[i]);
+            }
+            //đóng file
+            dc.close();
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi");
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

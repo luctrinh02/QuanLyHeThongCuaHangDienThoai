@@ -16,7 +16,7 @@ import java.util.List;
  * @author Admin
  */
 public class KhuyenMaiDAO implements DungNgocDAO<MaKhuyenMai, String>{
-    String insert = "insert into MaKhuyenMai values(?,?,1)";
+    String insert = "insert into MaKhuyenMai values(?,?,?)";
     String update = "update MaKhuyenMai set value=? where promoCode=?";
     String disable = "update MaKhuyenMai set status=0 where promoCode=?";
     String reStore = "update MaKhuyenMai set status=1 where promoCode=?";

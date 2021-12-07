@@ -106,3 +106,81 @@ begin
 	group by a.IdProduct,c.name 
 end
 go
+exec baoCaoHangHoa '2021-11-10'
+select MIN(date) 'date' from HoaDon
+
+select COUNT(*) from HoaDon where date='2021-11-10'
+select sum(count) from HoaDonCHiTiet a join HoaDon b on a.IdBill=b.IdBill where date='2021-11-10'
+select top 1 IdProduct from  HoaDonCHiTiet a join HoaDon b on a.IdBill=b.IdBill
+where date='2021-11-10'
+group by IdProduct
+order by count(IdProduct) desc 
+select sum(price*count) from HoaDonCHiTiet a join HoaDon b on a.IdBill=b.IdBill where date='2021-11-10'
+
+if OBJECT_ID('thongKeKhachHang') is not null
+drop proc thongKeKhachHang
+go
+create proc thongKeKhachHang 
+as
+begin
+	select a.IdGuest 'Ma',a.name 'Ten',a.totalMoney 'Tien',sum(count) 'SoLuong' from KhachHang a join HoaDon b on a.IdGuest=b.IdGuest
+	join HoaDonCHiTiet c on b.IdBill=c.IdBill 
+	group by a.IdGuest,a.name,a.totalMoney
+	order by a.totalMoney desc
+end
+go
+exec thongKeKhachHang
+select * from HoaDonCHiTiet join HoaDon on HoaDon.IdBill=HoaDonCHiTiet.IdBill where IdGuest='0123456789'
+if OBJECT_ID('top5') is not null
+drop proc top5
+go
+create proc top5 
+as
+begin
+	select top 5 a.IdGuest 'Ma',a.name 'Ten',a.totalMoney 'Tien',sum(count) 'SoLuong' from KhachHang a join HoaDon b on a.IdGuest=b.IdGuest
+	join HoaDonCHiTiet c on b.IdBill=c.IdBill 
+	group by a.IdGuest,a.name,a.totalMoney
+	order by a.totalMoney desc
+end
+go
+
+select date 'date',sum(totalMoney) 'Tien' from HoaDon 
+group by date
+
+if OBJECT_ID('thongKeNhanVien') is not null
+drop proc thongKeNhanVien
+go
+create proc thongKeNhanVien 
+as
+begin
+	select a.IdStaff 'ma',a.name 'ten',a.phoneNumber 'sdt',SUM(c.count) 'So'
+	from NhanVien a left join HoaDon b on a.IdStaff=b.IdStaff left join HoaDonCHiTiet c on b.IdBill=c.IdBill
+	group by a.IdStaff,a.name,a.phoneNumber
+	order by SUM(c.count) desc
+end
+go
+
+if OBJECT_ID('thongKeSanPham') is not null
+drop proc thongKeSanPham
+go
+create proc thongKeSanPham 
+as
+begin
+	select top 5 a.IdProduct 'ma',c.name 'ten',SUM(b.count) 'so',SUM(b.count*b.price) 'tien'
+	from SanPham a join HoaDonCHiTiet b on a.IdProduct = b.IdProduct join LoaiMay c on a.modelId=c.modelId
+	group by a.IdProduct,c.name
+end
+go
+
+if OBJECT_ID('thongKeSanPhamAll') is not null
+drop proc thongKeSanPhamAll
+go
+create proc thongKeSanPhamAll 
+as
+begin
+	select a.IdProduct 'ma',c.name 'ten',SUM(b.count) 'so',SUM(b.count*b.price) 'tien'
+	from SanPham a join HoaDonCHiTiet b on a.IdProduct = b.IdProduct join LoaiMay c on a.modelId=c.modelId
+	group by a.IdProduct,c.name
+	order by SUM(b.count*b.price) desc
+end
+go

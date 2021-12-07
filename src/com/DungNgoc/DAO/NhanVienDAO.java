@@ -45,6 +45,9 @@ public class NhanVienDAO implements DungNgocDAO<NhanVien, String> {
     public void update(NhanVien entity) {
         Xjdbc.update(update, entity.getName(), entity.getCCCD(), entity.getPhoneNumber(), entity.getEmail(), entity.getIdStaff());
     }
+    public void updatepass(NhanVien entity) {
+        Xjdbc.update("update NhanVien set salt=?, hash=? where IdStaff=?", entity.getSalt(),entity.getHash(),entity.getIdStaff());
+    }
 
     @Override
     public void disable(String id) {

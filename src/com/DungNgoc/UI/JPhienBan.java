@@ -9,6 +9,7 @@ import com.DungNgoc.DAO.PhienBanDAO;
 import com.DungNgoc.entitys.PhienBan;
 import com.DungNgoc.untils.Exceptions;
 import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Xcheck;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -244,6 +245,14 @@ public class JPhienBan extends javax.swing.JDialog {
     }
 
     PhienBan getForm() {
+        if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+            MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
+        if (Xcheck.isNotName(txtPhienBan.getText().trim())) {
+            MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
         return new PhienBan(txtMa.getText(), txtPhienBan.getText());
     }
 
