@@ -9,6 +9,7 @@ import com.DungNgoc.DAO.HangMayDAO;
 import com.DungNgoc.entitys.HangMay;
 import com.DungNgoc.untils.Exceptions;
 import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Xcheck;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -295,6 +296,14 @@ public class JHangMay extends javax.swing.JDialog {
         txtMa.setText("");
     }
     HangMay getForm(){
+        if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+            MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
+        if (Xcheck.isNotName(txtHangMay.getText().trim())) {
+            MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
         return new HangMay(txtMa.getText(), txtHangMay.getText());
     }
     void fillTable(){

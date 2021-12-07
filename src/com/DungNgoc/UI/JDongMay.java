@@ -11,6 +11,7 @@ import com.DungNgoc.entitys.DongMay;
 import com.DungNgoc.entitys.HangMay;
 import com.DungNgoc.untils.Exceptions;
 import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Xcheck;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -297,7 +298,15 @@ public class JDongMay extends javax.swing.JDialog {
     }
 
     DongMay getForm() {
-        return new DongMay(txtMa.getText(), txtDongMay.getText(), listHM.get(cbbHangMay.getSelectedIndex()).getTypeID());
+        if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+            MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
+        if (Xcheck.isNotName(txtDongMay.getText().trim())) {
+            MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
+        return new DongMay(txtMa.getText().trim(), txtDongMay.getText().trim(), listHM.get(cbbHangMay.getSelectedIndex()).getTypeID());
     }
 
     void insert() {
