@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class HoaDonChiTietDAO implements DungNgocDAO<HoaDonChiTiet, Integer>{
     String insert = "insert into HoaDonCHiTiet values(?,?,?,?)";
-    String update = "";
-    String disable = "";
+    String update = "update HoaDonCHiTiet set count =? where IdBill=? and IdProduct=?";
+    String disable = "delete from HoaDonCHiTiet where IdBill=? and IdProduct=?";
     String reStore = "";
     String select_ID = "select * from HoaDonCHiTiet where IdBill=? or IdProduct=?";
     String select_All = "select * from HoaDonCHiTiet";
@@ -30,10 +30,12 @@ public class HoaDonChiTietDAO implements DungNgocDAO<HoaDonChiTiet, Integer>{
     public void insert(HoaDonChiTiet entity) {
         Xjdbc.update(insert, entity.getIdBill(),entity.getIdProduct(),entity.getCount(),entity.getPrice());
     }
-
+    public void delete(HoaDonChiTiet entity){
+        Xjdbc.update(disable, entity.getIdBill(),entity.getIdProduct());
+    }
     @Override
     public void update(HoaDonChiTiet entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Xjdbc.update(update, entity.getCount(),entity.getIdBill(),entity.getIdProduct());
     }
 
     @Override
