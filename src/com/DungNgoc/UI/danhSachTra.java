@@ -5,6 +5,10 @@
  */
 package com.DungNgoc.UI;
 
+import com.DungNgoc.DAO.doiTraDAO;
+import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Xmoney;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,12 +17,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class danhSachTra extends javax.swing.JDialog {
     DefaultTableModel modelSP;
+    doiTraDAO dao=new doiTraDAO();
+    int id;
     /**
      * Creates new form danhSachTra
      */
-    public danhSachTra(java.awt.Frame parent, boolean modal) {
+    public danhSachTra(java.awt.Frame parent, boolean modal,int ma) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        id=ma;
+        init();
     }
 
     /**
@@ -34,7 +43,7 @@ public class danhSachTra extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblTien = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -53,9 +62,9 @@ public class danhSachTra extends javax.swing.JDialog {
 
         jLabel2.setText("Tổng tiền hoàn: ");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("0 đ");
+        lblTien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTien.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTien.setText("0 đ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,7 +78,7 @@ public class danhSachTra extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTien, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -85,7 +94,7 @@ public class danhSachTra extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(lblTien))
                 .addGap(62, 62, 62))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -127,7 +136,7 @@ public class danhSachTra extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                danhSachTra dialog = new danhSachTra(new javax.swing.JFrame(), true);
+                danhSachTra dialog = new danhSachTra(new javax.swing.JFrame(), true,1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -137,6 +146,10 @@ public class danhSachTra extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+    void init(){
+        prepareDanhSachGUI();
+        fillTable();
     }
     void prepareDanhSachGUI() {
         String h[] = {"Mã máy", "Tên máy", "Ram", "Dung Luọng", "Màu sắc", "Tình trạng", "Giá", "Số lượng"};
@@ -150,11 +163,30 @@ public class danhSachTra extends javax.swing.JDialog {
         tblSanPham.setModel(modelSP);
         tblSanPham.setSelectionMode(0);
     }
+    void fillTable(){
+        modelSP.setRowCount(0);
+        try {
+            List<Object[]> list=dao.getSP(id);
+            for(Object[] x:list){
+                modelSP.addRow(x);
+            }
+            tinhTien();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    void tinhTien(){
+        double tong=0;
+        for(int i=0;i<tblSanPham.getRowCount();i++){
+            tong=Double.parseDouble(tblSanPham.getValueAt(i, 6)+"")*Double.parseDouble(tblSanPham.getValueAt(i, 7)+"");
+        }
+        lblTien.setText(Xmoney.moneyToString(tong));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblTien;
     private javax.swing.JTable tblSanPham;
     // End of variables declaration//GEN-END:variables
 }

@@ -255,6 +255,11 @@ private void init() {
         tblHoaDonChiTiet.setSelectionMode(0);
         dtm = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         this.fillTable();
+        if(dtDAO.getTraHang(id)!=0){
+            lblDoiHang.setText("Đã trả");
+        }else{
+            lblDoiHang.setText("");
+        }
     }
 
     private void fillTable() {
@@ -321,6 +326,7 @@ private void init() {
                     fillTable();
                 }
                 dtDAO.them(id, ma, Integer.parseInt(a));
+                MsgBox.alert(this, "Trả hàng thành công");
             }
         } catch (Exception e) {
             MsgBox.alert(this, "Chưa chọn sản phẩm");
