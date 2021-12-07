@@ -67,6 +67,8 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popup = new javax.swing.JPopupMenu();
+        history = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtTenKH = new javax.swing.JTextField();
@@ -80,6 +82,14 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
         txtNgayMua = new javax.swing.JTextField();
         lblDoiHang = new javax.swing.JLabel();
         btnTraHang = new javax.swing.JButton();
+
+        history.setText("Lịch Sử");
+        history.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historyActionPerformed(evt);
+            }
+        });
+        popup.add(history);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -108,6 +118,7 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
                 "Mã SP", "Tên SP", "Số Lượng", "Màu Sắc", "Dung Lượng", "Ram", "Đơn Giá", "Giá Bán", "Thành Tiền"
             }
         ));
+        tblHoaDonChiTiet.setComponentPopupMenu(popup);
         jScrollPane1.setViewportView(tblHoaDonChiTiet);
 
         txtNgayMua.setEnabled(false);
@@ -191,8 +202,13 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
 
     private void btnTraHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraHangActionPerformed
         // TODO add your handling code here:
-        
+        traHang();
     }//GEN-LAST:event_btnTraHangActionPerformed
+
+    private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
+        // TODO add your handling code here:
+        new danhSachTra(null, true, id).setVisible(true);
+    }//GEN-LAST:event_historyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,6 +254,7 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTraHang;
+    private javax.swing.JMenuItem history;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -245,6 +262,7 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDoiHang;
+    private javax.swing.JPopupMenu popup;
     private javax.swing.JTable tblHoaDonChiTiet;
     private javax.swing.JTextField txtMaHD;
     private javax.swing.JTextField txtNgayMua;
@@ -271,6 +289,7 @@ private void init() {
         this.txtTenNV.setText(nv.getName());
         KhachHang kh = khdao.selectById(String.valueOf(hd.getIdGuest()));
         this.txtTenKH.setText(kh.getName());
+        dtm.setRowCount(0);
         for (int i = 0; i < lsthdct.size(); i++) {
             HoaDonChiTiet hdct = (HoaDonChiTiet) lsthdct.get(i);
             SanPham sp = spdao.selectById(String.valueOf(hdct.getIdProduct()));

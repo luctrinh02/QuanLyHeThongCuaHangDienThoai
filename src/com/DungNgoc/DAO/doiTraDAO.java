@@ -24,7 +24,7 @@ public class doiTraDAO {
     public int getTraHang(int idbill){
         String sql="select count(*) as soLuong from HoaDonDoiHang where idbill=? ";
         try {
-            ResultSet rs = Xjdbc.query(sql);
+            ResultSet rs = Xjdbc.query(sql,idbill);
             rs.next();
             return rs.getInt(1);
         } catch (Exception e) {
@@ -53,4 +53,7 @@ public class doiTraDAO {
         String[] cols = {"ma", "ten", "ram", "size","mau","moi","gia","so"};
         return this.getListOfArray(sql, cols, idbill);
     }
+//    public int getDate(){
+//        String s1l=""
+//    }
 }
