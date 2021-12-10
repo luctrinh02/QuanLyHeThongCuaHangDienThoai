@@ -19,19 +19,21 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class JLichSu extends javax.swing.JDialog {
+
     DefaultTableModel model;
-    HoaDonDAO dao=new HoaDonDAO();
-    String ma,ten;
+    HoaDonDAO dao = new HoaDonDAO();
+    String ma, ten;
+
     /**
      * Creates new form JLichSu
      */
-    public JLichSu(java.awt.Frame parent, boolean modal,String maKH,String tenKH) {
+    public JLichSu(java.awt.Frame parent, boolean modal, String maKH, String tenKH) {
         super(parent, modal);
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
-        ma=maKH;
-        ten=tenKH;
+        ma = maKH;
+        ten = tenKH;
         init();
     }
 
@@ -70,6 +72,11 @@ public class JLichSu extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblLichSu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblLichSuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblLichSu);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -134,6 +141,14 @@ public class JLichSu extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_formMouseClicked
 
+    private void tblLichSuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLichSuMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            String ma = tblLichSu.getValueAt(tblLichSu.getSelectedRow(), 0) + "";
+            new JHoaDonChiTiet(null, true, ma).setVisible(true);
+        }
+    }//GEN-LAST:event_tblLichSuMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -164,7 +179,7 @@ public class JLichSu extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JLichSu dialog = new JLichSu(new javax.swing.JFrame(), true,"0123456789","Mai Văn TÙng");
+                JLichSu dialog = new JLichSu(new javax.swing.JFrame(), true, "0123456789", "Mai Văn TÙng");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -175,14 +190,15 @@ public class JLichSu extends javax.swing.JDialog {
             }
         });
     }
-    void init(){
-        String[] h={"Mã hoá đơn","Tổng tiền","Ngày mua"};
-        model=new DefaultTableModel(h, 0){
+
+    void init() {
+        String[] h = {"Mã hoá đơn", "Tổng tiền", "Ngày mua"};
+        model = new DefaultTableModel(h, 0) {
             @Override
             public boolean isCellEditable(int i, int i1) {
                 return false;
             }
-            
+
         };
         tblLichSu.setModel(model);
         tblLichSu.setAutoCreateRowSorter(true);
@@ -190,12 +206,13 @@ public class JLichSu extends javax.swing.JDialog {
         txtName.setText(ten);
         fillTable();
     }
-    void fillTable(){
+
+    void fillTable() {
         model.setRowCount(0);
         try {
-            List<HoaDon> list=dao.selectByIdGuest(ma);
-            for(HoaDon x:list){
-                model.addRow(new Object[]{x.getIdBill(),Xmoney.moneyToString(Double.parseDouble(x.getTotalMoney())),x.getDateBill()});
+            List<HoaDon> list = dao.selectByIdGuest(ma);
+            for (HoaDon x : list) {
+                model.addRow(new Object[]{x.getIdBill(), Xmoney.moneyToString(Double.parseDouble(x.getTotalMoney())), x.getDateBill()});
             }
         } catch (Exception e) {
             MsgBox.alert(this, "Lỗi đọc dữ liệu");

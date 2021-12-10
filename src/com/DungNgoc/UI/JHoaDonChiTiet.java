@@ -67,8 +67,6 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        popup = new javax.swing.JPopupMenu();
-        history = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtTenKH = new javax.swing.JTextField();
@@ -82,14 +80,7 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
         txtNgayMua = new javax.swing.JTextField();
         lblDoiHang = new javax.swing.JLabel();
         btnTraHang = new javax.swing.JButton();
-
-        history.setText("Lịch Sử");
-        history.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                historyActionPerformed(evt);
-            }
-        });
-        popup.add(history);
+        btnLS = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -118,7 +109,6 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
                 "Mã SP", "Tên SP", "Số Lượng", "Màu Sắc", "Dung Lượng", "Ram", "Đơn Giá", "Giá Bán", "Thành Tiền"
             }
         ));
-        tblHoaDonChiTiet.setComponentPopupMenu(popup);
         jScrollPane1.setViewportView(tblHoaDonChiTiet);
 
         txtNgayMua.setEnabled(false);
@@ -133,6 +123,13 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
             }
         });
 
+        btnLS.setText("Lịch sử trả hàng");
+        btnLS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLSActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,7 +137,7 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(241, 241, 241)
                 .addComponent(jLabel1)
-                .addGap(101, 243, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +151,7 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
                             .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)
                         .addComponent(lblDoiHang, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -164,7 +161,9 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
                             .addComponent(txtNgayMua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(249, 249, 249)
+                        .addComponent(btnLS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTraHang)))
                 .addContainerGap())
         );
@@ -193,7 +192,9 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
                             .addComponent(jLabel5))))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addComponent(btnTraHang)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTraHang)
+                    .addComponent(btnLS))
                 .addContainerGap())
         );
 
@@ -205,10 +206,10 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
         traHang();
     }//GEN-LAST:event_btnTraHangActionPerformed
 
-    private void historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyActionPerformed
+    private void btnLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLSActionPerformed
         // TODO add your handling code here:
-        new danhSachTra(null, true, id).setVisible(true);
-    }//GEN-LAST:event_historyActionPerformed
+         new danhSachTra(null, true, id).setVisible(true);
+    }//GEN-LAST:event_btnLSActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,8 +254,8 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLS;
     private javax.swing.JButton btnTraHang;
-    private javax.swing.JMenuItem history;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -262,7 +263,6 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDoiHang;
-    private javax.swing.JPopupMenu popup;
     private javax.swing.JTable tblHoaDonChiTiet;
     private javax.swing.JTextField txtMaHD;
     private javax.swing.JTextField txtNgayMua;
@@ -275,8 +275,10 @@ private void init() {
         this.fillTable();
         if(dtDAO.getTraHang(id)!=0){
             lblDoiHang.setText("Đã trả");
+            btnLS.setEnabled(true);
         }else{
             lblDoiHang.setText("");
+            btnLS.setEnabled(false);
         }
     }
 
