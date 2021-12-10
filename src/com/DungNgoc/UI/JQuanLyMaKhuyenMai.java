@@ -592,8 +592,8 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Giá trị mã khuyến mãi không hợp lệ!");
             return null;
         }
-        km.setPromoCode(txtMaKM.getText());
-        km.setValue(Integer.parseInt(txtGiaTri.getText()));
+        km.setPromoCode(txtMaKM.getText().trim());
+        km.setValue(Integer.parseInt(txtGiaTri.getText().trim()));
         return km;
     }
 
