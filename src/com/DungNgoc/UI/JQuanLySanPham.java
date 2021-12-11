@@ -1561,7 +1561,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Không được để trống thông tin sản phẩm");
             return null;
         }
-        if (txtMaSP.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+        if (!txtMaSP.getText().trim().matches("\\w+")) {
             MsgBox.alert(this, "Mã sản phẩm không chứa kí tự đặc biệt");
             return null;
         }
