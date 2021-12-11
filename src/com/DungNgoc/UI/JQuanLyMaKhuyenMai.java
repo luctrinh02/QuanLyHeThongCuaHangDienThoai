@@ -75,7 +75,15 @@ public class JQuanLyMaKhuyenMai extends javax.swing.JInternalFrame {
             new String [] {
                 "Mã khuyến mãi", "Giá trị"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblKhuyenMaiMouseClicked(evt);
