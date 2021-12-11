@@ -246,15 +246,39 @@ public class JPhienBan extends javax.swing.JDialog {
     }
 
     PhienBan getForm() {
+        if (txtMa.getText().length() != 0 && txtMa.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Mã phiên bản không chứa chỉ kí tự khoảng cách");
+            return null;
+        }
+        if (txtPhienBan.getText().length() != 0 && txtPhienBan.getText().trim().length() == 0) {
+            MsgBox.alert(this, "tên phiên bản không chứa chỉ kí tự khoảng cách");
+            return null;
+        }
         if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
-            MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
+            MsgBox.alert(this, "Mã phiên bản không chứa kí tự đặc biệt");
             return null;
         }
         if (Xcheck.isNotName(txtPhienBan.getText().trim())) {
-            MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            MsgBox.alert(this, "Tên phiên bản không chứa kí tự đặc biệt");
             return null;
         }
-        return new PhienBan(txtMa.getText(), txtPhienBan.getText());
+        if (txtMa.getText().trim().length() > 7) {
+            MsgBox.alert(this, "Mã phiên bản trong khoảng [1-7]");
+            return null;
+        }
+        if (txtPhienBan.getText().trim().length() > 50) {
+            MsgBox.alert(this, "Tên phiên bản trong khoảng [1-50]");
+            return null;
+        }
+        if (!checkma(this.txtMa.getText().trim())) {
+            MsgBox.alert(this, "Mã phiên bản đã tồn tại");
+            return null;
+        }
+        if (!checkname(this.txtPhienBan.getText().trim())) {
+            MsgBox.alert(this, "Tên phiên bản đã tồn tại");
+            return null;
+        }
+        return new PhienBan(txtMa.getText().trim(), txtPhienBan.getText().trim());
     }
 
     void fillTable() {
@@ -275,7 +299,11 @@ public class JPhienBan extends javax.swing.JDialog {
             MsgBox.alert(this, "Không bỏ trống dữ liệu");
         } else {
             try {
-                dao.insert(getForm());
+                PhienBan pb = getForm();
+                if (pb == null) {
+                    return;
+                }
+                dao.insert(pb);
                 MsgBox.alert(this, "Thêm thành công");
                 fillTable();
                 clear();
@@ -298,5 +326,23 @@ public class JPhienBan extends javax.swing.JDialog {
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtPhienBan;
     // End of variables declaration//GEN-END:variables
+private boolean checkma(String ma) {
+        List<PhienBan> lstpb = dao.selectAll();
+        for (PhienBan x : lstpb) {
+            if (ma.equalsIgnoreCase(x.getVersionId())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    private boolean checkname(String name) {
+        List<PhienBan> lstpb = dao.selectAll();
+        for (PhienBan x : lstpb) {
+            if (name.equalsIgnoreCase(x.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

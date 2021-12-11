@@ -298,6 +298,10 @@ public class JDongMay extends javax.swing.JDialog {
     }
 
     DongMay getForm() {
+        if (txtMa.getText().trim().length() > 7) {
+            MsgBox.alert(this, "Mã dòng máy có độ dài 1-7 kí tự");
+            return null;
+        }
         if (!txtMa.getText().trim().matches("\\w+")) {
             MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
             return null;
@@ -312,11 +316,11 @@ public class JDongMay extends javax.swing.JDialog {
             return null;
         }
         if (!checkma(txtMa.getText().trim())) {
-            MsgBox.alert(this,"mã dòng mãy đã tồn tại");
+            MsgBox.alert(this, "mã dòng mãy đã tồn tại");
             return null;
         }
         if (!checkname(txtDongMay.getText().trim())) {
-            MsgBox.alert(this,"Tên dòng mãy đã tồn tại");
+            MsgBox.alert(this, "Tên dòng mãy đã tồn tại");
             return null;
         }
         return new DongMay(txtMa.getText().trim(), txtDongMay.getText().trim(), listHM.get(cbbHangMay.getSelectedIndex()).getTypeID());
@@ -366,7 +370,8 @@ private boolean checkma(String ma) {
         }
         return true;
     }
-private boolean checkname(String name) {
+
+    private boolean checkname(String name) {
         List<DongMay> lstdm = DMdao.selectAll();
         for (DongMay x : lstdm) {
             if (name.equalsIgnoreCase(x.getName())) {

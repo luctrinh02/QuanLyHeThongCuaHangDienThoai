@@ -63,7 +63,7 @@ public class JMau extends javax.swing.JDialog {
 
         jLabel2.setText("Mã");
 
-        jLabel3.setText("Mau");
+        jLabel3.setText("Màu");
 
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {

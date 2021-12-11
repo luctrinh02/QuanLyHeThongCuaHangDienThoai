@@ -538,20 +538,20 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
 
     private void tblKhachHangMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseReleased
         // TODO add your handling code here:
-        int rows[]=tblKhachHang.getSelectedRows();
-        if(rows.length<0){
+        int rows[] = tblKhachHang.getSelectedRows();
+        if (rows.length < 0) {
             btnLichSu.setEnabled(false);
-        }else{
+        } else {
             btnLichSu.setEnabled(true);
         }
     }//GEN-LAST:event_tblKhachHangMouseReleased
 
     private void tblThungRacMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThungRacMouseReleased
         // TODO add your handling code here:
-        int rows[]=tblThungRac.getSelectedRows();
-        if(rows.length<0){
+        int rows[] = tblThungRac.getSelectedRows();
+        if (rows.length < 0) {
             btnKhoiPhuc.setEnabled(false);
-        }else{
+        } else {
             btnKhoiPhuc.setEnabled(true);
         }
     }//GEN-LAST:event_tblThungRacMouseReleased
@@ -648,7 +648,7 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
     }
 
     public KhachHang getForm() {
-        return new KhachHang(txtSDT.getText(), txtTen.getText(), 0.0, 0.0, true);
+        return new KhachHang(txtSDT.getText().trim(), txtTen.getText().trim(), 0.0, 0.0, true);
     }
 
     public void setForm(KhachHang kh) {
@@ -712,7 +712,7 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
     }
 
     public void insert() {
-        KhachHang nv = getForm();
+        KhachHang nv = this.getForm();
         if (validateForm()) {
             try {
                 dao.insert(nv);
@@ -760,17 +760,43 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
     }
 
     boolean validateForm() {
-        if(txtSDT.getText().equals("") || txtTen.getText().equals("")){
+        if (txtSDT.getText().equals("") || txtTen.getText().equals("")) {
             MsgBox.alert(this, "Không bỏ trống dữ liệu");
             return false;
-        }else if(!Xcheck.isSDT(txtSDT.getText())){
+        }
+        if (txtTen.getText().length() != 0 && txtTen.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Tên Khách hàng không chỉ gồm khoảng trắng");
+            return false;
+        }
+        if (!Xcheck.isSDT(txtSDT.getText().trim())) {
             MsgBox.alert(this, "Số điện thoại không đúng định dạng");
             return false;
-        }else if(Xcheck.isNotName(txtTen.getText())){
-            MsgBox.alert(this, "Tên không đúng định dạng");
+        }
+        if (Xcheck.isNotName(txtTen.getText().trim())) {
+            MsgBox.alert(this, "Tên không Đúng định dạng");
             return false;
-        }else return true;
+        }
+        if (txtTen.getText().length() > 50) {
+            MsgBox.alert(this, "Tên khách hàng có độ dài trong khoảng [1-50] kí tự");
+            return false;
+        }
+        if (!checkma(this.txtSDT.getText().trim())) {
+            MsgBox.alert(this, "Số điện thoại đã tồn tại");
+            return false;
+        }
+        return true;
     }
+
+    private boolean checkma(String sdt) {
+        List<KhachHang> lstkh = dao.selectAll();
+        for (KhachHang x : lstkh) {
+            if (sdt.equalsIgnoreCase(x.getIdGuest())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void phucHoi() {
         int[] rows = tblThungRac.getSelectedRows();
         for (int i : rows) {
@@ -785,9 +811,10 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
         fillTableKhachHang();
         btnKhoiPhuc.setEnabled(false);
     }
-    public void LichSu(int rows){
-        String maKH=tblKhachHang.getValueAt(rows, 0)+"";
-        String tenKH=tblKhachHang.getValueAt(rows, 1)+"";
+
+    public void LichSu(int rows) {
+        String maKH = tblKhachHang.getValueAt(rows, 0) + "";
+        String tenKH = tblKhachHang.getValueAt(rows, 1) + "";
         new JLichSu(frameKhachHang, true, maKH, tenKH).setVisible(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -855,10 +882,10 @@ public class JQuanLyKhachHang extends javax.swing.JInternalFrame {
         fillTableKhachHang();
         fillTableRac();
         tabs.setSelectedIndex(1);
-        if(!Auth.isManager()){
+        if (!Auth.isManager()) {
             tabs.remove(0);
             tabs.remove(2);
-        }else{
+        } else {
             clearForm();
         }
     }
