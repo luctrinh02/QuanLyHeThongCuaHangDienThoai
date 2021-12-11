@@ -223,7 +223,7 @@ public class JDongMay extends javax.swing.JDialog {
 
     private void cbbHangMayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbHangMayItemStateChanged
         // TODO add your handling code here:
-        if(cbbHangMay.getItemCount()>1){
+        if (cbbHangMay.getItemCount() > 1) {
             fillTable();
         }
     }//GEN-LAST:event_cbbHangMayItemStateChanged
@@ -298,12 +298,25 @@ public class JDongMay extends javax.swing.JDialog {
     }
 
     DongMay getForm() {
-        if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+        if (!txtMa.getText().trim().matches("\\w+")) {
             MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
             return null;
         }
-        if (Xcheck.isNotName(txtDongMay.getText().trim())) {
+        if (txtDongMay.getText().length() != 0 && txtDongMay.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Tên dòng máy không chứa duy nhất kí tự khoảng trắng");
+
+            return null;
+        }
+        if (!txtDongMay.getText().trim().matches("[a-zA-Z0-9 ]+")) {
             MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            return null;
+        }
+        if (!checkma(txtMa.getText().trim())) {
+            MsgBox.alert(this,"mã dòng mãy đã tồn tại");
+            return null;
+        }
+        if (!checkname(txtDongMay.getText().trim())) {
+            MsgBox.alert(this,"Tên dòng mãy đã tồn tại");
             return null;
         }
         return new DongMay(txtMa.getText().trim(), txtDongMay.getText().trim(), listHM.get(cbbHangMay.getSelectedIndex()).getTypeID());
@@ -314,7 +327,11 @@ public class JDongMay extends javax.swing.JDialog {
             MsgBox.alert(this, "Không bỏ trống dữ liệu");
         } else {
             try {
-                DMdao.insert(getForm());
+                DongMay dm = this.getForm();
+                if (dm == null) {
+                    return;
+                }
+                DMdao.insert(dm);
                 MsgBox.alert(this, "Thêm thành công");
                 clear();
                 fillTable();
@@ -340,5 +357,22 @@ public class JDongMay extends javax.swing.JDialog {
     private javax.swing.JTextField txtDongMay;
     private javax.swing.JTextField txtMa;
     // End of variables declaration//GEN-END:variables
-
+private boolean checkma(String ma) {
+        List<DongMay> lstdm = DMdao.selectAll();
+        for (DongMay x : lstdm) {
+            if (ma.equalsIgnoreCase(x.getTag())) {
+                return false;
+            }
+        }
+        return true;
+    }
+private boolean checkname(String name) {
+        List<DongMay> lstdm = DMdao.selectAll();
+        for (DongMay x : lstdm) {
+            if (name.equalsIgnoreCase(x.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

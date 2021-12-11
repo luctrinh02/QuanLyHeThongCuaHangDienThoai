@@ -19,7 +19,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JHangMay extends javax.swing.JDialog {
 
-    HangMayDAO dao=new HangMayDAO();
+    HangMayDAO dao = new HangMayDAO();
+
     /**
      * Creates new form JHangMay
      */
@@ -291,39 +292,67 @@ public class JHangMay extends javax.swing.JDialog {
             }
         });
     }
-    void clear(){
+
+    void clear() {
         txtHangMay.setText("");
         txtMa.setText("");
     }
-    HangMay getForm(){
-        if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
+
+    HangMay getForm() {
+        if (!txtMa.getText().trim().matches("\\w+")) {
             MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
             return null;
+        }
+        if (txtHangMay.getText().length()!=0&& txtHangMay.getText().trim().length()==0) {
+            MsgBox.alert(this, "Tên dòng máy không chứa duy nhất kí tự khoảng trắng");
+            return null; 
         }
         if (Xcheck.isNotName(txtHangMay.getText().trim())) {
             MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
             return null;
         }
-        return new HangMay(txtMa.getText(), txtHangMay.getText());
+        if (txtMa.getText().length() > 7) {
+            MsgBox.alert(this, "Mã hãng có độ dài từ 1-7 kí tự");
+            return null;
+        }
+        if (txtHangMay.getText().length() > 50) {
+            MsgBox.alert(this, "Mã hãng có độ dài từ 1-50 kí tự");
+            return null;
+        }
+        if (!checkma(txtMa.getText())) {
+            MsgBox.alert(this, "Mã hãng đã tồn tại");
+            return null;
+        }
+        if (!checkname(txtHangMay.getText())) {
+            MsgBox.alert(this, "Tên hãng đã tồn tại");
+            return null;
+        }
+        return new HangMay(txtMa.getText().trim(), txtHangMay.getText().trim());
     }
-    void fillTable(){
-        DefaultTableModel model=(DefaultTableModel) tblHangMay.getModel();
+
+    void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblHangMay.getModel();
         model.setRowCount(0);
         try {
-            List<HangMay> list=dao.selectAll();
-            for(HangMay x:list){
-                model.addRow(new Object[]{x.getTypeID(),x.getName()});
+            List<HangMay> list = dao.selectAll();
+            for (HangMay x : list) {
+                model.addRow(new Object[]{x.getTypeID(), x.getName()});
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    void insert(){
-        if(txtMa.getText().equals("")||txtHangMay.getText().equals("")){
+
+    void insert() {
+        if (txtMa.getText().equals("") || txtHangMay.getText().equals("")) {
             MsgBox.alert(this, "Không bỏ trống dữ liệu");
-        }else{
+        } else {
             try {
-                dao.insert(getForm());
+                HangMay hm = getForm();
+                if (hm == null) {
+                    return;
+                }
+                dao.insert(hm);
                 MsgBox.alert(this, "Thêm thành công");
                 fillTable();
                 clear();
@@ -353,5 +382,22 @@ public class JHangMay extends javax.swing.JDialog {
     private javax.swing.JTextField txtHangMay;
     private javax.swing.JTextField txtMa;
     // End of variables declaration//GEN-END:variables
-
+private boolean checkma(String ma) {
+        List<HangMay> lsthm = dao.selectAll();
+        for (HangMay x : lsthm) {
+            if (ma.trim().equalsIgnoreCase(x.getTypeID())) {
+                return false;
+            }
+        }
+        return true;
+    }
+private boolean checkname(String name) {
+        List<HangMay> lsthm = dao.selectAll();
+        for (HangMay x : lsthm) {
+            if (name.trim().equalsIgnoreCase(x.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
