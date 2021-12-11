@@ -43,6 +43,7 @@ public class JLoaiMay extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         fillHangMay();
         fillDongMay();
+        fillTable();
     }
 
     /**

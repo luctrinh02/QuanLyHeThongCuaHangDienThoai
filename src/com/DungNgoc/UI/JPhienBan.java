@@ -29,6 +29,7 @@ public class JPhienBan extends javax.swing.JDialog {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
+        fillTable();
     }
 
     /**
