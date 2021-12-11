@@ -57,6 +57,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
     boolean isUpdate = false;
     double point = 0;
     double tong = 0.0;
+    boolean check = true;
 
     /**
      * Creates new form ThemHoaDon
@@ -738,14 +739,14 @@ public class ThemHoaDon extends javax.swing.JDialog {
         //sửa thông tin sản phẩm
         sanPham();
         //xuất hoá đơn
-        xuatHoaDon("HD"+hdDao.selectId()+"_"+Xdate.toString(new Date(), "yyMMdd"));
+        xuatHoaDon("HD" + hdDao.selectId() + "_" + Xdate.toString(new Date(), "yyMMdd"));
         //đóng form
         dispose();
     }
 
     void khachHang() {
         if (isUpdate) {
-            KhachHang kh = khDAO.selectById(txtSDT.getText());
+            KhachHang kh = khDAO.selectById(txtSDT.getText().trim());
             kh.setPoint(point);
             kh.setTotalMoney(tong);
             try {
@@ -755,7 +756,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
             }
         } else {
             if (checkKhachHang()) {
-                KhachHang kh = new KhachHang(txtSDT.getText(), txtHoTen.getText(), tong, point, true);
+                KhachHang kh = new KhachHang(txtSDT.getText().trim(), txtHoTen.getText().trim(), tong, point, true);
                 try {
                     khDAO.insert(kh);
                 } catch (Exception e) {
@@ -766,16 +767,20 @@ public class ThemHoaDon extends javax.swing.JDialog {
     }
 
     boolean checkKhachHang() {
-        if (!Xcheck.isSDT(txtSDT.getText())) {
-            MsgBox.alert(this, "Số điệnt hoại không đúng");
+        if (!Xcheck.isSDT(txtSDT.getText().trim())) {
+            MsgBox.alert(this, "Số điện thoại không đúng");
+            check=false;
             return false;
         } else if (txtHoTen.getText().trim().equals("")) {
             MsgBox.alert(this, "Không bỏ trống tên");
+            check=false;
             return false;
         } else if (Xcheck.isNotName(txtHoTen.getText())) {
             MsgBox.alert(this, "Tên chỉ chứa chữ cái và khoảng trắng");
+            check=false;
             return false;
         } else {
+            check=true;
             return true;
         }
     }
@@ -799,7 +804,6 @@ public class ThemHoaDon extends javax.swing.JDialog {
                 Exceptions.writeException(e, hdct.toString());
             }
         }
-        MsgBox.alert(this, "Thanh toán thành công!");
     }
 
     void sanPham() {
