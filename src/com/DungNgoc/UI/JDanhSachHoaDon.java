@@ -129,7 +129,15 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
             new String [] {
                 "Mã HD", "Thời Gian", "Khách Hàng", "Tổng Tiền Hàng", "Giảm Giá", "Tên NV", "Tổng Thu"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblDanhSachHoaDon.setComponentPopupMenu(jPopupMenu1);
         tblDanhSachHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

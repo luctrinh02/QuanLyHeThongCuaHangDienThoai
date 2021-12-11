@@ -108,7 +108,15 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
             new String [] {
                 "Mã SP", "Tên SP", "Số Lượng", "Màu Sắc", "Dung Lượng", "Ram", "Đơn Giá", "Giá Bán", "Thành Tiền"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblHoaDonChiTiet);
 
         txtNgayMua.setEnabled(false);
