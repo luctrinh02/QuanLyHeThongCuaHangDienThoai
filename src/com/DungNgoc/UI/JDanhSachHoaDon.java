@@ -218,6 +218,7 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
 
     private void tblDanhSachHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachHoaDonMouseClicked
         if (evt.getClickCount() == 2) {
+            vitri=tblDanhSachHoaDon.getSelectedRow();
             new JHoaDonChiTiet(null, true, String.valueOf(tblDanhSachHoaDon.getValueAt(vitri, 0))).setVisible(true);
         }
     }//GEN-LAST:event_tblDanhSachHoaDonMouseClicked

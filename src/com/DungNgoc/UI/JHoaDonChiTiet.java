@@ -44,8 +44,9 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     MauDAO mdao = new MauDAO();
     DefaultTableModel dtm;
     int id;
-    doiTraDAO dtDAO=new doiTraDAO();
+    doiTraDAO dtDAO = new doiTraDAO();
     DecimalFormat df = new DecimalFormat("#.000");
+
     public JHoaDonChiTiet(java.awt.Frame parent, boolean modal, String idbill) {
         super(parent, modal);
         initComponents();
@@ -216,7 +217,7 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
 
     private void btnLSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLSActionPerformed
         // TODO add your handling code here:
-         new danhSachTra(null, true, id).setVisible(true);
+        new danhSachTra(null, true, id).setVisible(true);
     }//GEN-LAST:event_btnLSActionPerformed
 
     /**
@@ -278,13 +279,14 @@ public class JHoaDonChiTiet extends javax.swing.JDialog {
     private javax.swing.JTextField txtTenNV;
     // End of variables declaration//GEN-END:variables
 private void init() {
+        System.out.println(id);
         tblHoaDonChiTiet.setSelectionMode(0);
         dtm = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         this.fillTable();
-        if(dtDAO.getTraHang(id)!=0){
+        if (dtDAO.getTraHang(id) != 0) {
             lblDoiHang.setText("Đã trả");
             btnLS.setEnabled(true);
-        }else{
+        } else {
             lblDoiHang.setText("");
             btnLS.setEnabled(false);
         }
@@ -319,6 +321,7 @@ private void init() {
             dtm.addRow(rowdata);
         }
     }
+
     boolean checkSoLuong(String a, int row) {
         try {
             int soLuong = Integer.parseInt(a);
@@ -340,17 +343,18 @@ private void init() {
             return false;
         }
     }
-    void traHang(){
+
+    void traHang() {
         try {
-            int index=tblHoaDonChiTiet.getSelectedRow();
-            String ma=tblHoaDonChiTiet.getValueAt(index, 0)+"";
-            String a=MsgBox.promt(this, "Nhập số lượng");
-            if(checkSoLuong(a, index)){
-                HoaDonChiTiet hd=new HoaDonChiTiet(id, ma,Integer.parseInt(tblHoaDonChiTiet.getValueAt(index, 2) + "") - Integer.parseInt(a), 0.0);
-                if(!a.equals(tblHoaDonChiTiet.getValueAt(index, 2) + "")){
+            int index = tblHoaDonChiTiet.getSelectedRow();
+            String ma = tblHoaDonChiTiet.getValueAt(index, 0) + "";
+            String a = MsgBox.promt(this, "Nhập số lượng");
+            if (checkSoLuong(a, index)) {
+                HoaDonChiTiet hd = new HoaDonChiTiet(id, ma, Integer.parseInt(tblHoaDonChiTiet.getValueAt(index, 2) + "") - Integer.parseInt(a), 0.0);
+                if (!a.equals(tblHoaDonChiTiet.getValueAt(index, 2) + "")) {
                     hdctdao.update(hd);
                     fillTable();
-                }else{
+                } else {
                     hdctdao.delete(hd);
                     fillTable();
                 }
