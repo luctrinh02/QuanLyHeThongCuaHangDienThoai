@@ -29,6 +29,7 @@ public class JMau extends javax.swing.JDialog {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
+        fillTable();
     }
 
     /**
