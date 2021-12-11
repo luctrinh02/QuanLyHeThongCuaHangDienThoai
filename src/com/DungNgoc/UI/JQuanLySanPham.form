@@ -80,11 +80,11 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tabs" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" alignment="0" attributes="0">
+              <Component id="tabs" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
                   <Component id="lblQLSP" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -94,7 +94,7 @@
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="lblQLSP" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                  <Component id="tabs" pref="521" max="32767" attributes="0"/>
+                  <Component id="tabs" pref="525" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -833,7 +833,10 @@
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                                  <Component id="btnThemThongSo" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="btnImport" max="32767" attributes="0"/>
+                                                      <Component id="btnThemThongSo" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -914,10 +917,18 @@
                               <Component id="txtGiaSP" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnThemThongSo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblSoLuong" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txtSoLuong" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="lblSoLuong" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="txtSoLuong" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                                  <Component id="btnImport" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
@@ -991,6 +1002,7 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbbLoaiMayMouseEntered"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbLoaiMayActionPerformed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -1271,6 +1283,11 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnImport">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Import"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
