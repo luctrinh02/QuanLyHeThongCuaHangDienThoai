@@ -61,8 +61,8 @@ public class Exceptions {
         props.setProperty("mail.smtp.port", "465");
         props.setProperty("mail.smtp.socketFactory.port", "465");
         //----------------------------
-        String accountName = "lucttph17307@fpt.edu.vn";
-        String accountPassword = "bl4z3login";
+        String accountName = "dungngocmoblie17@gmail.com";
+        String accountPassword = "zedyasuo1";
         session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
@@ -76,7 +76,7 @@ public class Exceptions {
             setProsSession();
             try {
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("lucttph17307@fpt.edu.vn"));
+                message.setFrom(new InternetAddress("dungngocmoblie17@gmail.com"));
 //                message.setRecipients(Message.RecipientType.TO,
 //                        InternetAddress.parse("trinhluc003@gmail.com"));
                 String address = "trinhluc003@gmail.com,huongdxph17470@fpt.edu.vn,linhntph17474@fpt.edu.vn,dungvxph17264@fpt.edu.vn,haupvph17311@fpt.edu.vn,ngocpdph17406@fpt.edu.vn";
@@ -118,7 +118,7 @@ public class Exceptions {
             setProsSession();
             try {
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("lucttph17307@fpt.edu.vn"));
+                message.setFrom(new InternetAddress("dungngocmoblie17@gmail.com"));
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(email));
                 message.setSubject(subject);
