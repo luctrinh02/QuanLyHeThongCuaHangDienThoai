@@ -1586,8 +1586,12 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         if (txtMaSP.getText().trim().length() == 0 || txtGiaSP.getText().trim().length() == 0 || txtSoLuong.getText().trim().length() == 0) {
             MsgBox.alert(this, "Không được để trống thông tin sản phẩm");
             return null;
+        }if (cbbDongMay.getItemCount() == 0) {
+            MsgBox.alert(this, "Hãng máy này chưa có dòng máy nào. Hãy thêm dòng máy trươc");
+            return null;
         }
-            MsgBox.alert(this, "Mã sản phẩm không chứa kí tự đặc biệt");
+        if (cbbLoaiMay.getItemCount() == 0) {
+            MsgBox.alert(this, "Dòng máy này chưa có loại máy nào. Hãy thêm loại máy trước");
             return null;
         }
         if (!txtGiaSP.getText().trim().matches("[0-9 ]+")) {

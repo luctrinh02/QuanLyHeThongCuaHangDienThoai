@@ -300,15 +300,15 @@ public class JHangMay extends javax.swing.JDialog {
 
     HangMay getForm() {
         if (!txtMa.getText().trim().matches("\\w+")) {
-            MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
+            MsgBox.alert(this, "Mã hãng máy không chứa kí tự đặc biệt");
             return null;
         }
         if (txtHangMay.getText().length()!=0&& txtHangMay.getText().trim().length()==0) {
-            MsgBox.alert(this, "Tên dòng máy không chứa duy nhất kí tự khoảng trắng");
+            MsgBox.alert(this, "Tên hãng máy không chứa duy nhất kí tự khoảng trắng");
             return null; 
         }
         if (Xcheck.isNotName(txtHangMay.getText().trim())) {
-            MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
+            MsgBox.alert(this, "Tên hãng máy không chứa kí tự đặc biệt");
             return null;
         }
         if (txtMa.getText().length() > 7) {

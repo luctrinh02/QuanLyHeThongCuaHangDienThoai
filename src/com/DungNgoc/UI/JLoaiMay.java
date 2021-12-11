@@ -363,12 +363,25 @@ public class JLoaiMay extends javax.swing.JDialog {
         if (txtLoaiMay.getText().equals("")) {
             MsgBox.alert(this, "Không bỏ trống dữ liệu");
             return false;
-        } else if (cbbDongMay.getItemCount() == 0) {
+        }
+        if (cbbDongMay.getItemCount() == 0) {
             MsgBox.alert(this, "Không có dòng máy nào");
             return false;
-        } else {
-            return true;
         }
+        if (txtLoaiMay.getText().length() != 0 && txtLoaiMay.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Tên loại máy không chỉ gồm khoảng trắng");
+            return false;
+        }
+        if (!txtLoaiMay.getText().trim().matches("\\w+")) {
+            MsgBox.alert(this, "Tên loại máy không chứa kí tự đặc biệt");
+            return false;
+        }
+        if (!checkname(this.txtLoaiMay.getText().trim())) {
+            MsgBox.alert(this, "Tên loại máy đã tồn tại");
+            return false;
+        }
+        return true;
+
     }
 
     void clear() {
@@ -390,5 +403,20 @@ public class JLoaiMay extends javax.swing.JDialog {
     private javax.swing.JTable tblLoaiMay;
     private javax.swing.JTextField txtLoaiMay;
     // End of variables declaration//GEN-END:variables
-
+private boolean checkname(String name) {
+        String dm = "";
+        List<DongMay> lstdm = DMdao.selectAll();
+        for (DongMay x : lstdm) {
+            if (this.cbbDongMay.getSelectedItem().toString().equalsIgnoreCase(x.getName())) {
+                dm = x.getTag();
+            }
+        }
+        List<LoaiMay> lstlm = LMdao.selectByDongMay(dm);
+        for (LoaiMay x : lstlm) {
+            if (name.equalsIgnoreCase(x.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
