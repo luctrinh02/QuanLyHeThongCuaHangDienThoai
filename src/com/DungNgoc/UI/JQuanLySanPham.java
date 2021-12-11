@@ -145,6 +145,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         cbbDungLuong = new javax.swing.JComboBox<>();
         lblMauMay = new javax.swing.JLabel();
         cbbMauMay = new javax.swing.JComboBox<>();
+        btnImport = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblThungRac = new javax.swing.JTable();
@@ -581,6 +582,11 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
                 cbbLoaiMayMouseEntered(evt);
             }
         });
+        cbbLoaiMay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLoaiMayActionPerformed(evt);
+            }
+        });
 
         cbbDongMay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -733,6 +739,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
 
         cbbMauMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnImport.setText("Import");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -796,7 +804,9 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
                                         .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGap(30, 30, 30)
-                                        .addComponent(btnThemThongSo)))))
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnThemThongSo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                         .addContainerGap(26, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lblMaSP)
@@ -857,10 +867,15 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtGiaSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThemThongSo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblSoLuong)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblSoLuong)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(btnImport)))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -964,7 +979,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(273, 273, 273)
                 .addComponent(lblQLSP)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -972,7 +987,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addComponent(lblQLSP)
                 .addGap(7, 7, 7)
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1097,6 +1112,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         row = cbbDongMay.getSelectedIndex();
         if (row >= 0) {
             fillLoaiMay(row);
+        }else{
+            cbbLoaiMay.removeAllItems();
         }
     }//GEN-LAST:event_cbbDongMayActionPerformed
 
@@ -1125,7 +1142,7 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNext3ActionPerformed
 
     private void cbbLoaiMayMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbLoaiMayMouseEntered
-        txtTenSP.setText(cbbLoaiMay.getSelectedItem().toString());
+        
     }//GEN-LAST:event_cbbLoaiMayMouseEntered
 
     private void RefeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefeshActionPerformed
@@ -1137,11 +1154,17 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         fillMau();
     }//GEN-LAST:event_RefeshActionPerformed
 
+    private void cbbLoaiMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLoaiMayActionPerformed
+        // TODO add your handling code here:
+        txtTenSP.setText(cbbLoaiMay.getItemCount()==0?"":cbbLoaiMay.getSelectedItem().toString());
+    }//GEN-LAST:event_cbbLoaiMayActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Refesh;
     private javax.swing.JButton btnCuoi;
     private javax.swing.JButton btnDau;
+    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnKhoiPhuc;
     private javax.swing.JButton btnLui;
     private javax.swing.JButton btnMoi;
@@ -1325,8 +1348,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
             listPB.clear();
         } catch (Exception e) {
         }
-        cbbLoaiMay1.removeAllItems();
-        cbbLoaiMay1.addItem("");
+        cbbPhienBan1.removeAllItems();
+        cbbPhienBan1.addItem("");
         listPB = pbdao.selectAll();
         for (PhienBan x : listPB) {
             cbbPhienBan1.addItem(x.getName());
@@ -1363,9 +1386,12 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         } catch (Exception e) {
         }
         cbbLoaiMay.removeAllItems();
-        listLM = lmdao.selectByDongMay(listDM.get(index).getTag());
-        for (LoaiMay x : listLM) {
-            cbbLoaiMay.addItem(x.getName());
+        try {
+            listLM = lmdao.selectByDongMay(listDM.get(index).getTag());
+            for (LoaiMay x : listLM) {
+                cbbLoaiMay.addItem(x.getName());
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -1392,8 +1418,8 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         String dungLuong = cbbDungLuong1.getSelectedItem() == null ? "" : cbbDungLuong1.getSelectedItem() + "";
         list = sptdao.select(txtTim.getText(), hang, dong, loai, phienBan, ram, dungLuong, page);
         if (list.size() == 21) {
-            for(int i=0;i<20;i++){
-                SanPhamTable x=list.get(i);
+            for (int i = 0; i < 20; i++) {
+                SanPhamTable x = list.get(i);
                 model.addRow(new Object[]{x.getMa(), x.getTen(), x.getRam(), x.getDungLuong(), x.getMau(), x.isTinhTrang() ? "Mới" : "Cũ", Xmoney.moneyToString(x.getGia()), x.getSoLuong()});
             }
         } else {
@@ -1559,6 +1585,14 @@ public class JQuanLySanPham extends javax.swing.JInternalFrame {
         SanPham sp = new SanPham();
         if (txtMaSP.getText().trim().length() == 0 || txtGiaSP.getText().trim().length() == 0 || txtSoLuong.getText().trim().length() == 0) {
             MsgBox.alert(this, "Không được để trống thông tin sản phẩm");
+            return null;
+        }
+        if(cbbDongMay.getItemCount()==0){
+            MsgBox.alert(this, "Hãng máy này chưa có dòng máy nào. Hãy thêm dòng máy trươc");
+            return null;
+        }
+        if(cbbLoaiMay.getItemCount()==0){
+            MsgBox.alert(this, "Dòng máy này chưa có loại máy nào. Hãy thêm loại máy trước");
             return null;
         }
         if (txtMaSP.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
