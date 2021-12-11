@@ -243,6 +243,14 @@ public class JMau extends javax.swing.JDialog {
     }
 
     Mau getForm() {
+        if (txtMa.getText().length() != 0 && txtMa.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Mã  máy không chứa chỉ kí tự khoảng trắng");
+            return null;
+        }
+        if (txtMau.getText().length() != 0 && txtMau.getText().trim().length() == 0) {
+            MsgBox.alert(this, "Màu máy không chứa chỉ kí tự khoảng trắng");
+            return null;
+        }
         if (txtMa.getText().trim().matches("[^a-zA-Z0-9 ]+")) {
             MsgBox.alert(this, "Mã dòng máy không chứa kí tự đặc biệt");
             return null;
@@ -251,7 +259,15 @@ public class JMau extends javax.swing.JDialog {
             MsgBox.alert(this, "Tên dòng máy không chứa kí tự đặc biệt");
             return null;
         }
-        return new Mau(txtMa.getText(), txtMau.getText());
+        if (!checkma(txtMa.getText().trim())) {
+            MsgBox.alert(this, "MÃ màu máy đã tồn tại");
+            return null;
+        }
+        if (!checkname(txtMau.getText().trim())) {
+            MsgBox.alert(this, "Tên màu máy đã tồn tại");
+            return null;
+        }
+        return new Mau(txtMa.getText().trim(), txtMau.getText().trim());
     }
 
     void fillTable() {
@@ -272,7 +288,11 @@ public class JMau extends javax.swing.JDialog {
             MsgBox.alert(this, "Không bỏ trống dữ liệu");
         } else {
             try {
-                dao.insert(getForm());
+                Mau m = getForm();
+                if (m == null) {
+                    return;
+                }
+                dao.insert(m);
                 MsgBox.alert(this, "Thêm thành công");
                 fillTable();
                 clear();
@@ -295,5 +315,23 @@ public class JMau extends javax.swing.JDialog {
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtMau;
     // End of variables declaration//GEN-END:variables
+private boolean checkma(String ma) {
+        List<Mau> lstm = dao.selectAll();
+        for (Mau x : lstm) {
+            if (ma.equalsIgnoreCase(x.getColorId())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    private boolean checkname(String name) {
+        List<Mau> lstm = dao.selectAll();
+        for (Mau x : lstm) {
+            if (name.equalsIgnoreCase(x.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
