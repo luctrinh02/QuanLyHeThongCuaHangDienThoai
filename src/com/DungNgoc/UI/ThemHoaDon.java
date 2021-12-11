@@ -733,15 +733,17 @@ public class ThemHoaDon extends javax.swing.JDialog {
         //thêm sửa khách hàng
         khachHang();
         //thêm hoá đơn
-        hoaDon();
-        //thêm hoá đơn chi tiết
-        hoaDonChiTiet();
-        //sửa thông tin sản phẩm
-        sanPham();
-        //xuất hoá đơn
-        xuatHoaDon("HD" + hdDao.selectId() + "_" + Xdate.toString(new Date(), "yyMMdd"));
-        //đóng form
-        dispose();
+        if (check == true) {
+            hoaDon();
+            //thêm hoá đơn chi tiết
+            hoaDonChiTiet();
+            //sửa thông tin sản phẩm
+            sanPham();
+            //xuất hoá đơn
+            xuatHoaDon("HD" + hdDao.selectId() + "_" + Xdate.toString(new Date(), "yyMMdd"));
+            //đóng form
+            dispose();
+        }
     }
 
     void khachHang() {
@@ -769,18 +771,18 @@ public class ThemHoaDon extends javax.swing.JDialog {
     boolean checkKhachHang() {
         if (!Xcheck.isSDT(txtSDT.getText().trim())) {
             MsgBox.alert(this, "Số điện thoại không đúng");
-            check=false;
+            check = false;
             return false;
         } else if (txtHoTen.getText().trim().equals("")) {
             MsgBox.alert(this, "Không bỏ trống tên");
-            check=false;
+            check = false;
             return false;
         } else if (Xcheck.isNotName(txtHoTen.getText())) {
             MsgBox.alert(this, "Tên chỉ chứa chữ cái và khoảng trắng");
-            check=false;
+            check = false;
             return false;
         } else {
-            check=true;
+            check = true;
             return true;
         }
     }
@@ -804,6 +806,7 @@ public class ThemHoaDon extends javax.swing.JDialog {
                 Exceptions.writeException(e, hdct.toString());
             }
         }
+        MsgBox.alert(this, "Thêm thành công");
     }
 
     void sanPham() {
