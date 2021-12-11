@@ -9,15 +9,29 @@ import com.DungNgoc.DAO.HoaDonDAO;
 import com.DungNgoc.DAO.KhachHangDAO;
 import com.DungNgoc.DAO.KhuyenMaiDAO;
 import com.DungNgoc.DAO.NhanVienDAO;
+import com.DungNgoc.DAO.SanPhamTableDao;
 import com.DungNgoc.entitys.HoaDon;
 import com.DungNgoc.entitys.KhachHang;
 import com.DungNgoc.entitys.MaKhuyenMai;
 import com.DungNgoc.entitys.NhanVien;
+import com.DungNgoc.entitys.SanPhamTable;
+import com.DungNgoc.untils.MsgBox;
+import com.DungNgoc.untils.Xdate;
 import com.DungNgoc.untils.Xmoney;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -37,6 +51,7 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
     KhuyenMaiDAO kmdao = new KhuyenMaiDAO();
     DefaultTableModel dtm;
     public int vitri;
+    String path = "";
 
     public JDanhSachHoaDon() {
         initComponents();
@@ -62,6 +77,7 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDanhSachHoaDon = new javax.swing.JTable();
         btnThem = new javax.swing.JButton();
+        btnPDF = new javax.swing.JButton();
 
         javax.swing.GroupLayout frameLayout = new javax.swing.GroupLayout(frame.getContentPane());
         frame.getContentPane().setLayout(frameLayout);
@@ -113,7 +129,15 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
             new String [] {
                 "Mã HD", "Thời Gian", "Khách Hàng", "Tổng Tiền Hàng", "Giảm Giá", "Tên NV", "Tổng Thu"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblDanhSachHoaDon.setComponentPopupMenu(jPopupMenu1);
         tblDanhSachHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -126,6 +150,13 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
+            }
+        });
+
+        btnPDF.setText("Xuất hoá đơn");
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
             }
         });
 
@@ -146,12 +177,14 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
                             .addComponent(jScrollPane1))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 186, Short.MAX_VALUE)
+                        .addGap(0, 229, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(281, 281, 281))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnPDF)
+                                .addGap(151, 151, 151)
                                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))))
         );
@@ -169,8 +202,10 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnThem)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThem)
+                    .addComponent(btnPDF))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,12 +217,9 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void tblDanhSachHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachHoaDonMouseClicked
-        this.vitri = tblDanhSachHoaDon.getSelectedRow();
-        if (this.vitri == -1) {
-            return;
+        if (evt.getClickCount() == 2) {
+            new JHoaDonChiTiet(null, true, String.valueOf(tblDanhSachHoaDon.getValueAt(vitri, 0))).setVisible(true);
         }
-         new JHoaDonChiTiet(null, true,String.valueOf(tblDanhSachHoaDon.getValueAt(vitri, 0))).setVisible(true);
-  
     }//GEN-LAST:event_tblDanhSachHoaDonMouseClicked
 
     private void txtTimKiemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimKiemFocusGained
@@ -217,8 +249,19 @@ public class JDanhSachHoaDon extends javax.swing.JInternalFrame {
         filltableSearch(txtTimKiem.getText());
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        // TODO add your handling code here:
+        try {
+            int row = tblDanhSachHoaDon.getSelectedRow();
+            xuatHoaDon("HD"+tblDanhSachHoaDon.getValueAt(row, 0)+"_"+Xdate.toString(new Date(), "yyMMdd"), row);
+        } catch (Exception e) {
+            MsgBox.alert(this, "Chưa chọn hoá đơn cần in");
+        }
+    }//GEN-LAST:event_btnPDFActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPDF;
     private javax.swing.JButton btnThem;
     private javax.swing.JFrame frame;
     private javax.swing.JLabel jLabel2;
@@ -258,10 +301,11 @@ private void init() {
         }
 
     }
+
     private void filltableSearch(String id) {
         dtm.setRowCount(0);
         //IdGuest LIKE '%?%' OR IdStaff LIKE '%?%' OR IdBill= ?
-        List<HoaDon> lsthd = hdao.selectBySql("SELECT *FROM HoaDon WHERE IdStaff like ? OR IdGuest like ? OR IdBill like ?" ,"%"+id+"%","%"+id+"%","%"+id+"%");
+        List<HoaDon> lsthd = hdao.selectBySql("SELECT *FROM HoaDon WHERE IdStaff like ? OR IdGuest like ? OR IdBill like ?", "%" + id + "%", "%" + id + "%", "%" + id + "%");
         for (int i = 0; i < lsthd.size(); i++) {
             HoaDon hd = (HoaDon) lsthd.get(i);
             KhachHang kh = khdao.selectById(hd.getIdGuest());
@@ -272,15 +316,16 @@ private void init() {
                 hd.getIdBill(),
                 hd.getDateBill(),
                 kh.getName(),
-                Xmoney.moneyToString(tongthu),
+                Xmoney.moneyToString(Double.parseDouble(hd.getTotalMoney())),
                 hd.getPromoCode(),
                 nv.getName(),
-                Xmoney.moneyToString(Double.parseDouble(hd.getTotalMoney()))
+                Xmoney.moneyToString(tongthu)
             };
             dtm.addRow(rd);
         }
 
     }
+
     public void addPlaceHolderStyle(JTextField textField) {
         Font font = textField.getFont();
         font = font.deriveFont(Font.PLAIN);
@@ -293,5 +338,107 @@ private void init() {
         font = font.deriveFont(Font.PLAIN);
         textField.setFont(font);
         textField.setForeground(Color.BLACK);
+    }
+
+    void xuatHoaDon(String name, int row) {
+        try {
+            HoaDon hd = hdao.selectById(Integer.parseInt(tblDanhSachHoaDon.getValueAt(row, 0) + ""));
+            KhachHang kh = khdao.selectById(hd.getIdGuest());
+            BaseFont bf = BaseFont.createFont("c:\\windows\\fonts\\times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            //khởi tạo dc
+            Document dc = new Document();
+            //tạo font tiếng việt
+            com.itextpdf.text.Font header = new com.itextpdf.text.Font(bf, 40, com.itextpdf.text.Font.BOLD, BaseColor.BLUE);//header
+            com.itextpdf.text.Font headerTB = new com.itextpdf.text.Font(bf, 14, com.itextpdf.text.Font.BOLD, BaseColor.BLACK);//headertbale
+            com.itextpdf.text.Font tiny = new com.itextpdf.text.Font(bf, 10, com.itextpdf.text.Font.UNDERLINE, BaseColor.GRAY);
+            com.itextpdf.text.Font text = new com.itextpdf.text.Font(bf, 14, com.itextpdf.text.Font.NORMAL, BaseColor.BLACK);//normal text
+            com.itextpdf.text.Font textTB = new com.itextpdf.text.Font(bf, 12, com.itextpdf.text.Font.NORMAL, BaseColor.BLACK);//normal text table
+            PdfWriter.getInstance(dc, new FileOutputStream("hoaDon/" + name + ".pdf"));
+            File file = new File("hoaDon/" + name + ".pdf");
+            path = file.getPath();
+            dc.open();
+            //nội dung
+            Paragraph[] p = new Paragraph[7];
+            p[0] = new Paragraph("Dũng Ngọc Mobile", header);
+            p[0].setAlignment(Element.ALIGN_CENTER);
+            p[0].setSpacingBefore(12);
+            p[1] = new Paragraph("HOÁ ĐƠN BÁN HÀNG", tiny);
+            p[1].setAlignment(Element.ALIGN_CENTER);
+            p[1].setSpacingBefore(5);
+            p[2] = new Paragraph("Số điện thoại: " + kh.getIdGuest(), text);
+            p[2].setAlignment(Element.ALIGN_LEFT);
+            p[3] = new Paragraph("Tên khách hàng: " + kh.getName(), text);
+            p[3].setAlignment(Element.ALIGN_LEFT);
+            p[4] = new Paragraph("Ngày mua hàng: " + Xdate.toString(new Date(), "dd/MM/yyyy"), text);
+            p[4].setAlignment(Element.ALIGN_LEFT);
+            p[5] = new Paragraph("Họ tên nhân viên: " + tblDanhSachHoaDon.getValueAt(row, 5) + "", text);
+            p[5].setAlignment(Element.ALIGN_LEFT);
+            p[6] = new Paragraph("Danh sách sản phẩm: ", text);
+            p[6].setAlignment(Element.ALIGN_LEFT);
+            p[6].setSpacingAfter(20);
+            //add nội dung
+            for (int i = 0; i < 7; i++) {
+                dc.add(p[i]);
+            }
+            //table
+            //Khởi tạo một table có 3 cột
+            PdfPTable table = new PdfPTable(8);
+            //Khởi tạo ô header và thêm vào table
+            String h[] = {"Mã máy", "Tên máy", "Ram", "Dung Luọng", "Màu", "Tình trạng", "Giá", "Số lượng"};
+            PdfPCell title[] = new PdfPCell[8];
+            for (int i = 0; i < 8; i++) {
+                title[i] = new PdfPCell(new Paragraph(h[i], headerTB));
+                title[i].setPaddingLeft(2.0f);
+                table.addCell(title[i]);
+            }
+            //Khởi tạo  ô data và thêm vào bảng
+            SanPhamTableDao sptbdao = new SanPhamTableDao();
+            List<SanPhamTable> list = sptbdao.selectByHoaDon(Integer.parseInt(tblDanhSachHoaDon.getValueAt(row, 0) + ""));
+            for (int i = 0; i < list.size(); i++) {
+                SanPhamTable x = list.get(i);
+                Paragraph[] pp = new Paragraph[8];
+                pp[0] = new Paragraph(x.getMa(), text);
+                pp[1] = new Paragraph(x.getTen(), text);
+                pp[2] = new Paragraph(x.getRam(), text);
+                pp[3] = new Paragraph(x.getDungLuong(), text);
+                pp[4] = new Paragraph(x.getMau(), text);
+                pp[5] = new Paragraph(x.isTinhTrang() + "", text);
+                pp[6] = new Paragraph(x.getGia() + "", text);
+                pp[7] = new Paragraph(x.getSoLuong() + "", text);
+                for (int j = 0; j < 8; j++) {
+                    PdfPCell data = new PdfPCell(pp[j]);
+                    table.addCell(data);
+                }
+            }
+            float[] withsKM = {1.2f, 2.3f, 0.8f, 1.7f, 1f, 1.6f, 1.6f, 1.3f};
+            table.setWidths(withsKM);
+            table.setWidthPercentage(100);
+            dc.add(table);
+            //thêm nội dung tiền
+            Paragraph[] pp = new Paragraph[5];
+            p[0] = new Paragraph("Tổng tiền: " + Xmoney.moneyToString(Double.parseDouble(hd.getTotalMoney())), text);
+            p[1] = new Paragraph("Mã giảm giá: " + hd.getPromoCode(), text);
+            p[2] = new Paragraph("Điểm thưởng: 0", text);
+            p[3] = new Paragraph("----------------------------------------------");
+            p[4] = new Paragraph("Thành tiền: " + tblDanhSachHoaDon.getValueAt(row, 6), text);
+            for (int i = 0; i < 5; i++) {
+                p[i].setAlignment(Element.ALIGN_RIGHT);
+                dc.add(p[i]);
+            }
+            //đóng file
+            dc.close();
+            if (MsgBox.confirm(this, "Hoá đơn đã được tạo bạn có muốn xem không?")) {
+                String command = "cmd /c start " + path;
+                try {
+                    Runtime rt = Runtime.getRuntime();
+                    Process pr = rt.exec(command);
+                } catch (Exception ex) {
+                    MsgBox.alert(this, "Không tìm thấy file");
+                }
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi");
+            e.printStackTrace();
+        }
     }
 }
